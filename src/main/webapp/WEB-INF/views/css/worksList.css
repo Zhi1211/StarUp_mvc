@@ -1,0 +1,92 @@
+
+.p-container{
+    margin-top:50px;
+    padding: 0px;
+    border-radius: 20px;
+    box-shadow: 3px 3px 3px rgb(2, 14, 53);
+    background-color:rgba(255, 255, 255, 0.5);
+    height: 460px;
+    width: 1500px;
+    border:2px solid #a492b4;
+  }
+  
+  .square{
+  
+    
+    height: 350px;
+    width: 1498px;
+    display: flex;
+    border-top: 2px solid #a492b4;
+    border-bottom: 2px solid #a492b4;
+  
+  }
+  
+  .p-username{
+    float: right;
+     margin-right: 30px;
+     margin-top:15px;
+     font-size: 18px;
+     font-family: '微軟正黑體';
+     font-weight: 900;
+     text-shadow: 1px 2px 1px rgb(245, 247, 255);
+     color: #44318b;
+  }
+  
+  .p-time{
+    float: left;
+     margin-left: 30px;
+     margin-top:10px;
+     font-family: '微軟正黑體';
+     font-weight: 600;
+     text-shadow: 1px 2px 1px rgb(245, 247, 255);
+     color: #44318b;
+  }
+  
+  .p-img{
+    height: 270px;
+    width: 370px;
+    margin-top:15px;
+    margin-left:70px;
+    box-shadow: 1px 1px 1px rgb(2, 14, 53);
+   
+  }
+  
+  .p-font{
+    margin-left: 390px;
+    margin-top: 90px;
+    width: 900px;
+    height: 230px;
+    font-family: '微軟正黑體';
+     font-weight: 600;
+     
+     color: #382c58;
+     font-size: 21px;
+     text-align: justify;
+  }
+  
+  .p-title{
+    font-family: '微軟正黑體';
+     font-weight: 600;
+     text-shadow: 1px 2px 1px rgb(245, 247, 255);
+     color: #15035a;
+     font-size: 25px;
+     margin-top: 10px;
+     width: 120px;
+     height: 30px;
+     margin-left: 30px;
+  
+  }
+  
+  .p-container:hover { 
+    
+    background-color: rgba(237, 232, 250, 0.733);
+  }
+
+
+  .heart:hover{
+   color: rgb(170, 5, 60);
+  }
+
+  /* $(window).scroll(funtion(){
+    $().addClass();
+}); */
