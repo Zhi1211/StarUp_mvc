@@ -17,14 +17,13 @@
 	crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Josefin+Sans"
 	rel="stylesheet">
-<link href="../css/index_main.css" rel="stylesheet">
-<link href="./css/index_main.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/index_main.css" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-<link href="../css/product.css" rel="stylesheet"> 
-<link href="../css/select.css" rel="stylesheet">  
- <link href="../css/personal.css" rel="stylesheet">
- <link href="../css/upload.css" rel="stylesheet">
- <link href="../css/worksList.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/product.css" rel="stylesheet"> 
+<link href="${pageContext.request.contextPath}/css/select.css" rel="stylesheet">  
+ <link href="${pageContext.request.contextPath}/css/personal.css" rel="stylesheet">
+ <link href="${pageContext.request.contextPath}/css/upload.css" rel="stylesheet">
+ <link href="${pageContext.request.contextPath}/css/worksList.css" rel="stylesheet">
 </head>
  
 <body>
