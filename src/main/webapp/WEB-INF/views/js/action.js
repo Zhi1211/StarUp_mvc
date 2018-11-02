@@ -1,5 +1,5 @@
 function doFirst(){
-	$("#uploadImg").change(function(){
+	$("#productImage").change(function(){
 	  readURL(this);
 	});
 	function readURL(input){

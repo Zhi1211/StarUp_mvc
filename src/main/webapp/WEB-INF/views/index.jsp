@@ -5,7 +5,7 @@
 
 <c:set var="funcName" value="REG" scope="session" />
 <jsp:useBean id="SYSTEM" class="_00_init.util.GlobalService" scope="application" />
-<jsp:include page="fragment/header.jsp" />
+<jsp:include page="/fragment/header.jsp" />
 
 </div>
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="position:absolute; z-index:0; top:0px;">
@@ -17,7 +17,7 @@
 	</ol>
 	<div class="carousel-inner" >
 		<div class="carousel-item active" style="width:100%; height:600px; overflow:hidden;">
-			<img class="d-block w-100" src="images/598d4e5d7024d.png" alt="First slide" >
+			<img class="d-block w-100" src="image/598d4e5d7024d.png" alt="First slide" >
 			<div class="container" style="display:flex; justify-content:center">
 	            <div class="carousel-caption">
 		              <h1 style="text-shadow: 0px 0px 5px #f4dc42;">STAR UP !</h1>
@@ -27,17 +27,17 @@
           </div>
 		</div>
 		<div class="carousel-item" style="width:100%; height:600px; overflow:hidden;">
-			<img class="d-block w-100" src="images/5b33a326571eb.jpg" alt="Second slide">
+			<img class="d-block w-100" src="image/5b33a326571eb.jpg" alt="Second slide">
 			<div class="container" style="display:flex; justify-content:center">
 	            <div class="carousel-caption">
 		              <h1 style="text-shadow: 0px 0px 5px #f4dc42;">STAR UP !</h1>
 		              <p style="margin-bottom:130px;font-family:'Josefin Sans', sans-serif; font-size:26px; text-shadow: 0px 0px 5px #f4dc42;">
 		              If We Are Sparkling Star,<br> We Won't Need To Worry Where We Spark.</p>
-	            </div>
+	            </div>  
           </div>
 		</div>
 		<div class="carousel-item" style="width:100%; height:600px; overflow:hidden;">
-			<img class="d-block w-100" src="images/5b44a3ac357d3.jpg" alt="Third slide">
+			<img class="d-block w-100" src="image/5b44a3ac357d3.jpg" alt="Third slide">
 			<div class="container" style="display:flex; justify-content:center">
 	            <div class="carousel-caption">
 		              <h1 style="text-shadow: 0px 0px 5px #f4dc42;">STAR UP !</h1>
@@ -47,7 +47,7 @@
           </div>
 		</div>
 	</div>
-	<a class="carousel-control-prev" href="#carouselExampleIndicators"
+	<a class="carousel-control-prev" href="#carouselExampleIndicators"       
 		role="button" data-slide="prev"> <span
 		class="carousel-control-prev-icon" aria-hidden="true"></span> <span
 		class="sr-only">Previous</span>
@@ -70,4 +70,4 @@ ${logoutMessage}${MsgOK.InsertOK}
 %>
 
 </body>
-<jsp:include page="fragment/footer.jsp" />
+<jsp:include page="/fragment/footer.jsp" />  

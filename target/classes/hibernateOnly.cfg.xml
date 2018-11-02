@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- 連結資料庫的相關設定 -->
+		<!-- 顯示實際操作資料庫時的SQL -->
+		<property name="show_sql">true</property>
+		<!-- 將顯示的SQL排版，方便觀看 -->
+		<property name="format_sql">true</property>
+		<!-- http://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/dialect/package-summary.html 
+			可以找到hibernate.dialect的說明 -->
+		<!-- SQL方言、JDBC驅動程式的主類別、連線的URL、帳號與密碼，Database是MySQL -->
+
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/star_up?useUnicode=true&amp;characterEncoding=utf8</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">password</property>
+
+		<!-- SQL方言、JDBC驅動程式的主類別、連線的URL、帳號與密碼，Database是SQL Server -->
+		<!-- <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property> -->
+		<!-- <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property> -->
+		<!-- <property name="connection.url">jdbc:sqlserver://127.0.0.1:1433;DatabaseName=JSPDB</property> -->
+		<!-- <property name="connection.username">sa</property> -->
+		<!-- <property name="connection.password">sa123456</property> -->
+		<!-- hibernate 相關效能設定 -->
+		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+		<property name="connection_pool_size">1</property>
+<property name="hibernate.current_session_context_class">thread</property>
+
+		<!-- validate | update | create | create-drop 如果沒要用 set value="none". -->
+		<!-- validate 程式執行驗證資料對應表相關資料。 update 如果table已存在，就更新，不存在則新增 create 每次執行就自動刪除所有對應的table，再新增所有對應的table 
+			create-drop 新增所有對應的table , 程式關閉前刪除所有對應的table -->
+		<!-- 自動產生資料庫的Schema -->
+		<property name="hbm2ddl.auto">update</property>
+		<!-- 對應資料表 ，所有的Persistent類別都需要定義一個Mapping檔 -->
+<!-- 		<mapping class="_01_register.model.MemberBean"></mapping> -->
+<!-- 		<mapping class="_03_listBooks.model.BookBean"></mapping> -->
+<!-- 		<mapping class="_03_listBooks.model.CompanyBean"></mapping> -->
+<!-- 		<mapping class="_04_ShoppingCart.model.OrderBean"></mapping> -->
+<!-- 		<mapping class="_04_ShoppingCart.model.OrderItemBean"></mapping> -->
+		<mapping class="com.web.store.model.UserBean"></mapping>
+		<mapping class="com.web.store.model.ProductBean"></mapping>
+		<mapping class="com.web.store.model.WorksBean"></mapping>
+
+	</session-factory>
+</hibernate-configuration>

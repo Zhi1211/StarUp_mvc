@@ -1,16 +1,16 @@
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
-@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+@import url('/fonts.googleapis.com/earlyaccess/notosanstc.css');
 body {
-  background-image: url('../images/background-light-1.jpg');
+  background-image: url('../image/background-light-1.jpg');  
   background-size: cover;
   font-weight: normal;
 }
 
 
 /* CUSTOMIZE THE NAVBAR
--------------------------------------------------- */
+-------------------------------------------------- */  
 
 /* Special class on .container surrounding .navbar, used for positioning it into place. */
 .navbar-wrapper {

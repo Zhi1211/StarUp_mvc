@@ -8,16 +8,39 @@
 	margin: 20px 0px;
 	cursor :pointer;
 }
+.productboxMD {
+	display:flex;
+	background-color:rgba(255, 255, 255, 0.5); 
+	height: 150px; 
+	width: 500px;  
+	border-radius: 5px; 
+	box-shadow: 3px 3px 3px rgb(2, 14, 53); 
+	margin: 10px 10px;
+	cursor :pointer;
+}
 .imgFrame {
 	height: 250px; 
 	width: 250px; 
 	overflow: hidden; 
 	display: flex; 
 	justify-content: center; 
-	margin: 5px 0px; 
+	box-shadow: 1px 1px 1px rgb(2, 14, 53);
+}
+.imgFrameMD {
+	height: 130px; 
+	width: 130px; 
+	overflow: hidden; 
+	display: flex;
+	margin: 10px 10px; 
+	justify-content: center; 
 	box-shadow: 1px 1px 1px rgb(2, 14, 53);
 }
 .textFrame {
+	height: 100px; 
+	width: 250px;
+} 
+.textFrameMD {
+	margin-top:10px;
 	height: 100px; 
 	width: 250px;
 }
@@ -28,7 +51,27 @@
 }
 .prodImg {
 	width: 100%; 
-	height:100%;
+	height:100%;  
+}
+.imgBlock {
+	height: 500px; /*can be anything*/
+    width: 500px; /*can be anything*/
+    position: relative;
+}
+.prodDetailImg {
+	max-height: 500px;  
+    max-width: 500px; 
+    width: auto;
+    height: auto;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    border:10px rgba(255, 255, 255, 0.767) solid;
+    border-radius:5px;
+    box-shadow: 1px 1px 3px black;
+    
 }
 .prodCompany {
 	margin:0px; 

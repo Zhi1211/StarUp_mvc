@@ -55,7 +55,7 @@ public class RootAppConfig {		//RootApplicationContext_JavaConfig
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		source.setJdbcUrl("jdbc:mysql://localhost:3306/jspdb?useUnicode=true&amp;characterEncoding=utf8");
+		source.setJdbcUrl("jdbc:mysql://localhost:3306/star_up?useUnicode=true&amp;characterEncoding=utf8");
 		source.setInitialPoolSize(4);
 		source.setMaxPoolSize(8);
 		return source;
@@ -65,9 +65,7 @@ public class RootAppConfig {		//RootApplicationContext_JavaConfig
 	public LocalSessionFactoryBean sessionFactory () {
 		LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
 		factory.setDataSource(dataSource());
-		factory.setPackagesToScan(new String[] {
-													"com.web.store.model"
-		});
+		factory.setPackagesToScan(new String[] {"com.web.store"});
 		factory.setHibernateProperties(additionalProperties());
 		return factory;
 	}
@@ -88,7 +86,5 @@ public class RootAppConfig {		//RootApplicationContext_JavaConfig
 		HibernateTransactionManager txManager = new HibernateTransactionManager();
 		txManager.setSessionFactory(sessionFactory);
 		return txManager;
-	}
-	
-	
+	}	
 }

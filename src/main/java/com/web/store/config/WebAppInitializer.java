@@ -3,6 +3,7 @@ package com.web.store.config;
 import javax.servlet.Filter;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -24,9 +25,12 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
 	@Override
 	protected Filter[] getServletFilters() {
-		CharacterEncodingFilter filter1 = new CharacterEncodingFilter();
-		filter1.setEncoding("UTF-8");  
-		return new Filter[] {filter1};
+		CharacterEncodingFilter cef = new CharacterEncodingFilter();
+		cef.setEncoding("UTF-8");
+		cef.setForceEncoding(true);
+		HiddenHttpMethodFilter hhmf = new HiddenHttpMethodFilter();
+		Filter[] fa = new Filter[] {cef, hhmf};
+		return fa;
 	}
 
 }
