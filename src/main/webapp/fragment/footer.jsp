@@ -63,7 +63,7 @@ function modify(key, qty, index) {
 // 		document.forms[0].action="<c:url value='UpdateItem.do?cmd=MOD&prod_id=" + key + "&newQty=" +newQty + "' />";
 		var cmd = "MOD";
 // 		document.forms[0].action="<c:url value='/" + cmd + "/" + key + "/" + newQty + "/updateShoppingCart' />";
-		document.forms[0].action="<c:url value='/updateShoppingCart/" + cmd + "/" + key + "/" + newQty + "' />";
+		document.forms[0].action="<c:url value='/updateShoppingCart/" + cmd + "/" + key + "/" + newQty + "/update' />";
 		document.forms[0].method="POST";
 		document.forms[0].submit();
 	} else {
