@@ -108,10 +108,13 @@ public class UserDaoImpl implements UserDao {
 			return mb;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public List<UserBean> getAllUsers() {
-			// TODO Auto-generated method stub
-			return null;
+		String hql = "FROM UserBean";
+		Session session = factory.getCurrentSession();
+		List<UserBean> list = session.createQuery(hql).getResultList();
+		return list;
 		}
 
 		@Override

@@ -14,7 +14,9 @@ public interface ProductService {
 
 	public int updateProduct(ProductBean bean, long sizeInBytes);
 
-	void addProduct(ProductBean pb); 
+	void addProduct(ProductBean pb);
+
+	void deleteProduct(int id); 
 	
 	int getTotalPages();
 	

@@ -37,6 +37,11 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+
+	public void deleteProduct(int id) {
+		prodRepository.deleteProduct(id);
+	}
+
 	public int getTotalPages() {
 		return prodRepository.getTotalPages();
 	}
@@ -139,6 +144,7 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<ProductBean> getTypeProds() {
 		return prodRepository.getTypeProds();
+
 	}
 
 }

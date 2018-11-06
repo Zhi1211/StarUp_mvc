@@ -34,30 +34,36 @@
             <!-- 1.顯示所有商品-------------------------------------------------------------- -->
   			
   			 <c:forEach var="product"  items="${products}" >
-               
-                <div class="productboxMD" onclick="location.href='<c:url value='/modifyProduct?id=${product.prod_id}'/>';">
-                        <div class="imgFrameMD">
+                <div class="productboxMD">                 
+                        <div class="imgFrameMD" onclick="location.href='<c:url value='/modifyProduct?id=${product.prod_id}'/>';">
                             <img class="prodImg" src="<c:url value='/getPicture/${product.prod_id}'/>"> 
-                        </div> 										
-                        <div class="textFrameMD">    
-                           <FORM  action="<c:url value='Shopping.do' />" method="POST">  
-                            <p class="prodName">${product.prodName}</p>
-                            <p class="prodCompany">By ${product.prodCompany} </p>
-                            <div class="prodIntro">${product.prodIntro}</div>   
-											 
-			               <!-- 這些隱藏欄位都會送到後端 -->      
-			               <Input type='hidden' name='prodId' value='${product.prod_id}'>
-			               <Input type='hidden' name='prodName' value='${product.prodName}'>
-			               <Input type='hidden' name='prodCompany' value='${product.prodCompany}'>
-			               <Input type='hidden' name='prodIntro' value='${product.prodIntro}'><P/>
-			               <Input type='hidden' name='discount' value='${product.prodPrice}'><P/>
-			               <Input type='hidden' name='pageNo' value='${param.pageNo}'><P/>    			            
-				               <h4 class="prodPrice">NT$ ${product.prodPrice}</h4>				  		                        				              			            
-			           </FORM>  		             	 		         
-			         </div> 
-			         <div>    
-			           			<button class="btn btn-danger" style="margin-top:10px; margin-left:45px;"><i class="fas fa-trash-alt" ></i></button>	
-			           		</div>	
+                        </div>
+			<div class="textFrameMD">
+				<FORM action="<c:url value='Shopping.do' />" method="POST">
+					<p class="prodName">${product.prodName}</p>
+					<p class="prodCompany">By ${product.prodCompany}</p>
+					<div class="prodIntro">${product.prodIntro}</div>
+
+					<!-- 這些隱藏欄位都會送到後端 -->
+					<Input type='hidden' name='prodId' value='${product.prod_id}'>
+					<Input type='hidden' name='prodName' value='${product.prodName}'>
+					<Input type='hidden' name='prodCompany'
+						value='${product.prodCompany}'> <Input type='hidden'
+						name='prodIntro' value='${product.prodIntro}'>
+					<P />
+					<Input type='hidden' name='discount' value='${product.prodPrice}'>
+					<P />
+					<Input type='hidden' name='pageNo' value='${param.pageNo}'>
+					<P />
+					<h4 class="prodPrice">NT$ ${product.prodPrice}</h4>
+				</FORM>
+			</div>
+			<div>    
+			           			<button class="btn btn-danger" onclick="location.href='<c:url value='/deleteProduct?id=${product.prod_id}'/>';" style="margin-top:10px; margin-left:45px;">
+			           					<i class="fas fa-trash-alt" ></i>
+			           			</button>	
+			           	 </div>	
+			      
                 </div>   
                </c:forEach>
           

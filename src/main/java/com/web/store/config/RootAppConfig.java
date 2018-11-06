@@ -55,6 +55,7 @@ public class RootAppConfig {		//RootApplicationContext_JavaConfig
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+
 		source.setJdbcUrl("jdbc:mysql://localhost:3306/star_up?useUnicode=true&characterEncoding=utf8&useSSL=false");
 		source.setInitialPoolSize(4);
 		source.setMaxPoolSize(8);

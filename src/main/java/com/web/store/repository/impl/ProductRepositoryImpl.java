@@ -125,6 +125,13 @@ public class ProductRepositoryImpl implements ProductRepository{
 		session.save(bean);
 		
 	}
+
+	@Override
+	public void deleteProduct(int id) {
+		Session session = factory.getCurrentSession();
+		ProductBean bean = getProductById(id);
+		session.delete(bean);
+	}
 	
 	// 查詢某一頁的商品資料，執行本方法前，一定要先設定實例變數pageNo的初值
 	@SuppressWarnings("unchecked")

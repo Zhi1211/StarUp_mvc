@@ -17,6 +17,8 @@ public interface ProductRepository {
 		// 新增一筆商品
 		void addProduct(ProductBean bean);
 
+		void deleteProduct(int id);
+
 		int getTotalPages();
 	
 		List<ProductBean> getPageProds();

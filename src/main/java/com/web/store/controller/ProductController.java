@@ -35,10 +35,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import com.google.gson.Gson;
 import com.web.store.model.OrderedItem;
 import com.web.store.model.ProductBean;
 import com.web.store.model.ShoppingCart;
 import com.web.store.service.ProductService;
+
 
 @Controller
 public class ProductController {
@@ -109,11 +112,18 @@ public class ProductController {
 	    }
 		
 	
-		@RequestMapping(value= "/productMaintain")
-		public String productMaintainPage(Model model) {
+//		@RequestMapping(value= "/productMaintain")
+//		public String productMaintainPage(Model model) {
+//			List<ProductBean> list = prodService.getAllProducts();
+//			model.addAttribute("products", list);
+//			return "_20_productMaintain/ProductMaintainList";
+//		}
+	
+		@RequestMapping(value= "/productMaintain", produces="application/json")
+		public @ResponseBody byte[] productMaintainPage(Model model) throws UnsupportedEncodingException {	
 			List<ProductBean> list = prodService.getAllProducts();
-			model.addAttribute("products", list);
-			return "_20_productMaintain/ProductMaintainList";
+			byte[] productJson = new Gson().toJson(list).getBytes("UTF-8");
+			return productJson;
 		}
 //		-------------------更新商品-------------------
 		@RequestMapping(value = "/modifyProduct")
@@ -167,7 +177,7 @@ public class ProductController {
 				}
 			}
 			prodService.updateProduct(pb,sizeInByte);
-			return "redirect:/productMaintain";
+			return "redirect:/backstage";
 		}
 		
 		@RequestMapping(value="/modifyProduct/{id}", method=RequestMethod.PUT)
@@ -231,5 +241,16 @@ public class ProductController {
 			prodService.addProduct(pb);
 			return "redirect:/products";
 		}
-		
+
+//		-------------------刪除商品-------------------
+//		@RequestMapping(value="/deleteProduct", method=RequestMethod.POST)
+//		public String processDeleteProduct(@RequestParam(value = "id") int id) {
+//			prodService.deleteProduct(id);
+//			return "redirect:/backstage";
+//		}
+		@RequestMapping(value="/deleteProduct", method=RequestMethod.POST)
+		@ResponseBody
+		public void processDeleteProduct(@RequestParam(value = "id") int id) {
+			prodService.deleteProduct(id);
+		}
 }

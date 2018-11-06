@@ -14,7 +14,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/sketchy/bootstrap.min.css"
 	rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Josefin+Sans"
-	rel="stylesheet">
+	rel="stylesheet">   
 <link href="css/index_main.css" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 <link href="css/product.css" rel="stylesheet"> 
@@ -40,10 +40,13 @@
 					<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/">首頁
 							<span class="sr-only">(current)</span>
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value='/_10_personalPage/DisplayPersonalPage'/>">個人主頁</a></li>
+					<li class="nav-item"><a class="nav-link" href="<c:url value='personalPage?id=${LoginOK.user_id }'/>">個人主頁</a></li>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="<c:url value='/_10_personalPage/DisplayPersonalPage'/>">探索作品</a></li>															
-					<li class="nav-item"><a class="nav-link" href="<c:url value='/products'/>">商城</a></li>				 	
+					<li class="nav-item"><a class="nav-link" href="<c:url value='/products'/>">商城</a></li>
+				<c:if test = "${!empty BOSS}">
+ 					<li class="nav-item"><a class="nav-link" href="<c:url value='/backstage'/>">後台管理</a></li>
+				</c:if>					 										 	
 				</ul>
 				<c:if test="${empty LoginOK}">
 					<span class="badge badge-pill badge-warning"><a href="#"
@@ -55,13 +58,13 @@
 					<span class="badge badge-pill badge-warning"><a href="<c:url value='/logout' />" style="text-decoration:none;">登出</a>
 					</span> &nbsp;&nbsp;&nbsp; 
 					<img class="rounded-circle" height='45px' width='45px'"
-						src='${pageContext.request.contextPath}/Util/getImage?id=${LoginOK.user_id}&type=USER'>
-				</c:if>
+						src='getUserPhoto/${LoginOK.user_id}'>
+				</c:if>  
 				<!-- 				<span class="badge badge-pill badge-warning"><a href="login.jsp" style="text-decoration: none;">登入</a></span> -->
 				<!-- 				&nbsp;&nbsp;&nbsp; -->
-				<c:if test="${empty LoginOK}">
+				<c:if test="${empty LoginOK}"> 
 					<span class="badge badge-pill badge-info"><a
-						href="${pageContext.request.contextPath}/_01_register/register" style="text-decoration: none;">註冊</a></span>
+						href="register" style="text-decoration: none;">註冊</a></span>
 					&nbsp;&nbsp;&nbsp;
 				</c:if>
 			<!------------------------------------ Login Modal -------------------------------------->
