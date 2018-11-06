@@ -57,7 +57,7 @@
            
                 <nav class="nav flex-column nav-tabs">
                         <a class="nav-link active">購物專區</a>
-                        <a class="nav-link" href="#" style="color:#dfc2ef; font-weight:400;">結帳</a>
+                        <a class="nav-link" href="<c:url value='/showShoppingCart' />" style="color:#dfc2ef; font-weight:400;">結帳</a>
                         <a class="nav-link" href="#" style="color:#dfc2ef; font-weight:400;">訂單查詢</a>
                 </nav>
             </div>
@@ -72,18 +72,30 @@
                             <img class="prodImg" src="<c:url value='/getPicture/${product.prod_id}'/>">
                         </div> 										
                         <div class="textFrame">    
-                           <FORM  action="<c:url value='Shopping.do' />" method="POST">  
+<%--                            <FORM  action="<c:url value='Shopping.do' />" method="POST">   --%>
+                           <FORM  action="<c:url value='/addProductToCart' />" method="POST">  
                             <p class="prodName">${product.prodName}</p>
                             <p class="prodCompany">By ${product.prodCompany} </p>
                             <div class="prodIntro">${product.prodIntro}</div>   
 						   <hr>		
 			               <!-- 這些隱藏欄位都會送到後端 -->      
-			               <Input type='hidden' name='prodId' value='${product.prod_id}'>
-			               <Input type='hidden' name='prodName' value='${product.prodName}'>
-			               <Input type='hidden' name='prodCompany' value='${product.prodCompany}'>
+<%-- 			               <Input type='hidden' name='prodId' value='${product.prod_id}'> --%>
+<%-- 			               <Input type='hidden' name='prodName' value='${product.prodName}'> --%>
+<%-- 			               <Input type='hidden' name='prodCompany' value='${product.prodCompany}'> --%>
+<%-- 			               <Input type='hidden' name='prodIntro' value='${product.prodIntro}'><P/> --%>
+<%-- 			               <Input type='hidden' name='discount' value='${product.prodPrice}'><P/> --%>
+<%-- 			               <Input type='hidden' name='pageNo' value='${param.pageNo}'><P/> --%>
+			               
+			               <Input type='hidden' name='prod_id' value='${product.prod_id}'><P/>
+			               <Input type='hidden' name='prodName' value='${product.prodName}'><P/>
+			               <Input type='hidden' name='prodPrice' value='${product.prodPrice}'><P/>
+			               <Input type='hidden' name='prodCompany' value='${product.prodCompany}'><P/>
 			               <Input type='hidden' name='prodIntro' value='${product.prodIntro}'><P/>
+			               <Input type='hidden' name='prodType' value='${product.prodType}'><P/>
 			               <Input type='hidden' name='discount' value='${product.prodPrice}'><P/>
-			               <Input type='hidden' name='pageNo' value='${param.pageNo}'><P/>    
+			               <Input type='hidden' name='pageNo' value='${param.pageNo}'><P/> 
+			               <Input type='hidden' name='qty' value='1'><P/>
+			                   
 			               <div class="priceBlock">
 				               <h4 class="prodPrice">NT$ ${product.prodPrice}</h4>			                    
 				               <button class="addCartBtn" type="submit">

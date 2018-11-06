@@ -49,10 +49,11 @@
                     </div>                               
                 <div class="prodInfo col-lg-5" >
                     <div class="upper" style="padding: 20px; background-color: rgba(255, 255, 255, 0.767); border-radius: 5px; box-shadow: 1px 1px 3px black">
+                        <form action="<c:url value='/addProductToCart' />" method="POST">
                         <h4>${product.prodName}</h4>
                         <h5>NT$ ${product.prodPrice}</h5>
                         <div class="styled-select blue semi-square">
-	                        <select name="" id="" style="width:230px; text-align: center;">
+	                        <select name="qty" id="prodQty" style="width:230px; text-align: center;">
 	                            <option disabled selected>請選擇購買數量</option>
 	                            <option value="1">1</option>
 	                            <option value="2">2</option>
@@ -68,7 +69,15 @@
                         </div>    
                     
                         <p>小計：NT$ </p>
+                        <Input type='hidden' name='prod_id' value='${product.prod_id}'><P/>
+			            <Input type='hidden' name='prodName' value='${product.prodName}'><P/>
+			            <Input type='hidden' name='prodPrice' value='${product.prodPrice}'><P/>
+			            <Input type='hidden' name='prodCompany' value='${product.prodCompany}'><P/>
+			            <Input type='hidden' name='prodIntro' value='${product.prodIntro}'><P/>
+			            <Input type='hidden' name='prodType' value='${product.prodType}'><P/>
+			            <Input type='hidden' name='pageNo' value='${prodPageNo}'><P/> 
                         <button class="btn btn-info" style="width: 100%;"><h4 style="font-weight:300;font-size:20px">加入購物車</h4> </button>   
+                        </form>
                     </div>               
 		                    <div class="lower" style=" margin: 10px 0px; padding: 20px 10px; background-color: rgba(255, 255, 255, 0.733); border-radius: 5px; box-shadow: 1px 1px 3px black">
 		                          <p style="font-size:20px; color:#123d82; text-align:center; margin:0px;">商品說明</p>   
