@@ -16,6 +16,7 @@ import com.web.store.model.OrderBean;
 import com.web.store.model.UserBean;
 import com.web.store.repository.UserDao;
 import com.web.store.service.impl.UserNotFoundException;
+import com.web.store.ude.UnpaidOrderAmountExceedingException;
 
 import _00_init.util.GlobalService;
 
@@ -155,28 +156,25 @@ public class UserDaoImpl implements UserDao {
 			double currentAmount = ob.getTotalAmount();
 			Long unpaidAmount = 0L;
 			UserBean ub;
-			String hql = "unpaid_amount FROM UserBean u WHERE u.user_id = :uid";
+			String hql = "FROM UserBean u WHERE u.account = :account";
 			Session session = factory.getCurrentSession();
 			ub = (UserBean)session.createQuery(hql)
-												 .setParameter("uid", ob.getUserId())
+												 .setParameter("account", ob.getAccount())
 												 .getSingleResult();
 			if(ub != null) {
 				unpaidAmount = ub.getUnpaid_amount();
 			}else {
 				new UserNotFoundException("查無會員資料");
 			}
-			if((currentAmount + unpaidAmount) > GlobalService.ORDER_AMOUNT_LIMIT) {
-				try {
-					throw new Exception("未付款金額超過限額"+(currentAmount + unpaidAmount));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			Long longUnpaidAmount = Math.round(currentAmount + unpaidAmount);
+			if(longUnpaidAmount > GlobalService.ORDER_AMOUNT_LIMIT) {
+				throw new UnpaidOrderAmountExceedingException("未付款金額超過限額" + longUnpaidAmount);
 			}else {
-				String hqlUpdate = "UPDATE UserBean u SET u.unpaid_amount = u.unpaid_amount + :amt ";
-				session.createQuery(hqlUpdate).setParameter("amt", currentAmount + unpaidAmount)
-																	 .setParameter("mid", ob.getUserId())
-																	 .executeUpdate();
+				String hqlUpdate = "UPDATE UserBean u SET u.unpaid_amount = u.unpaid_amount + :amt "
+						+ "WHERE account = :account";
+				session.createQuery(hqlUpdate).setParameter("amt", longUnpaidAmount)
+											  .setParameter("account", ob.getAccount())
+											  .executeUpdate();
 			}
 		}
 
