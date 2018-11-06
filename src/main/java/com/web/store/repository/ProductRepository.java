@@ -17,6 +17,8 @@ public interface ProductRepository {
 
 		void addProduct(ProductBean bean);
 
+		void deleteProduct(int id);
+
 
 	
 }

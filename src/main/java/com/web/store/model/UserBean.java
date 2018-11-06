@@ -3,10 +3,6 @@ package com.web.store.model;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Clob;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 
 
@@ -35,6 +34,9 @@ public class UserBean implements Serializable {
 		Clob introduction;
 		String regTime; // 1029改String
 		long unpaid_amount;
+		String password2;
+		MultipartFile userImage;
+		String userIntro;
 //		Set<WorksBean> works = new LinkedHashSet<>();
 		
 		public UserBean(Integer user_id, String account, String password, String name, String nickname, String gender, String birthday,
@@ -187,5 +189,29 @@ public class UserBean implements Serializable {
 		public void setUnpaid_amount(Long unpaid_amount) {
 			this.unpaid_amount = unpaid_amount;
 		}
+		@Transient
+		public String getPassword2() {
+			return password2;
+		}
 
+		public void setPassword2(String password2) {
+			this.password2 = password2;
+		}
+		@Transient
+		@XmlTransient
+		public MultipartFile getUserImage() {
+			return userImage;
+		}
+		public void setUserImage(MultipartFile userImage) {
+			this.userImage = userImage;
+		}
+		@Transient
+		public String getUserIntro() {
+			return userIntro;
+		}
+
+		public void setUserIntro(String userIntro) {
+			this.userIntro = userIntro;
+		}
+		
 }

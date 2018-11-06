@@ -36,4 +36,10 @@ public class ProductServiceImpl implements ProductService{
 		prodRepository.addProduct(bean);
 	}
 
+	@Override
+	public void deleteProduct(int id) {
+		prodRepository.deleteProduct(id);
+		
+	}
+
 }

@@ -1,16 +1,16 @@
 ﻿package _00_init.util;
  
 import java.io.*;
-
+import java.sql.Clob;
 import java.sql.SQLException;
 
 
 public class UserFileIO {
 	String filePath;
-	
+
 	public UserFileIO(String filePath) {
 		this.filePath = filePath;
-		String dir = filePath.substring(0, filePath.lastIndexOf("\\"));
+		String dir = filePath.substring(0, filePath.lastIndexOf("/"));
 		File f = new File(dir);
 		if ( !f.exists() ) {
 			f.mkdirs();
@@ -26,14 +26,14 @@ public class UserFileIO {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	public void insertUser(String present) throws IOException {
+	public void insertUser(Clob introduction) throws IOException {
 		FileWriter fw = null;
 		PrintWriter pw = null;
 
 		try {
 			fw = new FileWriter(filePath, true);
 			pw = new PrintWriter(fw);
-			pw.println(present);
+			pw.println(introduction);
 		} finally {
 			if (pw != null) {
 				pw.close();

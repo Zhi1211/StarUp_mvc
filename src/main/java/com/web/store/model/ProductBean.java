@@ -33,6 +33,7 @@ public class ProductBean implements Serializable {
 	private String prodOutDate;
 	private String prodCategory;
 	private MultipartFile  productImage;
+	
 	@Transient
 	@XmlTransient
 	public MultipartFile getProductImage() {
