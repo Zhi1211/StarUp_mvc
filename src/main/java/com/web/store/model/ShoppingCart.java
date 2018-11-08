@@ -63,7 +63,7 @@ public class ShoppingCart {
 		for (int n : set) {
 			double prodPrice = cart.get(n).getProdPrice();
 			int qty = cart.get(n).getQty();
-			subTotal = prodPrice * qty;
+			subTotal += (prodPrice * qty);
 		}
 		return subTotal;
 	}
