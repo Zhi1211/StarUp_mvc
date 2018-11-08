@@ -9,13 +9,6 @@
         <div class="content container-fluid" style="display: flex; padding: 0px;">
             <!-- 側邊欄 --> 
             <div class="section col-lg-2" style="width:100px; padding: 20px 20px;margin-left:20px;">
-            <!-- 設定管理者帳號starup@gamil.com才能進入商城的 維護-商品管理ProductMaintainList.jsp-->
-            <c:if test="${!empty BOSS}">
-                <nav class="nav flex-column nav-tabs">
-                	<a class="nav-link active">維護</a>
-                	<a class="nav-link" href="<c:url value='/productMaintain'/>" style="color:#dfc2ef; font-weight:400;">商品管理</a>
-               	</nav>
-			</c:if>
                 <nav class="nav flex-column nav-tabs">
                     <a class="nav-link active" href="<c:url value='/_03_listProducts/DisplayPageProducts'/>">分類商品</a>
                     <a class="nav-link" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&prod_type=文創周邊'/>" style="color:#dfc2ef; font-weight:400;">
@@ -45,7 +38,7 @@
              
             <div class="container col-lg-10" style=" display: flex;margin-top:20px">    
                     <div class="imgBlock" >   
-                        <img class="prodDetailImg" src="<c:url value='/getPicture/${product.prod_id}'/>">
+                        <img class="prodDetailImg" src="<c:url value='/getProductPicture/${product.prod_id}'/>">
                     </div>                               
                 <div class="prodInfo col-lg-5" >
                     <div class="upper" style="padding: 20px; background-color: rgba(255, 255, 255, 0.767); border-radius: 5px; box-shadow: 1px 1px 3px black">

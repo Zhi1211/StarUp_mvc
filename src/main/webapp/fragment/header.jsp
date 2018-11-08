@@ -58,7 +58,7 @@
 					<span class="badge badge-pill badge-warning"><a href="<c:url value='/logout' />" style="text-decoration:none;">登出</a>
 					</span> &nbsp;&nbsp;&nbsp; 
 					<img class="rounded-circle" height='45px' width='45px'"
-						src='getUserPhoto/${LoginOK.user_id}'>
+						src='getUserPicture/${LoginOK.user_id}'>
 				</c:if>  
 				<!-- 				<span class="badge badge-pill badge-warning"><a href="login.jsp" style="text-decoration: none;">登入</a></span> -->
 				<!-- 				&nbsp;&nbsp;&nbsp; -->

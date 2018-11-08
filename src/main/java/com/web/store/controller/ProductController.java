@@ -13,7 +13,6 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,12 +35,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.google.gson.Gson;
-import com.web.store.model.OrderedItem;
 import com.web.store.model.ProductBean;
-import com.web.store.model.ShoppingCart;
 import com.web.store.service.ProductService;
+
 
 
 @Controller
@@ -56,8 +54,8 @@ public class ProductController {
 			model.addAttribute("products", list);			
 			return "/_03_product/listProducts";
 		}
-		@RequestMapping(value="/getPicture/{prodId}", method = RequestMethod.GET)
-		public ResponseEntity<byte[]> getPicture
+		@RequestMapping(value="/getProductPicture/{prodId}", method = RequestMethod.GET)
+		public ResponseEntity<byte[]> getProductPicture
 		(HttpServletResponse resp,@PathVariable Integer prodId){
 			String filePath = "/resources/images/NoImage.jpg";
 			ProductBean bean = prodService.getProductById(prodId);
@@ -126,7 +124,7 @@ public class ProductController {
 			return productJson;
 		}
 //		-------------------更新商品-------------------
-		@RequestMapping(value = "/modifyProduct")
+		@RequestMapping(value = "/modifyProduct",method = RequestMethod.GET)
 		public String getProductModifyForm(Model model, @RequestParam(value = "id") int id) {
 			ProductBean pb = new ProductBean();
 			model.addAttribute("product", prodService.getProductById(id));
@@ -248,9 +246,13 @@ public class ProductController {
 //			prodService.deleteProduct(id);
 //			return "redirect:/backstage";
 //		}
-		@RequestMapping(value="/deleteProduct", method=RequestMethod.POST)
-		@ResponseBody
-		public void processDeleteProduct(@RequestParam(value = "id") int id) {
+		@DeleteMapping(value="/deleteProduct/{prodId}")
+		public ResponseEntity<ProductBean> processDeleteProduct(@PathVariable("prodId") int id) {
+			ProductBean pb = prodService.getProductById(id);
+			if(pb == null) {
+			return new ResponseEntity<ProductBean>(HttpStatus.NOT_FOUND);
+			}			
 			prodService.deleteProduct(id);
+			return new ResponseEntity<ProductBean>(HttpStatus.NO_CONTENT);
 		}
 }

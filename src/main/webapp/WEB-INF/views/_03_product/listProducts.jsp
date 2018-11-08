@@ -31,12 +31,6 @@
             <!-- 側邊欄 -->
             <div class="section col-lg-2" style="width:100px; padding: 20px 0px;">
             <!-- 設定管理者帳號starup@gamil.com才能進入商城的 維護-商品管理ProductMaintainList.jsp-->
-         <c:if test="${!empty BOSS}">
-                <nav class="nav flex-column nav-tabs">
-                	<a class="nav-link active">維護</a>
-                	<a class="nav-link" href="<c:url value='/productMaintain'/>" style="color:#dfc2ef; font-weight:400;">商品管理</a>
-               	</nav> 
-			</c:if>
                 <nav class="nav flex-column nav-tabs">
                     <a class="nav-link active" href="<c:url value='/_03_listProducts/DisplayPageProducts'/>">分類商品</a>
                     <a class="nav-link" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&prod_type=文創周邊'/>" style="color:#dfc2ef; font-weight:400;">
@@ -69,7 +63,7 @@
                
                 <div class="productbox" onclick="location.href='<c:url value='/productDetail?id=${product.prod_id}'/>';">
                         <div class="imgFrame">
-                            <img class="prodImg" src="<c:url value='/getPicture/${product.prod_id}'/>">
+                            <img class="prodImg" src="<c:url value='/getProductPicture/${product.prod_id}'/>">
                         </div> 										
                         <div class="textFrame">    
 <%--                            <FORM  action="<c:url value='Shopping.do' />" method="POST">   --%>

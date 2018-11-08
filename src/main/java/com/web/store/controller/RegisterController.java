@@ -231,11 +231,11 @@ public class RegisterController {
 			model.addAttribute("errorMsg", errorMsg);
 			return "_01_register/Register";
 		}
-		@RequestMapping(value="/getUserPhoto/{userId}", method = RequestMethod.GET)
+		@RequestMapping(value="/getUserPhoto/{userAccount}", method = RequestMethod.GET)
 		public ResponseEntity<byte[]> getPicture
-		(HttpServletResponse resp,@PathVariable Integer userId){
+		(HttpServletResponse resp,@PathVariable("userAccount") String account){
 			String filePath = "/resources/images/NoImage.jpg";
-			UserBean bean = userService.getUser(userId);
+			UserBean bean = userService.getUser2(account);
 			HttpHeaders headers = new HttpHeaders();
 			String filename = "";
 			int len = 0;
