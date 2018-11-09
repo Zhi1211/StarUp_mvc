@@ -1,0 +1,7 @@
+meroz_wang@gmail.com|c6dde091a17ac9a33197e805f9b4962f|王千千|梅洛茲meroz|female|1993-10-16|0987535666|台北市中山區長安東路二段68號|@梅洛茲meroz.jpg|data/images/user/@梅洛茲meroz.jpg|data/user_intro/comment1.txt
+kungcrystal@gmail.com|c6dde091a17ac9a33197e805f9b4962f|孔曉慧|水晶孔crystalKung|female|1994-02-13|0988156923|台北市松山區八德路三段25號|@水晶孔crystalKung.jpg|data/images/user/@水晶孔crystalKung.jpg|data/user_intro/comment2.txt
+Casimir_Lee@gmail.com|c6dde091a17ac9a33197e805f9b4962f|李文安|CaSiMiR|male|1970-10-17|0912345678|台南市中西區民權路二段254-256號|@casimir.jpg|data/images/user/@casimir.jpg|data/user_intro/comment3.txt
+san_logic@gmail.com|c6dde091a17ac9a33197e805f9b4962f|陳立廉|神邏輯|male|1992-06-18|0975125902|台北市大安區敦化南路一段245號|@神邏輯sanLogic.jpg|data/images/user/@神邏輯sanLogic.jpg|data/user_intro/comment4.txt
+echo@gmail.com|c6dde091a17ac9a33197e805f9b4962f|李翎|矮柯echo|female|1994-02-13|0912345678|台南市中西區中正路1號|@矮科echo.jpg|data/images/user/@矮科echo.jpg|data/user_intro/comment5.txt
+virgie@gmail.com|c6dde091a17ac9a33197e805f9b4962f|何唯欣|維吉virgie|female|1992-09-18|0975125902|台北市中山區長安東路二段68號|@維吉virgie.jpg|data/images/user/@維吉virgie.jpg|data/user_intro/comment6.txt
+rabbit_craft@gmail.com|c6dde091a17ac9a33197e805f9b4962f|蔡任萱|草本菟刻rabbit|female|1985-04-10|0912345678|台北市大安區敦化南路一段245號|@草本菟刻rabbit.jpg|data/images/user/@草本菟刻rabbit.jpg|data/user_intro/comment7.txt
