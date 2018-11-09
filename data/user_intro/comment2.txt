@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 ﻿Crystal Kung is an artist from Taipei, Taiwan. She's 
 currently studying character animation in CalArts, 
 focusing on character design and visual development.
 Beside animation, She's also a comic artist. Her 
 graphic novel "The Little Drifter" has been published
+=======
+﻿Crystal Kung is an artist from Taipei, Taiwan. She's 
+currently studying character animation in CalArts, 
+focusing on character design and visual development.
+Beside animation, She's also a comic artist. Her 
+graphic novel "The Little Drifter" has been published
+>>>>>>> 617f9d69064ea4aa71b28779f13ce67e81c92903
  in Taiwan, France, Italy and Korea.

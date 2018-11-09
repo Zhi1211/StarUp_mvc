@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 default.configuration=mvcExercise
 eclipse.preferences.version=1
 hibernate3.enabled=true
+=======
+default.configuration=mvcExercise
+eclipse.preferences.version=1
+hibernate3.enabled=true
+>>>>>>> 617f9d69064ea4aa71b28779f13ce67e81c92903

@@ -43,3 +43,4 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 			configurer.enable();
 		}
 }
+
