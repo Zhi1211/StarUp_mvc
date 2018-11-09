@@ -130,13 +130,15 @@ public class ShoppingController {
 	}
 	
 	@RequestMapping(value="/checkOutShoppingCart")
-	public String checkOutShoppingCart(HttpServletRequest request) {
+	public String checkOutShoppingCart(HttpServletRequest request, Model model) {
 		ShoppingCart sc = null;
 		if(request.getSession(false) != null) {
 			HttpSession session = request.getSession(false);
 			sc = (ShoppingCart)session.getAttribute("ShoppingCart");
 		}
 		if (sc != null) {
+			Date today = new Date();
+			model.addAttribute("today", today);
 			return "_04_shoppingCart/checkout";
 		} else {
 			return "redirect:/products";

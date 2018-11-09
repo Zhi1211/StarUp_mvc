@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +15,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialClob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
@@ -190,55 +193,92 @@ public class ProductController {
 			
 			return null;
 		}
-//		-------------------新增商品-------------------
-		@RequestMapping(value="/addProduct", method=RequestMethod.GET)
-		public String getAddProductForm(Model model) {
-			ProductBean pb = new ProductBean();
-			model.addAttribute("productBean", pb);
-			return "_20_productMaintain/AddProduct"; 
-		}
-		@RequestMapping(value="/addProduct", method=RequestMethod.POST, produces="text/html;charset=UTF-8")
-		public String processAddNewProductForm(@ModelAttribute("productBean") ProductBean pb,
-																				 BindingResult result, HttpServletRequest request) {		
-			String [] suppressedField = result.getSuppressedFields();
-			if(suppressedField.length > 0 ) {
-				throw new RuntimeException("嘗試傳入不合法的欄位 :"
-									+StringUtils.arrayToCommaDelimitedString(suppressedField));
-			}
-			MultipartFile productImage = pb.getProductImage();
-			String originalFilename = productImage.getOriginalFilename();
-			String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String date = df.format(new Date());
-			pb.setProdUpDate(date);
-			//建立Blob物件，交由Hibernate寫入資料庫
-			if(productImage != null && !productImage.isEmpty()) {
-				pb.setProdImgName(originalFilename);
-				String ext = originalFilename.substring(originalFilename.lastIndexOf("."));	
-				try {
-					byte[] b = productImage.getBytes();
-					Blob blob = new SerialBlob(b);
-					pb.setProdImg(blob);
-				}catch(Exception e) {
-					e.printStackTrace();
-					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-				}
-				
-				try {
-					File imageFolder = new File(rootDirectory+"images");
-					if(!imageFolder.exists()) {
-						imageFolder.mkdirs();
+//		-------------------新增商品ajax-------------------
+		@RequestMapping(value="/addProduct", method=RequestMethod.POST)
+		@ResponseBody
+		public void processAddProduct(HttpServletRequest request, ProductBean pb) throws SerialException, SQLException {
+			System.out.println(pb);		
+				MultipartFile productImage = pb.getProductImage();
+				String originalFilename = productImage.getOriginalFilename();
+				String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String date = df.format(new Date());
+				pb.setProdUpDate(date);
+				//建立Blob物件，交由Hibernate寫入資料庫
+				if(productImage != null && !productImage.isEmpty()) {
+					pb.setProdImgName(originalFilename);
+					String ext = originalFilename.substring(originalFilename.lastIndexOf("."));	
+					try {
+						byte[] b = productImage.getBytes();
+						Blob blob = new SerialBlob(b);
+						pb.setProdImg(blob);
+					}catch(Exception e) {
+						e.printStackTrace();
+						throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
 					}
-					File file = new File(imageFolder, pb.getProd_id()+ext);
-					productImage.transferTo(file);
-				}catch(Exception e) {
-					e.printStackTrace();
-					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-				}
-			}
-			prodService.addProduct(pb);
-			return "redirect:/products";
+					try {
+						File imageFolder = new File(rootDirectory+"images");
+						if(!imageFolder.exists()) {
+							imageFolder.mkdirs();
+						}
+						File file = new File(imageFolder, pb.getProd_id()+ext);
+						productImage.transferTo(file);
+					}catch(Exception e) {
+						e.printStackTrace();
+						throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+					}
+				}		
+				prodService.addProduct(pb);
 		}
+//		-------------------新增商品-------------------
+//		@RequestMapping(value="/addProduct", method=RequestMethod.GET)
+//		public String getAddProductForm(Model model) {
+//			ProductBean pb = new ProductBean();
+//			model.addAttribute("productBean", pb);
+//			return "_20_productMaintain/AddProduct"; 
+//		}
+//		@RequestMapping(value="/addProduct", method=RequestMethod.POST, produces="text/html;charset=UTF-8")
+//		public String processAddNewProductForm(@ModelAttribute("productBean") ProductBean pb,
+//																				 BindingResult result, HttpServletRequest request) {		
+//			String [] suppressedField = result.getSuppressedFields();
+//			if(suppressedField.length > 0 ) {
+//				throw new RuntimeException("嘗試傳入不合法的欄位 :"
+//									+StringUtils.arrayToCommaDelimitedString(suppressedField));
+//			}
+//			MultipartFile productImage = pb.getProductImage();
+//			String originalFilename = productImage.getOriginalFilename();
+//			String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+//			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			String date = df.format(new Date());
+//			pb.setProdUpDate(date);
+//			//建立Blob物件，交由Hibernate寫入資料庫
+//			if(productImage != null && !productImage.isEmpty()) {
+//				pb.setProdImgName(originalFilename);
+//				String ext = originalFilename.substring(originalFilename.lastIndexOf("."));	
+//				try {
+//					byte[] b = productImage.getBytes();
+//					Blob blob = new SerialBlob(b);
+//					pb.setProdImg(blob);
+//				}catch(Exception e) {
+//					e.printStackTrace();
+//					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+//				}
+//				
+//				try {
+//					File imageFolder = new File(rootDirectory+"images");
+//					if(!imageFolder.exists()) {
+//						imageFolder.mkdirs();
+//					}
+//					File file = new File(imageFolder, pb.getProd_id()+ext);
+//					productImage.transferTo(file);
+//				}catch(Exception e) {
+//					e.printStackTrace();
+//					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+//				}
+//			}
+//			prodService.addProduct(pb);
+//			return "redirect:/products";
+//		}
 
 //		-------------------刪除商品-------------------
 //		@RequestMapping(value="/deleteProduct", method=RequestMethod.POST)

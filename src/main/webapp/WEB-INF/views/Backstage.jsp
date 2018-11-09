@@ -16,6 +16,9 @@
       	<ul class="nav nav-tabs" style="padding:10px;">         
 			  <li class="nav-item">
 			    <a class="nav-link active show" data-toggle="tab" href="#product" v-on:click="getProducts">商品維護</a>
+			  </li>   
+			  <li class="nav-item">
+			  	<a class="nav-link" data-toggle="tab" href="#addProduct">商品上架</a>
 			  </li>
 			  <li class="nav-item">
 			    <a class="nav-link" data-toggle="tab" href="#user" v-on:click="getUsers">會員管理</a>
@@ -56,11 +59,76 @@
   					</li>  					
 				</ul> 
 			  </div>
+			<div class="tab-pane fade" id="addProduct">
+			    		  <form id="addProdForm" v-on:submit="addProduct($event)" action="addProduct" method="POST" enctype="multipart/form-data">
+					            <div class="container col-lg-10" style=" display: flex; ">  
+					          		 <div class="prodImg col-lg-7" style="z-index:0;margin: 10px 0px 30px 20px; background-color: rgba(255, 255, 255, 0.699); box-shadow: 1px 1px 3px black; border-radius: 5px;">
+					                    <div id="dropZone" style="margin-top:10px;border:grey solid 1px;width:500;height:500px;overflow:hidden">  
+					                        <img  src="" id="previewImg" style="width:100%">
+					                    </div>    
+					                    <div>                    
+					                    	  <label for="photo">請選擇要上傳的圖片</label>
+					            			  <input id="productImage" type="file" class="form-control-file" name="productImage"/>
+					                    </div>
+					                </div>  
+					         <div class="prodInfo col-lg-6" >     
+					                <div class="upper" style="margin: 10px 0px; padding: 20px; background-color: rgba(255, 255, 255, 0.767); border-radius: 5px; box-shadow: 1px 1px 3px black">
+					                        <label>商品名稱：</label>  
+					                        <input type="text" name="prodName" id="prodName" style="margin-bottom:15px"/> 
+					                        <br> 
+					                        <label>廠商名稱：</label>       
+					                        <input type="text" name="prodCompany"/>    
+					                        <br>                					                        					                          
+					                        <br>                					                        					                          
+					                        <div style="display:flex;">
+						                        <label>商品分類：</label>  
+						                        <div>
+							                        <input id="tog" type="radio" name="prodType" value="文創周邊" style="margin-left:50px">文創周邊<br>
+							                        <input type="radio" name="prodType" value="原創桌遊" style="margin-left:50px">原創桌遊<br>						                        
+						                        </div>        
+					                        </div>  					                   
+					                        <div style="display:flex;">
+						                        <label>分類目錄：</label><br>      
+						                        <div>
+							                        <div id="type1" style="display:none;">
+								                        <select name="prodCategory">
+														    <option value="暖心小物">暖心小物</option>
+														    <option value="質感選物">質感選物</option>											    
+														    <option value="城市紋理">城市紋理</option>											    
+														</select>					                        
+							                        </div>       
+													<div id="type2" style="display:none;">
+														<select name="prodCategory">
+														    <option value="1~3人">1~3人</option>
+														    <option value="3~5人">3~5</option>											    
+														    <option value="5~10人">5~10人</option>											    
+														    <option value="10人以上">10人以上</option>											    
+														</select>    											
+													</div>
+						                        </div>
+					                        </div>             					                       
+					                        <label>售價：NT$ </label>    
+					                        <input type="number" name="prodPrice" style="margin-bottom:15px"/>   									
+											<br>  
+					                        <label>庫存：</label>    
+					                        <input type="number" name="prodStock"/>   
+					                    </div> 
+						                <div class="lower" style=" margin: 10px 0px; padding: 20px 10px; border-radius: 5px; box-shadow: 1px 1px 3px black">
+							                    <p style="font-size:20px; color:#123d82; text-align:center; margin:0px;">商品說明</p>   
+							                    <textarea name="prodIntro" rows="5" cols="55"></textarea>   
+						                        <hr>                                          
+						                 </div> 
+					                    <input id="btnAdd" type='submit' class='btn btn-outline-primary' value="送出"  style="margin-bottom:10px;"/>              
+					                </div>     
+					            </div>					 
+					        </form>
+					</div>
+			  
 			  <div class="tab-pane fade" id="user">
 			   		<ul style="list-style:none;">    
 	  					<li v-for="user in users">  
 							<div style="display:flex; margin: 5px 0px;">  
-								 <div style="width:200px; height:200px; overflow:hidden;">    
+								 <div style="width:150px; height:150px; overflow:hidden;">    
 		   						 	<img style="width:100%;" v-bind:src="'getUserPicture/' + user.user_id" />
 		   						 </div>
 		   						 <div style="margin-left:5px;"> 	   						 	
@@ -126,6 +194,19 @@
             	            }  
             	        });
         			},
+        			/*  */
+        			addProduct: function(e){        				
+        				$.ajax({
+        					  type:"POST", 
+        					  cache: false,
+        					  url: $(this).attr('action'),
+        					  data: $('#addProdForm').serialize(),
+        					  datatype: 'json',
+        					  success: function() {   
+        						  window.location.href= "backstage";
+        					  }
+        					});
+        			},
         			/*  */  
         			confirmDelete: function(e){
         				var tagId = e.target.id;
@@ -138,6 +219,7 @@
     					        data : {_method:"DELETE"},  
     					        url: "deleteProduct/"+ prodId,    					    
     					        success: function(data) {
+    					        	alert('刪除成功');
     					           location.reload();
     					        }
     					    });   

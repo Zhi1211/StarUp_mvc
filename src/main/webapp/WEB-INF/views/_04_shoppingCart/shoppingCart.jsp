@@ -29,13 +29,13 @@
 							<div class="itemImg"
 								style="width: 160px; height: 120px; margin: 15px 0px 15px 20px; box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.438); overflow: hidden">
 								<img class="prodImg"
-									src="<c:url value='/getPicture/${anEntry.value.prod_id}'/>">
+									src="<c:url value='/getProductPicture/${anEntry.value.prod_id}'/>">
 							</div>
 						</td>
 						<td style="width: 200px">${anEntry.value.prodName}</td>
 						<td style="width: 120px">
 							<input id="minus${anEtry.value.prod_id}" name="minus" type="button" value="-" 
-								onclick="minusModify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})" /> 
+								onclick="minusModify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})"  /> 
 							<input id="newQty${vs.index}" name="goodnum" type="text" 
 								value="${anEntry.value.qty}" style="width: 25px;" />
 							<input id="plus${anEtry.value.prod_id}" name="plus" type="button" value="+" 
@@ -44,8 +44,8 @@
 						<td style="width: 120px" class="subtotal">${anEntry.value.prodPrice * anEntry.value.qty}</td>
 						<td style="width: 120px"><input type="button" name="update" value="修改"
 							onclick="modify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})"></td>
-						<td style="width: 120px"><i class="far fa-trash-alt"
-							onclick="return confirmDelete(${anEntry.key});"></i></td>
+						<td style="width: 120px"><i class="far fa-trash-alt"  
+							onclick="return confirmDelete(${anEntry.key});" style="cursor:pointer;"></i></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -94,7 +94,8 @@
 		 <!-- 增加購物車中之商品數量 -->
 		 function plusModify(key, qty, index, price){
 			 var x = "newQty" + index;
-			 	var newQty = (document.getElementById(x).value + 1);
+			 	var newQty = parseInt((document.getElementById(x).value))+1;
+				 console.log(newQty)
 			 	if (newQty < 0) {
 			 		window.alert('數量不能小於0');
 			 		return;
@@ -178,10 +179,10 @@
 		 function Checkout(qty) {
 		 	if (qty == 0) {
 		 		alert("無購買任何商品，不須結帳");
-		 		return false;
+		 		return false;  
 		 	}
 		 	if (confirm("再次確認訂單內容?")){
-		 		document.forms[0].action="<c:url value='/checkOutShoppingCart' />";
+		 		document.forms[0].action="<c:url value='checkOutShoppingCart' />";
 		 		document.forms[0].method="POST";
 		 		document.forms[0].submit();
 		 		return true;

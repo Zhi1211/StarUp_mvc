@@ -16,11 +16,16 @@
          
        <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>          
        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-   	   <script src="${pageContext.request.contextPath}/js/action.js" type="text/javascript">
-<!--
-
-//-->
-</script>
-   	   
+   	   <script src="${pageContext.request.contextPath}/js/action.js" type="text/javascript"></script>
+   	   <script>
+			$('input[name="prodType"]').bind('change',function(){
+			var showOrHide = ($(this).val() == '文創周邊') ? true : false;
+			$('#type1').toggle(showOrHide);
+			});
+			$('input[name="prodType"]').bind('change',function(){
+				var showOrHide = ($(this).val() == '原創桌遊') ? true : false;
+				$('#type2').toggle(showOrHide);
+				});
+		</script> 
    </body>
 </html>
