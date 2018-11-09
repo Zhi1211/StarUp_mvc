@@ -1,3 +1,4 @@
+
 package _00_init;
 
 import java.io.BufferedReader;
@@ -53,13 +54,13 @@ public class InsertUserWorkMySQL {
 					// 讀取圖片檔01
 					Blob blob = SystemUtils2018.fileToBlob(token[3].trim());				
 					w.setWorksImg(blob);
-					w.setCaption_1(token[4]);
+//					w.setCaption_1(token[4]);
 					w.setDetail_1(token[5]);
 					w.setCaptionImgName_1(token[6]);
 					// 讀取圖片檔02
 					Blob blob_1 = SystemUtils2018.fileToBlob(token[7].trim());
 					w.setCaptionImg_1(blob_1);
-					w.setCaption_2(token[8]);
+//					w.setCaption_2(token[8]);
 					w.setDetail_2(token[9]);
 					w.setCaptionImgName_2(token[10]);
 					// 讀取圖片檔02

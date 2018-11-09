@@ -1,3 +1,4 @@
+
 package com.web.store.model;
 
 import java.io.Serializable;
