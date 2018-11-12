@@ -32,11 +32,11 @@
 			  <li class="nav-item">
 			    <a class="nav-link" data-toggle="tab" href="#opinion">意見回饋</a>
 			  </li>
-			</ul>
+			</ul>		
 			<div id="myTabContent" class="tab-content">
 			  <div class="tab-pane fade active show" id="product">
 			    <ul style="list-style:none;">    
-  					<li v-for="product in products">  
+  					<li v-for="(product, index) in products">  
 						<div style="display:flex; margin: 5px 0px;">  
 							 <div style="width:200px; height:200px; overflow:hidden;">    
 	   						 	<img style="width:100%;" v-bind:src="'getProductPicture/' + product.prod_id" />
@@ -51,8 +51,8 @@
 		   						 <div>上架日期：{{ product.prodUpDate}}</div>   	
 	   						 </div> 
 	   						 <div style="flex-grow:2; text-align:right;">
-	   								<a class="btn" v-bind:href="'modifyProduct?id='+ product.prod_id">編輯</a>	 
-								 	<a class="btn" href="" v-bind:id="'delProdBtn'+product.prod_id" v-on:click="confirmDelete($event)">刪除</a>
+	   								<button class="btn"><a  v-bind:href="'modifyProduct?id='+ product.prod_id">編輯</a></button>	 
+								 	<button class="btn" v-bind:id="'delProdBtn'+product.prod_id" v-on:click="confirmDelete(index,$event)" style="text-decoration:underline;">刪除</button>
 	   						 </div>	  							 					   						
 						</div>  					  
   					<hr>
@@ -208,21 +208,23 @@
         					});
         			},
         			/*  */  
-        			confirmDelete: function(e){
-        				var tagId = e.target.id;
-        				var prodId = tagId.substr(10)
-        				console.log(e.target.id);    
-        				console.log(prodId);    
-        			    if(confirm("確定要刪除此項商品？")){	
+        			confirmDelete: function(index,e){
+        				var _self = this;
+        				e.preventDefault();
+        				var tagId = e.target.id;   
+        				var prodId = tagId.substr(10); 		
+        			    if(confirm("確定要刪除此項商品？")){
+        			    	_self.products.splice(index,1);
         					  $.ajax({
     					        type: "POST",  
     					        data : {_method:"DELETE"},  
     					        url: "deleteProduct/"+ prodId,    					    
-    					        success: function(data) {
-    					        	alert('刪除成功');
-    					           location.reload();
+    					        success: function() {    					        	
+    					        	alert('刪除成功');     					        	
     					        }
-    					    });   
+
+    					    });
+        					  
         				}
         			},
         			/*  */

@@ -59,15 +59,15 @@
             <div class="container col-lg-10" style=" display: flex; justify-content: space-between; flex-wrap: wrap;">
             <!-- 1.顯示所有商品-------------------------------------------------------------- -->
   			
-  			 <c:forEach var="product"  items="${products}" >
+  			 <c:forEach var="product" items="${products}" >
                
-                <div class="productbox" onclick="location.href='<c:url value='/productDetail?id=${product.prod_id}'/>';">
+                <div class="productbox">
                         <div class="imgFrame">
-                            <img class="prodImg" src="<c:url value='/getProductPicture/${product.prod_id}'/>">
+                            <img class="prodImg" src="<c:url value='/getProductPicture/${product.prod_id}'/>" onclick="location.href='<c:url value='/productDetail?id=${product.prod_id}'/>';" style="cursor:pointer">
                         </div> 										
                         <div class="textFrame">    
 <%--                            <FORM  action="<c:url value='Shopping.do' />" method="POST">   --%>
-                           <FORM  action="<c:url value='/addProductToCart' />" method="POST">  
+                           <FORM id="cartForm${product.prod_id}" action="addProductToCart" method="POST">  
                             <p class="prodName">${product.prodName}</p>
                             <p class="prodCompany">By ${product.prodCompany} </p>
                             <div class="prodIntro">${product.prodIntro}</div>   
@@ -93,14 +93,27 @@
 			               <div class="priceBlock">
 				               <h4 class="prodPrice">NT$ ${product.prodPrice}</h4>			                    
 				               <button class="addCartBtn" type="submit">
-				               			<a  class="action-button shadow animate yellow"><i class="fa fa-cart-plus fa-lg"  aria-hidden="true" style="line-height:35px; color:#fff;"></i></a>			               		
+				               			<a  class="action-button shadow animate yellow"><i class="fa fa-cart-plus fa-lg"  aria-hidden="true" style="line-height:35px; color:#fff; cursor :pointer;"></i></a>			               		
 				               	</button>			  			           				               
 			               </div>
 			           </FORM>
 			         </div>
                 </div>   
                </c:forEach>
-          
+               <script src="js/jquery-3.3.1.min.js"></script>   
+          	   <script>
+ 				$('form').on('submit',function(e){
+ 					e.preventDefault(); 	 					
+ 					var formId = "#"+e.target.id;
+ 					$.ajax({
+        			    type: "POST",  
+        			    url: $(this).attr('action'),
+        			    data: $(formId).serialize(),
+        			    dataType: 'json',        	            
+        	        }); 		
+ 					alert("成功啦(*´▽`*)");
+ 				})           				
+          	   </script>	
           
                 <!-- 頁數 -->
                 <div id="product" style="display: flex; width: 100%; justify-content: center; ">

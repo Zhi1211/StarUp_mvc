@@ -286,11 +286,13 @@ public class ProductController {
 //			prodService.deleteProduct(id);
 //			return "redirect:/backstage";
 //		}
+		
+		
 		@DeleteMapping(value="/deleteProduct/{prodId}")
 		public ResponseEntity<ProductBean> processDeleteProduct(@PathVariable("prodId") int id) {
 			ProductBean pb = prodService.getProductById(id);
 			if(pb == null) {
-			return new ResponseEntity<ProductBean>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<ProductBean>(HttpStatus.NOT_FOUND);
 			}			
 			prodService.deleteProduct(id);
 			return new ResponseEntity<ProductBean>(HttpStatus.NO_CONTENT);

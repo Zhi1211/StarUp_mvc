@@ -235,7 +235,12 @@ public class RegisterController {
 		public ResponseEntity<byte[]> getPicture
 		(HttpServletResponse resp,@PathVariable("userAccount") String account){
 			String filePath = "/resources/images/NoImage.jpg";
-			UserBean bean = userService.getUser2(account);
+			UserBean bean = null;
+			if(userService.getUser2(account) != null) {
+				bean = userService.getUser2(account);
+			}else {				
+				bean = userService.getUser(Integer.parseInt(account));
+			}
 			HttpHeaders headers = new HttpHeaders();
 			String filename = "";
 			int len = 0;
