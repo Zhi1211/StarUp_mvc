@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -58,7 +59,7 @@ public class OrderBean {
 	}
 
 	//說明多方表格的orderBean欄位為外鍵欄位，對照的主鍵為一方表格的orderno欄
-	@OneToMany(mappedBy="orderBean", cascade= {CascadeType.ALL})
+	@OneToMany(mappedBy="orderBean", cascade= {CascadeType.ALL}, fetch = FetchType.EAGER)
 	public Set<OrderItemBean> getItems() {
 		return items;
 	}

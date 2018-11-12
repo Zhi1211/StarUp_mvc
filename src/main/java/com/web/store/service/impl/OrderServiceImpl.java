@@ -83,4 +83,9 @@ public class OrderServiceImpl implements OrderService {
 		return oqdao.getAllOrder();
 	}
 
+	@Override
+	public OrderBean getShoppingOverOrder() {
+		return oqdao.getShoppingOverOrder();
+	}
+
 }

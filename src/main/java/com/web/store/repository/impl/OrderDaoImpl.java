@@ -60,8 +60,10 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public OrderBean getOrder(Integer orderNo) {
 		OrderBean ob = null;
+		String hql = "FROM OrderBean WHERE orderNo = :orderNo ";
 		Session session = factory.getCurrentSession();
-		ob = session.get(OrderBean.class, orderNo);
+//		ob = session.get(OrderBean.class, orderNo);
+		ob = (OrderBean)session.createQuery(hql).setParameter("orderNo", orderNo).getSingleResult();
 		return ob;
 	}
 

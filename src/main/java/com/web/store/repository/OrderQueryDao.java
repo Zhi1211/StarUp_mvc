@@ -12,6 +12,8 @@ public interface OrderQueryDao {
 	
 	List<OrderBean> getMemberOrders();
 	
+	OrderBean getShoppingOverOrder();
+	
 	String getAccount();
 	
 	void setAccount(String account);

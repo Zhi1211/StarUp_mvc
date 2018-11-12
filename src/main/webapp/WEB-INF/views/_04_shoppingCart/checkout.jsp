@@ -70,11 +70,11 @@
 			</table>
 		</div>
 	</form>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
 	<!-- 取消訂單 -->
 	function cancelOrder() {
 		if (confirm("確定取消此份訂單?")) {
-// 			document.forms[0].finalDecision.value = "CANCEL";
 			document.forms[0].action = "<c:url value='/processShoppingOrder/CANCEL/orderReady' />";
 			document.forms[0].method="POST";
 			document.forms[0].submit();
@@ -92,7 +92,13 @@
 		}
 		if (confirm("確定送出此份訂單?")) {
 			// 接收此資料的Servlet會使用finalDecision參數的值
-// 			document.formCheckout.finalDecision.value = "ORDER";
+			
+// 			$.ajax({
+// 				type:'POST',
+// 				url:'processShoppingOrder/ORDER/orderReady',
+// 				success:function(data){	
+// 				}
+// 			})
 			document.formCheckout.action = "<c:url value='/processShoppingOrder/ORDER/orderReady' />";
 			document.formCheckout.method = "POST";
 			document.formCheckout.submit();

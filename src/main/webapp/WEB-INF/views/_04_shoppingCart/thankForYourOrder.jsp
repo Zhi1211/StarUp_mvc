@@ -14,7 +14,7 @@
 					<td>數量</td>
 					<td>小計</td>
 				</tr>
-				<c:forEach varStatus="os" var="opi" items="${orderedProduct.items}">
+				<c:forEach varStatus="os" var="opi" items="${shoppingOverOrder.items}">
 					<tr>
 						<td>${opi.description}</td>
 						<td>${opi.quantity}</td>
@@ -23,11 +23,11 @@
 				</c:forEach>
 				<tr>
 					<td>總金額</td>
-					<td>${orderedProduct.totalAmount}</td>
+					<td>${shoppingOverOrder.totalAmount}</td>
 				</tr>
 				<tr>
 					<td>運送地址</td>
-					<td>${orderedProduct.shippingAddress}</td>
+					<td>${shoppingOverOrder.shippingAddress}</td>
 				</tr>
 		</table>
 	</div>
