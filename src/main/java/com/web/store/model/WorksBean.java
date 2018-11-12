@@ -9,32 +9,44 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="works")
 public class WorksBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	Integer works_id;
-	String worksName;
-	String worksIntro;
-	String worksImgName;
-	Blob worksImg;
-	String worksUpDate; // 1029改String
+	private Integer user_Id;
+	private String author;
+	
+	
+	private Integer works_id;
+	private String worksName;
+	private String worksIntro;
+	private String worksImgName;
+	private Blob worksImg;
+	private String worksUpDate;
 	
 	//進階
-	String caption_1;//標題_1
-	String detail_1;//內文_1
-	String captionImgName_1;//照片_1
-	Blob captionImg_1;
+	private String detail_1;//作品細節_1
+	private String captionImgName_1;//照片_1
+	private Blob captionImg_1;
 	
-	String caption_2;//標題_1
-	String detail_2;//內文_1
-	String captionImgName_2;//照片_1
-	Blob captionImg_2;
+	private String detail_2;//作品細節_2
+	private String captionImgName_2;//照片_2
+	private Blob captionImg_2;
+	
+	private MultipartFile  worksPoto;
+	private MultipartFile  captionPoto_1;
+	private MultipartFile  captionPoto_2;
+	
+	
 	public WorksBean(Integer works_id, String worksName, String worksIntro, String worksImgName, Blob worksImg,
-			String worksUpDate, String caption_1, String detail_1, String captionImgName_1, Blob captionImg_1,
-			String caption_2, String detail_2, String captionImgName_2, Blob captionImg_2) {
+		  String worksUpDate,String detail_1, String captionImgName_1, Blob captionImg_1, String detail_2, 
+		   String captionImgName_2, Blob captionImg_2,Integer user_Id, String author) {
 		super();
 		this.works_id = works_id;
 		this.worksName = worksName;
@@ -42,17 +54,19 @@ public class WorksBean implements Serializable{
 		this.worksImgName = worksImgName;
 		this.worksImg = worksImg;
 		this.worksUpDate = worksUpDate;
-		this.caption_1 = caption_1;
 		this.detail_1 = detail_1;
 		this.captionImgName_1 = captionImgName_1;
 		this.captionImg_1 = captionImg_1;
-		this.caption_2 = caption_2;
 		this.detail_2 = detail_2;
 		this.captionImgName_2 = captionImgName_2;
 		this.captionImg_2 = captionImg_2;
+		this.user_Id=user_Id;
+		this.author = author;
 	}
 	
 	public WorksBean() {}
+	
+
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -96,21 +110,14 @@ public class WorksBean implements Serializable{
 		this.worksImg = worksImg;
 	}
 
-	public String getWorksUpDate() { // 1029改String
+	public String getWorksUpDate() {
 		return worksUpDate;
 	}
 
-	public void setWorksUpDate(String worksUpDate) { // 1029改String
+	public void setWorksUpDate(String worksUpDate) {
 		this.worksUpDate = worksUpDate;
 	}
 
-	public String getCaption_1() {
-		return caption_1;
-	}
-
-	public void setCaption_1(String caption_1) {
-		this.caption_1 = caption_1;
-	}
 
 	public String getDetail_1() {
 		return detail_1;
@@ -136,13 +143,6 @@ public class WorksBean implements Serializable{
 		this.captionImg_1 = captionImg_1;
 	}
 
-	public String getCaption_2() {
-		return caption_2;
-	}
-
-	public void setCaption_2(String caption_2) {
-		this.caption_2 = caption_2;
-	}
 
 	public String getDetail_2() {
 		return detail_2;
@@ -169,6 +169,52 @@ public class WorksBean implements Serializable{
 	}
 
 	
+	public Integer getUser_Id() {
+		return user_Id;
+	}
+
+	public void setUser_Id(Integer user_Id) {
+		this.user_Id = user_Id;
+	}
+
+	public String getAuthor() {
+		return  author;
+	}
+
+	public void setAuthor(String  author) {
+		this. author =  author;
+	}
+
+	
+	@Transient
+	@XmlTransient
+	public MultipartFile getWorksPoto() {
+		return worksPoto;
+	}
+
+	public void setWorksPoto(MultipartFile worksPoto) {
+		this.worksPoto = worksPoto;
+	}
+	
+	@Transient
+	@XmlTransient
+	public MultipartFile getCaptionPoto_1() {
+		return captionPoto_1;
+	}
+
+	public void setCaptionPoto_1(MultipartFile captionPoto_1) {
+		this.captionPoto_1 = captionPoto_1;
+	}
+	
+	@Transient
+	@XmlTransient
+	public MultipartFile getCaptionPoto_2() {
+		return captionPoto_2;
+	}
+
+	public void setCaptionPoto_2(MultipartFile captionPoto_2) {
+		this.captionPoto_2 = captionPoto_2;
+	}
 	
 	
 }

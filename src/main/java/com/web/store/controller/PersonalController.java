@@ -1,11 +1,13 @@
 package com.web.store.controller;
 
+import java.sql.Clob;
+import java.sql.SQLException;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,7 +26,15 @@ public class PersonalController {
 	@RequestMapping(value="/personalPage")
 	public String getPersonalPage(@RequestParam(value = "id") Integer userId, Model model) {
 		UserBean ub = userService.getUser(userId);
+		Clob introduction = ub.getIntroduction();
+		String intro = null;
+		try {
+			intro = introduction.getSubString(1, (int) ub.getIntroduction().length());
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
 		model.addAttribute("userBean", ub);
+		model.addAttribute("introduction", intro);
 		return "_10_personalPage/personalPage";
 	}
 

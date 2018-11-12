@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,8 +14,9 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialClob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
@@ -26,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,12 +38,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.google.gson.Gson;
-import com.web.store.model.OrderedItem;
 import com.web.store.model.ProductBean;
-import com.web.store.model.ShoppingCart;
 import com.web.store.service.ProductService;
+
 
 
 @Controller
@@ -56,8 +57,8 @@ public class ProductController {
 			model.addAttribute("products", list);			
 			return "/_03_product/listProducts";
 		}
-		@RequestMapping(value="/getPicture/{prodId}", method = RequestMethod.GET)
-		public ResponseEntity<byte[]> getPicture
+		@RequestMapping(value="/getProductPicture/{prodId}", method = RequestMethod.GET)
+		public ResponseEntity<byte[]> getProductPicture
 		(HttpServletResponse resp,@PathVariable Integer prodId){
 			String filePath = "/resources/images/NoImage.jpg";
 			ProductBean bean = prodService.getProductById(prodId);
@@ -126,7 +127,7 @@ public class ProductController {
 			return productJson;
 		}
 //		-------------------更新商品-------------------
-		@RequestMapping(value = "/modifyProduct")
+		@RequestMapping(value = "/modifyProduct",method = RequestMethod.GET)
 		public String getProductModifyForm(Model model, @RequestParam(value = "id") int id) {
 			ProductBean pb = new ProductBean();
 			model.addAttribute("product", prodService.getProductById(id));
@@ -192,55 +193,92 @@ public class ProductController {
 			
 			return null;
 		}
-//		-------------------新增商品-------------------
-		@RequestMapping(value="/addProduct", method=RequestMethod.GET)
-		public String getAddProductForm(Model model) {
-			ProductBean pb = new ProductBean();
-			model.addAttribute("productBean", pb);
-			return "_20_productMaintain/AddProduct"; 
-		}
-		@RequestMapping(value="/addProduct", method=RequestMethod.POST, produces="text/html;charset=UTF-8")
-		public String processAddNewProductForm(@ModelAttribute("productBean") ProductBean pb,
-																				 BindingResult result, HttpServletRequest request) {		
-			String [] suppressedField = result.getSuppressedFields();
-			if(suppressedField.length > 0 ) {
-				throw new RuntimeException("嘗試傳入不合法的欄位 :"
-									+StringUtils.arrayToCommaDelimitedString(suppressedField));
-			}
-			MultipartFile productImage = pb.getProductImage();
-			String originalFilename = productImage.getOriginalFilename();
-			String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String date = df.format(new Date());
-			pb.setProdUpDate(date);
-			//建立Blob物件，交由Hibernate寫入資料庫
-			if(productImage != null && !productImage.isEmpty()) {
-				pb.setProdImgName(originalFilename);
-				String ext = originalFilename.substring(originalFilename.lastIndexOf("."));	
-				try {
-					byte[] b = productImage.getBytes();
-					Blob blob = new SerialBlob(b);
-					pb.setProdImg(blob);
-				}catch(Exception e) {
-					e.printStackTrace();
-					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-				}
-				
-				try {
-					File imageFolder = new File(rootDirectory+"images");
-					if(!imageFolder.exists()) {
-						imageFolder.mkdirs();
+//		-------------------新增商品ajax-------------------
+		@RequestMapping(value="/addProduct", method=RequestMethod.POST)
+		@ResponseBody
+		public void processAddProduct(HttpServletRequest request, ProductBean pb) throws SerialException, SQLException {
+			System.out.println(pb);		
+				MultipartFile productImage = pb.getProductImage();
+				String originalFilename = productImage.getOriginalFilename();
+				String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String date = df.format(new Date());
+				pb.setProdUpDate(date);
+				//建立Blob物件，交由Hibernate寫入資料庫
+				if(productImage != null && !productImage.isEmpty()) {
+					pb.setProdImgName(originalFilename);
+					String ext = originalFilename.substring(originalFilename.lastIndexOf("."));	
+					try {
+						byte[] b = productImage.getBytes();
+						Blob blob = new SerialBlob(b);
+						pb.setProdImg(blob);
+					}catch(Exception e) {
+						e.printStackTrace();
+						throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
 					}
-					File file = new File(imageFolder, pb.getProd_id()+ext);
-					productImage.transferTo(file);
-				}catch(Exception e) {
-					e.printStackTrace();
-					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-				}
-			}
-			prodService.addProduct(pb);
-			return "redirect:/products";
+					try {
+						File imageFolder = new File(rootDirectory+"images");
+						if(!imageFolder.exists()) {
+							imageFolder.mkdirs();
+						}
+						File file = new File(imageFolder, pb.getProd_id()+ext);
+						productImage.transferTo(file);
+					}catch(Exception e) {
+						e.printStackTrace();
+						throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+					}
+				}		
+				prodService.addProduct(pb);
 		}
+//		-------------------新增商品-------------------
+//		@RequestMapping(value="/addProduct", method=RequestMethod.GET)
+//		public String getAddProductForm(Model model) {
+//			ProductBean pb = new ProductBean();
+//			model.addAttribute("productBean", pb);
+//			return "_20_productMaintain/AddProduct"; 
+//		}
+//		@RequestMapping(value="/addProduct", method=RequestMethod.POST, produces="text/html;charset=UTF-8")
+//		public String processAddNewProductForm(@ModelAttribute("productBean") ProductBean pb,
+//																				 BindingResult result, HttpServletRequest request) {		
+//			String [] suppressedField = result.getSuppressedFields();
+//			if(suppressedField.length > 0 ) {
+//				throw new RuntimeException("嘗試傳入不合法的欄位 :"
+//									+StringUtils.arrayToCommaDelimitedString(suppressedField));
+//			}
+//			MultipartFile productImage = pb.getProductImage();
+//			String originalFilename = productImage.getOriginalFilename();
+//			String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+//			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			String date = df.format(new Date());
+//			pb.setProdUpDate(date);
+//			//建立Blob物件，交由Hibernate寫入資料庫
+//			if(productImage != null && !productImage.isEmpty()) {
+//				pb.setProdImgName(originalFilename);
+//				String ext = originalFilename.substring(originalFilename.lastIndexOf("."));	
+//				try {
+//					byte[] b = productImage.getBytes();
+//					Blob blob = new SerialBlob(b);
+//					pb.setProdImg(blob);
+//				}catch(Exception e) {
+//					e.printStackTrace();
+//					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+//				}
+//				
+//				try {
+//					File imageFolder = new File(rootDirectory+"images");
+//					if(!imageFolder.exists()) {
+//						imageFolder.mkdirs();
+//					}
+//					File file = new File(imageFolder, pb.getProd_id()+ext);
+//					productImage.transferTo(file);
+//				}catch(Exception e) {
+//					e.printStackTrace();
+//					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+//				}
+//			}
+//			prodService.addProduct(pb);
+//			return "redirect:/products";
+//		}
 
 //		-------------------刪除商品-------------------
 //		@RequestMapping(value="/deleteProduct", method=RequestMethod.POST)
@@ -248,9 +286,15 @@ public class ProductController {
 //			prodService.deleteProduct(id);
 //			return "redirect:/backstage";
 //		}
-		@RequestMapping(value="/deleteProduct", method=RequestMethod.POST)
-		@ResponseBody
-		public void processDeleteProduct(@RequestParam(value = "id") int id) {
+		
+		
+		@DeleteMapping(value="/deleteProduct/{prodId}")
+		public ResponseEntity<ProductBean> processDeleteProduct(@PathVariable("prodId") int id) {
+			ProductBean pb = prodService.getProductById(id);
+			if(pb == null) {
+				return new ResponseEntity<ProductBean>(HttpStatus.NOT_FOUND);
+			}			
 			prodService.deleteProduct(id);
+			return new ResponseEntity<ProductBean>(HttpStatus.NO_CONTENT);
 		}
 }

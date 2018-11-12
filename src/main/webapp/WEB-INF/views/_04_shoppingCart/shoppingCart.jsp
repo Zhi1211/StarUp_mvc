@@ -15,37 +15,39 @@
 				<tr style="font-size: px">
 					<th style="width: 220px"><span class="badge badge-primary"></span></th>
 					<th style="width: 300px"><span class="badge badge-primary">品名</span></th>
-					<th style="width: 120px"><span class="badge badge-primary">數量</span></th>
+					<th style="width: 200px"><span class="badge badge-primary">數量</span></th>
 					<th style="width: 120px"><span class="badge badge-primary">單價</span></th>
-					<th style="width: 120px"><span class="badge badge-primary">小計</span></th>
-					<th style="width: 120px"><span class="badge badge-primary">修改</span></th>
+					<th style="width: 120px"><span class="badge badge-primary">小計</span></th>			  		
 					<th style="width: 120px"><span class="badge badge-primary">刪除</span></th>
 				</tr>
 				<c:set var="cart" value="${ShoppingCart}" />
 				<c:forEach varStatus='vs' var='anEntry'
 					items='${ShoppingCart.content}'>
-					<tr>
+					<tr id="item${anEntry.key}">
 						<td style="width: 160px">
 							<div class="itemImg"
 								style="width: 160px; height: 120px; margin: 15px 0px 15px 20px; box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.438); overflow: hidden">
 								<img class="prodImg"
-									src="<c:url value='/getPicture/${anEntry.value.prod_id}'/>">
+									src="<c:url value='/getProductPicture/${anEntry.value.prod_id}'/>">
 							</div>
 						</td>
 						<td style="width: 200px">${anEntry.value.prodName}</td>
 						<td style="width: 120px">
 							<input id="minus${anEtry.value.prod_id}" name="minus" type="button" value="-" 
-								onclick="minusModify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})" /> 
-							<input id="newQty${vs.index}" name="goodnum" type="text" 
-								value="${anEntry.value.qty}" style="width: 25px;" />
+								onclick="minusModify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})"  /> 
+							<input id="newQty${vs.index}" name="goodnum" type="text"   
+								value="${anEntry.value.qty}" style="width: 25px;" onchange="modify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})"/>
 							<input id="plus${anEtry.value.prod_id}" name="plus" type="button" value="+" 
 								onclick="plusModify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})" /></td>
 						<td style="width: 120px">${anEntry.value.prodPrice}</td>
-						<td style="width: 120px" class="subtotal">${anEntry.value.prodPrice * anEntry.value.qty}</td>
-						<td style="width: 120px"><input type="button" name="update" value="修改"
-							onclick="modify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})"></td>
-						<td style="width: 120px"><i class="far fa-trash-alt" style="cursor:pointer;"
-							onclick="return confirmDelete(${anEntry.key});"></i></td>
+<%-- 						<td style="width: 120px" class="subtotal">${anEntry.value.prodPrice * anEntry.value.qty}</td> --%>
+<!-- 						<td style="width: 120px"><input type="button" name="update" value="修改" -->
+<%-- 							onclick="modify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})"></td> --%>
+<!-- 						<td style="width: 120px"><i class="far fa-trash-alt" style="cursor:pointer;" -->
+<%-- 							onclick="return confirmDelete(${anEntry.key});"></i></td> --%>
+						<td style="width: 120px" id="subtotal${vs.index}" class="subtotal">${anEntry.value.prodPrice * anEntry.value.qty}</td>						
+						<td style="width: 120px"><i class="far fa-trash-alt"  
+							onclick="return confirmDelete(${anEntry.key},${anEntry.value.prodPrice * anEntry.value.qty});" style="cursor:pointer;"></i></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -55,8 +57,8 @@
 	<div class="checkoutBox"
 		style="width: 70%; height: 100px; border-radius: 5px; background-color: rgb(255, 255, 255); box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); display: flex; margin-bottom: 5px; margin-top: 30px">
 		<div style="line-height: 100px; margin: 0px auto; font-size: 20px">
-			購物車內含有<span style="color: red">${ShoppingCart.itemNumber}</span>
-			樣商品，消費總金額<span>${ShoppingCart.subtotal}</span> 元
+			購物車內含有 <span id="itemAmount" style="color: red">${ShoppingCart.itemNumber}</span>
+			樣商品，消費總金額 <span style="color: red" id="totalPayment"> ${ShoppingCart.subtotal} </span> 元
 		</div>
 		<div class="checkoutBtn"
 			style="line-height: 100px; margin-right: 30px">
@@ -85,31 +87,38 @@
 				$.ajax({
 					type:'POST',
 					url:'updateShoppingCart/mod' + '/' + key + '/' + newQty + '/update',
-					success:function(data){	
-						//alert(JSON.stringify(data));
-						location.reload();
+					success:function(data){					
+						document.getElementById(x).value = newQty;						
+						document.getElementById("subtotal"+index).innerText = newQty * price;
+						var newTotal = parseInt(document.getElementById("totalPayment").innerText)-price;
+						document.getElementById("totalPayment").innerText = newTotal;
+						
 					}
 				})				 
 		 }
 		 <!-- 增加購物車中之商品數量 -->
 		 function plusModify(key, qty, index, price){
 			 var x = "newQty" + index;
-			 	var newQty = parseInt(document.getElementById(x).value) + 1;
+			 	//var newQty = parseInt(document.getElementById(x).value) + 1;
+			 	var newQty = parseInt((document.getElementById(x).value))+1;
+				 console.log(newQty)
 			 	if (newQty < 0) {
 			 		window.alert('數量不能小於0');
 			 		return;
-			 	}
+			 	}  
 				$.ajax({
 					type:'POST',
 					url:'updateShoppingCart/mod' + '/' + key + '/' + newQty + '/update',
 					success:function(data){	
-						//alert(JSON.stringify(data));
-						location.reload();
+						document.getElementById(x).value = newQty;					
+						document.getElementById("subtotal"+index).innerText  = newQty * price;
+						var newTotal = parseInt(document.getElementById("totalPayment").innerText)+price;
+						document.getElementById("totalPayment").innerText = newTotal;
 					}
 				})				 
 		 }
 		 <!-- 修改購物車中之商品數量 -->
-		 function modify(key, qty, index, price){
+		 function modify(key, qty, index, price, cartSize){
 			 var x = "newQty" + index;
 			 	var newQty = document.getElementById(x).value;
 			 	if (newQty < 0) {
@@ -124,7 +133,7 @@
 			 	if (newQty == qty) {
 			 		window.alert('與原數量相同，無須修改');
 			 		return;
-			 	}
+			 	}  
 			
 			 if(confirm("確定將此商品的數量由 " + qty + " 改為 "+ newQty + " ? ") ){
 					$.ajax({
@@ -132,7 +141,15 @@
 						url:'updateShoppingCart/mod' + '/' + key + '/' + newQty + '/update',
 						success:function(data){	
 // 							alert(JSON.stringify(data));
- 							location.reload();
+							document.getElementById(x).value = newQty;							
+							document.getElementById("subtotal"+index).innerText  = newQty * price;
+							var newTotal = 0;
+							var itemAmount = parseInt(document.getElementById('itemAmount').innerText); 		
+							for(var i=0; i< itemAmount; i++){
+								newTotal += parseInt(document.getElementById("subtotal"+i).innerText);
+							}							
+							document.getElementById("totalPayment").innerText = newTotal;	
+							
 						}
 					})
 					
@@ -141,13 +158,20 @@
 				}			 
 		 }
 		 <!-- 刪除購物車中選定之商品 -->
-		 function confirmDelete(n) {
+		 function confirmDelete(n,subtotal) {
 			if (confirm("確定刪除此項商品?")) {
 				$.ajax({
 					type:'POST',
 					url:'updateShoppingCart/del' + '/' + n + '/' + 'noQty' + '/update',
-					success:function(data){
-						location.reload();
+					success:function(data){					
+						document.getElementById('item'+n).remove();
+						var itemAmount = document.getElementById('itemAmount'); 						
+						console.log(itemAmount.innerText);	
+						var newAmount = parseInt(itemAmount.innerText)-1;
+						console.log(newAmount);	
+						itemAmount.innerText = newAmount;						 												
+						newTotal = parseInt(document.getElementById("totalPayment").innerText) - subtotal;												
+						document.getElementById("totalPayment").innerText = newTotal;
 					}
 				})
 			} else {
@@ -178,10 +202,10 @@
 		 function Checkout(qty) {
 		 	if (qty == 0) {
 		 		alert("無購買任何商品，不須結帳");
-		 		return false;
+		 		return false;  
 		 	}
 		 	if (confirm("再次確認訂單內容?")){
-		 		document.forms[0].action="<c:url value='/checkOutShoppingCart' />";
+		 		document.forms[0].action="<c:url value='checkOutShoppingCart' />";
 		 		document.forms[0].method="POST";
 		 		document.forms[0].submit();
 		 		return true;

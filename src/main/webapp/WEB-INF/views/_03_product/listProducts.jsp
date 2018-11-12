@@ -31,12 +31,6 @@
             <!-- 側邊欄 -->
             <div class="section col-lg-2" style="width:100px; padding: 20px 0px;">
             <!-- 設定管理者帳號starup@gamil.com才能進入商城的 維護-商品管理ProductMaintainList.jsp-->
-         <c:if test="${!empty BOSS}">
-                <nav class="nav flex-column nav-tabs">
-                	<a class="nav-link active">維護</a>
-                	<a class="nav-link" href="<c:url value='/productMaintain'/>" style="color:#dfc2ef; font-weight:400;">商品管理</a>
-               	</nav> 
-			</c:if>
                 <nav class="nav flex-column nav-tabs">
                     <a class="nav-link active" href="<c:url value='/_03_listProducts/DisplayPageProducts'/>">分類商品</a>
                     <a class="nav-link" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&prod_type=文創周邊'/>" style="color:#dfc2ef; font-weight:400;">
@@ -65,14 +59,15 @@
             <div class="container col-lg-10" style=" display: flex; justify-content: space-between; flex-wrap: wrap;">
             <!-- 1.顯示所有商品-------------------------------------------------------------- -->
   			
-  			 <c:forEach var="product"  items="${products}" >
+  			 <c:forEach var="product" items="${products}" >
                
-                <div class="productbox" onclick="location.href='<c:url value='/productDetail?id=${product.prod_id}'/>';">
+                <div class="productbox">
                         <div class="imgFrame">
-                            <img class="prodImg" src="<c:url value='/getPicture/${product.prod_id}'/>">
+                            <img class="prodImg" src="<c:url value='/getProductPicture/${product.prod_id}'/>" onclick="location.href='<c:url value='/productDetail?id=${product.prod_id}'/>';" style="cursor:pointer">
                         </div> 										
                         <div class="textFrame">    
-                           <FORM  action="<c:url value='/addProductToCart' />" method="POST">  
+<%--                            <FORM  action="<c:url value='/addProductToCart' />" method="POST">   --%>
+                           <FORM id="cartForm${product.prod_id}" action="addProductToCart" method="POST">  
                             <p class="prodName">${product.prodName}</p>
                             <p class="prodCompany">By ${product.prodCompany} </p>
                             <div class="prodIntro">${product.prodIntro}</div>   
@@ -90,14 +85,30 @@
 			                   
 			               <div class="priceBlock">
 				               <h4 class="prodPrice">NT$ ${product.prodPrice}</h4>			                    
-				               <button class="addCartBtn addBotton" type="submit">
-				               			<a  class="action-button shadow animate yellow"><i class="fa fa-cart-plus fa-lg"  aria-hidden="true" style="line-height:35px; color:#fff;"></i></a>			               		
+<!-- 				               <button class="addCartBtn addBotton" type="submit"> -->
+<!-- 				               			<a  class="action-button shadow animate yellow"><i class="fa fa-cart-plus fa-lg"  aria-hidden="true" style="line-height:35px; color:#fff;"></i></a>			               		 -->
+				               <button class="addCartBtn" type="submit">
+				               			<a  class="action-button shadow animate yellow"><i class="fa fa-cart-plus fa-lg"  aria-hidden="true" style="line-height:35px; color:#fff; cursor :pointer;"></i></a>			               		
 				               	</button>			  			           				               
 			               </div>
 			           </FORM>
 			         </div>
                 </div>   
                </c:forEach>
+               <script src="js/jquery-3.3.1.min.js"></script>   
+          	   <script>
+ 				$('form').on('submit',function(e){
+ 					e.preventDefault(); 	 					
+ 					var formId = "#"+e.target.id;
+ 					$.ajax({
+        			    type: "POST",  
+        			    url: $(this).attr('action'),
+        			    data: $(formId).serialize(),
+        			    dataType: 'json',        	            
+        	        }); 		
+ 					alert("成功啦(*´▽`*)");
+ 				})           				
+          	   </script>	
           
                 <!-- 頁數 -->
                 <div id="product" style="display: flex; width: 100%; justify-content: center; ">

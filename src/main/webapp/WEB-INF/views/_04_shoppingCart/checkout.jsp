@@ -7,27 +7,27 @@
 <jsp:include page="/fragment/header.jsp" />
 <div class="content container-fluid"
 	style="padding: 0px; display: flex; flex-wrap: wrap;">
-	<form action="<c:url value='/processShoppingOrder/Order/orderReady' />" method="POST" name="formCheckout">
 		<div class="checkoutBox container"
 			style="width: 100%; border-radius: 5px; background-color: rgb(255, 255, 255); box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); margin: 20px 0px 5px 150px; padding: 20px">
 			<h5>訂單資訊</h5>
 			<p></p>
-			<div>
-				<table>
-					<tr>
-						<td><label for="receiverAccount">會員帳號：${LoginOK.account}</label></td>
-						<td><label for="customerNamer">客戶姓名：${LoginOK.name}</label></td>
-						<td><label for="receiveDate">訂單日期：<fmt:formatDate value="${today}" pattern="yyyy-MM-dd"/></label></td>
-						<td><label for="customerAddr">會員地址：${LoginOK.address}</label>
-					</tr>
-					<tr>
-						<td><label for="receiver">收件人：<input size="10" type="text" id="Receiver" name="Receiver" value=""></label></td>
-						<td><label for="deliverAddr">送貨地址：<input size="50" type="text" id="ShippingAddress" name="ShippingAddress" value=""></label></td>
-						<td><label for="taxId">統一編號：<input size="10" type="text" id="BNO" name="BNO" value=""></label></td>
-						<td><label for="companyName">發票抬頭：<input size="50" type="text" id="InvoiceTitle" name="InvoiceTitle" value=""></label></td>
-					</tr>
-				</table>
+			<div style="display:flex">
+				<div>
+					<ul>
+						<li>訂單日期：<fmt:formatDate value="${today}" pattern="yyyy-MM-dd"/></li>
+						<li>會員帳號：${LoginOK.account}</li>					
+						<li>收件人：<input size="10" type="text" id="Receiver" name="Receiver" value="${LoginOK.name}"></li>					
+					</ul>
+			    </div>
+			    <div >
+					<ul>						
+						<li>送貨地址：<input size="50" type="text" id="ShippingAddress" name="ShippingAddress" value="${LoginOK.address}"></li>
+						<li>統一編號：<input size="10" type="text" id="BNO" name="BNO" value=""></li>
+						<li>發票抬頭：<input size="50" type="text" id="InvoiceTitle" name="InvoiceTitle" value=""></li>
+					</ul>
+			    </div>
 			</div>
+			
 			<div class="checkoutBtn"
 				style="line-height: 100px; margin-right: 30px">
 				<!-- <button type="button" class="btn btn-info">付款</button>
@@ -69,7 +69,7 @@
 				</tr>
 			</table>
 		</div>
-	</form>
+<!-- 	</form> -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
 	<!-- 取消訂單 -->
@@ -82,7 +82,7 @@
 		} else {
 			return;
 		}
-	}
+	}  
 	<!-- 確認送出訂單 -->
 	function reconfirmOrder(){
 		var sa = document.getElementById('ShippingAddress').value;

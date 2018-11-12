@@ -11,16 +11,15 @@
       
       <form:form modelAttribute="productBean" method="POST"  enctype="multipart/form-data">
             
-            
-            <div class="container col-lg-10" style=" display: flex; ">      
-          		 <div class="prodImg col-lg-7" style="z-index:0;margin: 10px 0px 30px 20px; background-color: rgba(255, 255, 255, 0.699); box-shadow: 1px 1px 3px black; border-radius: 5px;">
-                    <div id="dropZone" style="margin-top:10px;border:grey solid 1px;width:500;height:500px;overflow:hidden">  
-                        <img alt="" src="<c:url value='/getPicture/${product.prod_id}'/>" id="previewImg" style="width:100%">
-                    </div>    
-                    <div>                    
+               
+            <div class="container col-lg-10" style=" display: flex; ">        
+          		 <div class="prodImg col-lg-7" style="max-width:100%;max-height:100%;z-index:0;margin: 10px 0px 30px 20px; background-color: rgba(255, 255, 255, 0.699); box-shadow: 1px 1px 3px black; border-radius: 5px;">
+                    <div id="dropZone" style="margin:10px auto;max-width:100%;max-height:100%;overflow:hidden">  
+                        <img alt="" src="<c:url value='/getProductPicture/${product.prod_id}'/>" id="previewImg" style="width:100%">
                     	  <label for="photo">請選擇要上傳的圖片</label>
             			  <form:input id="productImage" type="file" class="form-control-file" name="productImage" path="productImage" aria-describedby="fileHelp"/>
-                    </div>
+                    </div>    
+                  
                    
               
                 

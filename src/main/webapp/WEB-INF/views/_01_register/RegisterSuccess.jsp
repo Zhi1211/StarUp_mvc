@@ -12,23 +12,23 @@
 			<h4 class="card-title" style="float: left;"><%=session.getAttribute("nickname")%>
 				，Welcome !
 			</h4>									     
-			<img class="img-circle" src="${pageContext.request.contextPath}/Util/getImage?account=${LoginOK.account}&type=USER2" width="80"
+			<img class="img-circle" src="getUserPhoto/${sessionScope.account }" width="80"
 				height="80" style="position: absolute; right: 20px;">
 			<div style="clear: both;"></div>
 			<p class="card-text">
-				帳號：<%=session.getAttribute("account")%></p>
+				帳號：${sessionScope.account}</p>
 			<p class="card-text">
-				姓名：<%=session.getAttribute("name")%></p>
+				姓名：${sessionScope.name}</p>
 			<p class="card-text">
-				暱稱：<%=session.getAttribute("nickname")%></p>
+				暱稱：${sessionScope.nickname}</p>
 			<p class="card-text">
-				性別：<%=session.getAttribute("gender")%></p>
+				性別：${sessionScope.gender}</p>
 			<p class="card-text">
-				生日：<%=session.getAttribute("birthday")%></p>
+				生日：${sessionScope.birthday}</p>
 			<p class="card-text">
-				聯絡電話：<%=session.getAttribute("phone")%></p>
+				聯絡電話：${sessionScope.phone}</p>
 			<p class="card-text">
-				地址：<%=session.getAttribute("address")%></p>
+				地址：${sessionScope.address}</p>
 		</div>
 
 	</div>
