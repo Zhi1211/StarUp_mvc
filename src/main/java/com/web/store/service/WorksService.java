@@ -18,7 +18,7 @@ int getTotalPages();
 	
 	long getRecordCounts();
 	
-	List<WorksBean> getAllWorkss();
+	List<WorksBean> getAllWorks();
 	
 	WorksBean getWorksById(int worksId);
 	
@@ -45,5 +45,7 @@ int getTotalPages();
 	 WorksBean queryWorks(int works_id);
 	 
 	 int deleteWorks(int works_id);
+	 
+	 List<WorksBean> getWorksByUserId(int userId);
 	 
 }

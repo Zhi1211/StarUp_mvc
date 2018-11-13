@@ -6,11 +6,12 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.web.store.model.ProductBean;
 import com.web.store.model.WorksBean;
 import com.web.store.repository.WorksRepository;
 
+@Repository
 public class WorksRepositoryImpl implements WorksRepository {
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +42,7 @@ public class WorksRepositoryImpl implements WorksRepository {
 		List<Long> list;
 		Long count = 0L; // 必須使用long型態
 		Session session = factory.getCurrentSession();
-		String hql = "SELECT count(*)FROM WorksBean";
+		String hql = "SELECT count(*) FROM WorksBean";
 		list = session.createQuery(hql).getResultList();
 		if (list != null) {
 			count = list.get(0);
@@ -52,11 +53,15 @@ public class WorksRepositoryImpl implements WorksRepository {
 	// 搜尋所有作品
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<WorksBean> getAllWorkss() {
-		String hql = "FROM WorksBean";
+	public List<WorksBean> getAllWorks() {
 		List<WorksBean> list = new ArrayList<>();
-		Session session = factory.getCurrentSession();
-		list = session.createQuery(hql).getResultList();
+		try {
+			String hql = "FROM WorksBean";
+			Session session = factory.getCurrentSession();
+			list = session.createQuery(hql).getResultList();						
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return list;
 	}
 
@@ -66,7 +71,7 @@ public class WorksRepositoryImpl implements WorksRepository {
 		WorksBean wb = new WorksBean();
 		Session session = factory.getCurrentSession();
 		wb = (WorksBean)session.createQuery(hql)
-																.setParameter("pid",worksId).getSingleResult();
+																.setParameter("wid",worksId).getSingleResult();
 	return wb;
 	}
 	
@@ -74,11 +79,11 @@ public class WorksRepositoryImpl implements WorksRepository {
 		@Override
 		public int updateWorks(WorksBean bean, long sizeInBytes, long sizeInBytes_1, long sizeInBytes_2) {
 			int n = 0;
-			String hql = "UPDATE worksBean SET " 
+			String hql = "UPDATE WorksBean SET " 
 					+ " worksName=:worksName, "
 					+ "worksIntro=:worksIntro,"
 					+ "  worksImgName=:worksImgName,"
-					+ " WorksImg = :WorksImg,"
+					+ " worksImg = :WorksImg,"
 					+ " detail_1=:detail_1,"
 					+ " captionImgName_1=:captionImgName_1,"
 					+ " captionImg_1=:captionImg_1,"
@@ -113,7 +118,7 @@ public class WorksRepositoryImpl implements WorksRepository {
 		@Override
 		public int updateWorks(WorksBean bean) {
 			int n = 0;
-			String hql = "UPDATE worksBean SET " 
+			String hql = "UPDATE WorksBean SET " 
 					+ " worksName=:worksName,"
 					+ "  worksIntro=:worksIntro, "
 					+ " detail_1=:detail_1,"
@@ -204,6 +209,15 @@ public class WorksRepositoryImpl implements WorksRepository {
 			wbean.setWorks_id(works_id);
 			Session session = factory.getCurrentSession();
 			session.delete(wbean);
-			return ++n;
+			return n++;
+		}
+		@SuppressWarnings("unchecked")
+		@Override
+		public List<WorksBean> getWorksByUserId(int userId) {
+			String hql = "FROM WorksBean wb WHERE wb.user_Id = :uid";
+			List<WorksBean> list = null;
+			Session session = factory.getCurrentSession();
+			list = session.createQuery(hql).setParameter("uid", userId).getResultList();
+			return list;
 		}
 }
