@@ -21,8 +21,6 @@ public class WorksBean implements Serializable{
 	
 	private Integer user_Id;
 	private String author;
-	
-	
 	private Integer works_id;
 	private String worksName;
 	private String worksIntro;

@@ -48,7 +48,7 @@ public class WorksControlller {
 
 	@RequestMapping("/works")
 	public String listWorks(Model model) {
-		List<WorksBean> list = worksService.getAllWorkss();
+		List<WorksBean> list = worksService.getAllWorks();
 		model.addAttribute("workss", list);
 		return "/_06_works/listWorks";
 	}
@@ -154,7 +154,7 @@ public class WorksControlller {
 	
 	@RequestMapping(value= "/worksMaintain", produces="application/json")
 	public @ResponseBody byte[] wokesMaintainPage(Model model) throws UnsupportedEncodingException {	
-		List<WorksBean> list = worksService.getAllWorkss();
+		List<WorksBean> list = worksService.getAllWorks();
 		byte[] WorksJson = new Gson().toJson(list).getBytes("UTF-8");
 		return WorksJson;
 	}

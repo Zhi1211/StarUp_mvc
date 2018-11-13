@@ -2,6 +2,7 @@ package com.web.store.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,8 @@ import com.web.store.service.WorksService;
 @Service
 @Transactional
 public class WorksServiceImpl implements WorksService {
-	private WorksRepository	worksRepository;		
+	@Autowired
+	private WorksRepository	 worksRepository;		
 	
 	@Override
 	public int getTotalPages() {
@@ -28,8 +30,8 @@ public class WorksServiceImpl implements WorksService {
 	}
 
 	@Override
-	public List<WorksBean> getAllWorkss() {
-		return worksRepository.getAllWorkss();
+	public List<WorksBean> getAllWorks() {
+		return worksRepository.getAllWorks();
 	}
 
 	@Override
@@ -98,5 +100,10 @@ public class WorksServiceImpl implements WorksService {
 	@Override
 	public int deleteWorks(int works_id) {
 		return worksRepository. deleteWorks( works_id);
+	}
+
+	@Override
+	public List<WorksBean> getWorksByUserId(int userId) {		
+		return worksRepository.getWorksByUserId(userId);
 	}
 }
