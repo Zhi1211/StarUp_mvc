@@ -52,7 +52,7 @@ public class PersonalController {
 		return "_06_workUp/worksList";
 	}
 	@RequestMapping(value="/upload")
-	public String getUploadForm() {
+	public String getUploadForm() {   
 		return "_06_workUp/upload";
 	}
 	@RequestMapping(value="/userWorks", method=RequestMethod.POST)
