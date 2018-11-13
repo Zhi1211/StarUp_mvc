@@ -10,7 +10,7 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,5 +61,14 @@ public class PersonalController {
 		List<WorksBean> list = worksService.getWorksByUserId(userId);
 		byte[] worksJson = new Gson().toJson(list).getBytes("UTF-8");
 		return worksJson;	
+	}
+	@RequestMapping(value="/testComment")
+	public String testComment(Model model, @RequestParam("worksId") Integer worksId) {
+		WorksBean wb = null;
+		if (worksId != null) {
+			wb = worksService.getWorksById(worksId);			
+		}
+		model.addAttribute("oneWork", wb);
+		return "_06_workUp/works";
 	}
 }
