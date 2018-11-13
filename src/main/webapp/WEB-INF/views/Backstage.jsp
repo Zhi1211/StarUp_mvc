@@ -187,7 +187,7 @@
         				$.ajax({
             			    type: "GET",  
             			    url: 'productMaintain',
-            			    dataType: 'json',
+            			    dataType: 'json',            			   
             	            success : function(data) { 
             	            	_self.products = data;
             	            	console.log(_self.products)

@@ -50,8 +50,15 @@ public class WorksControlller {
 	@RequestMapping("/works")
 	public String listWorks(Model model) {
 		List<WorksBean> list = worksService.getAllWorks();
-		model.addAttribute("workss", list);
-		return "/_06_works/listWorks";
+		model.addAttribute("worksBean", list);
+		return "_06_workUp/worksList";
+	}
+	@RequestMapping("/worksAjax")
+	@ResponseBody
+	public byte[] listWorksAjax(Model model) throws UnsupportedEncodingException {
+		List<WorksBean> list = worksService.getAllWorks();
+		byte[] worksJson = new Gson().toJson(list).getBytes("UTF-8");
+		return worksJson;
 	}
 //___________________________________________________________________________________________________
 	

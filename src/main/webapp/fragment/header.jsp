@@ -42,7 +42,7 @@
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="<c:url value='personalPage?id=${LoginOK.user_id }'/>">個人主頁</a></li>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value='/_10_personalPage/DisplayPersonalPage'/>">探索作品</a></li>															
+					<li class="nav-item"><a class="nav-link" href="<c:url value='/works'/>">探索作品</a></li>															
 					<li class="nav-item"><a class="nav-link" href="<c:url value='/products'/>">商城</a></li>
 				<c:if test = "${!empty BOSS}">
  					<li class="nav-item"><a class="nav-link" href="<c:url value='/backstage'/>">後台管理</a></li>
