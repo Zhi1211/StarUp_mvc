@@ -49,6 +49,15 @@ public class OrderQueryDaoImpl implements OrderQueryDao {
 		list = session.createQuery(hql).setParameter("account", account).getResultList();
 		return list;
 	}
+	
+	@Override
+	public OrderBean getShoppingOverOrder() {
+		OrderBean ob = null;
+		String hql = "FROM OrderBean WHERE account = :account ORDER BY orderDate desc LIMIT 1";
+		Session session = factory.getCurrentSession();
+		ob = (OrderBean)session.createQuery(hql).setParameter("account", account).getSingleResult();
+		return ob;
+	}
 
 	@Override
 	public String getAccount() {

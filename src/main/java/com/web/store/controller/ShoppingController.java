@@ -2,6 +2,7 @@ package com.web.store.controller;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -240,7 +241,7 @@ public class ShoppingController {
 			}
 			// 執行到此，購物車內所有購買的商品已經全部轉換為OrderItemBean物件，並放在Items內
 			ob.setItems(items);
-			model.addAttribute("orderedProduct", ob);
+			//model.addAttribute("orderedProduct", ob);
 			try {
 				orderService.processOrder(ob);
 				request.getSession(false).removeAttribute("ShoppingCart");
@@ -248,7 +249,33 @@ public class ShoppingController {
 				e.printStackTrace();
 			}
 //			return "redirect:/products";
-			return "_04_shoppingCart/thankForYourOrder";
+			return "redirect:/showShoppingOverDetail";
 		}
+	}
+	
+	@RequestMapping(value="/showShoppingOverDetail")
+	public String showShoppingOverDetail(HttpServletRequest request, Model model) {
+		UserBean ub = (UserBean)request.getSession(false).getAttribute("LoginOK");
+		orderService.setAccount(ub.getAccount());
+		OrderBean ob = orderService.getShoppingOverOrder();
+		model.addAttribute("shoppingOverOrder", ob);
+		return "_04_shoppingCart/thankForYourOrder";
+	}
+	
+	@RequestMapping(value="/showShoppingOrderList")
+	public String showShoppingOrderList(HttpServletRequest request, Model model) {
+		UserBean ub = (UserBean)request.getSession(false).getAttribute("LoginOK");
+		orderService.setAccount(ub.getAccount());
+		List<OrderBean> list =  orderService.getMemberOrders();
+		model.addAttribute("memberOrders", list);
+		return "/_04_shoppingCart/shoppingOrderList";
+	}
+	
+	@RequestMapping(value="/showOneOrderDetail/{orderNo}/anOrderShow")
+	public String showOneOrderDetail(HttpServletRequest request, Model model, 
+			@PathVariable("orderNo")Integer orderNo) {
+		OrderBean ob = orderService.getOrder(orderNo);
+		model.addAttribute("memberOrder", ob);
+		return "/_04_shoppingCart/oneOrderDetail";
 	}
 }

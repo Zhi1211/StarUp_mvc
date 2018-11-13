@@ -40,6 +40,11 @@
 							<input id="plus${anEtry.value.prod_id}" name="plus" type="button" value="+" 
 								onclick="plusModify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})" /></td>
 						<td style="width: 120px">${anEntry.value.prodPrice}</td>
+<%-- 						<td style="width: 120px" class="subtotal">${anEntry.value.prodPrice * anEntry.value.qty}</td> --%>
+<!-- 						<td style="width: 120px"><input type="button" name="update" value="修改" -->
+<%-- 							onclick="modify(${anEntry.key}, ${anEntry.value.qty}, ${vs.index},${anEntry.value.prodPrice})"></td> --%>
+<!-- 						<td style="width: 120px"><i class="far fa-trash-alt" style="cursor:pointer;" -->
+<%-- 							onclick="return confirmDelete(${anEntry.key});"></i></td> --%>
 						<td style="width: 120px" id="subtotal${vs.index}" class="subtotal">${anEntry.value.prodPrice * anEntry.value.qty}</td>						
 						<td style="width: 120px"><i class="far fa-trash-alt"  
 							onclick="return confirmDelete(${anEntry.key},${anEntry.value.prodPrice * anEntry.value.qty});" style="cursor:pointer;"></i></td>
@@ -70,7 +75,7 @@
 		<!-- 減少購物車中之商品數量 -->
 		 function minusModify(key, qty, index, price){
 			 var x = "newQty" + index;
-			 	var newQty = (document.getElementById(x).value - 1);
+			 	var newQty = parseInt(document.getElementById(x).value) - 1;
 			 	if (newQty < 0) {
 			 		window.alert('數量不能小於0');
 			 		return;
@@ -94,6 +99,7 @@
 		 <!-- 增加購物車中之商品數量 -->
 		 function plusModify(key, qty, index, price){
 			 var x = "newQty" + index;
+			 	//var newQty = parseInt(document.getElementById(x).value) + 1;
 			 	var newQty = parseInt((document.getElementById(x).value))+1;
 				 console.log(newQty)
 			 	if (newQty < 0) {

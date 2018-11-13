@@ -26,4 +26,6 @@ public interface OrderService {
 	void setAccount(String account);
 	
 	List<OrderBean> getAllOrders();
+	
+	OrderBean getShoppingOverOrder();
 }
