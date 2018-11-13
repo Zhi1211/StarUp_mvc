@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.web.store.model.ProductBean;
 import com.web.store.model.WorksBean;
 import com.web.store.service.WorksService;
 
@@ -49,16 +50,23 @@ public class WorksControlller {
 	@RequestMapping("/works")
 	public String listWorks(Model model) {
 		List<WorksBean> list = worksService.getAllWorks();
-		model.addAttribute("workss", list);
-		return "/_06_works/listWorks";
+		model.addAttribute("worksBean", list);
+		return "_06_workUp/worksList";
+	}
+	@RequestMapping("/worksAjax")
+	@ResponseBody
+	public byte[] listWorksAjax(Model model) throws UnsupportedEncodingException {
+		List<WorksBean> list = worksService.getAllWorks();
+		byte[] worksJson = new Gson().toJson(list).getBytes("UTF-8");
+		return worksJson;
 	}
 //___________________________________________________________________________________________________
 	
-	@RequestMapping(value="/getPicture/{wordId}", method = RequestMethod.GET)
+	@RequestMapping(value="/getWorksPicture/{wordId}", method = RequestMethod.GET)
 	public ResponseEntity<List> getPicture
-	(HttpServletResponse resp,@PathVariable Integer wordId){
+	(HttpServletResponse resp,@PathVariable Integer worksId){
 		String filePath = "/resources/images/NoImage.jpg";
-		WorksBean bean = worksService.getWorksById(wordId);
+		WorksBean bean = worksService.getWorksById(worksId);
 		HttpHeaders headers = new HttpHeaders();
 		String[] filename= null;
 		int len = 0;
@@ -145,6 +153,44 @@ public class WorksControlller {
 		}
 		return b;
 	}
+	
+//___________________________________________________________________________________________________
+	@RequestMapping(value="/mainWorksPicture/{works_id}",method=RequestMethod.GET)
+	public ResponseEntity<byte[]> getMainPicture(@PathVariable Integer works_id){
+		String filePath = "/resources/images/NoImage.jpg";
+		WorksBean bean = worksService.getWorksById(works_id);
+		HttpHeaders headers = new HttpHeaders();
+		String filename = "";
+		int len = 0;
+		byte[] media = null;
+		if(bean!=null) {
+			Blob blob = bean.getWorksImg();
+			filename = bean.getWorksImgName();
+			if(blob!= null) {
+				try {
+					len = (int) blob.length();
+					media = blob.getBytes(1, len);
+				} catch (SQLException e) {
+					throw new RuntimeException("ProductController的getPicture()發生error"+e.getMessage());
+				}
+			}else {
+				media = toByteArray(filePath);
+				filename = filePath;
+			}
+		}else {
+			media = toByteArray(filePath);
+			filename = filePath;
+		}
+		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+		String mimeType = context.getMimeType(filename);
+		MediaType mediaType = MediaType.valueOf(mimeType);
+//		System.out.println("mediaType = "+mediaType);
+		headers.setContentType(mediaType);
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,headers,HttpStatus.OK);
+		return responseEntity;
+	}
+		
+	
 //___________________________________________________________________________________________________
 	@RequestMapping("/worksDetail")
     public String getWorksById(@RequestParam("id")Integer id, Model model) {

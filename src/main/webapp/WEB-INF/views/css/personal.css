@@ -32,7 +32,7 @@
 	padding: 5px;
 }
 .pieceOfWork {
-	display: flex; 
+ 	/* display: flex; */
 	margin: 10px 0px;
 	padding: 10px;
 	background-color: rgba(0, 0, 0, 0.397); 
@@ -40,6 +40,7 @@
 	box-shadow: 1px 1px 3px black;
 }
 .workText {
-	padding:10px; 
+	/* padding:10px;  */
+	font-weight:300;
 	color: white; 
 }

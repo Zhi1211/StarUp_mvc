@@ -1,3 +1,8 @@
+.carousel-item{
+  background-image: url("../image/night.jpg");     
+  background-size: cover;
+  width:100%;
+}
 
 .p-container{
     margin-top:50px;
@@ -8,6 +13,7 @@
     height: 460px;
     width: 1500px;
     border:2px solid #a492b4;
+     
   }
   
   .square{
@@ -23,7 +29,7 @@
   
   .p-username{
     float: right;
-     margin-right: 30px;
+     margin-right: 1150px;
      margin-top:15px;
      font-size: 18px;
      font-family: '微軟正黑體';
@@ -83,9 +89,6 @@
   }
 
 
-  .heart:hover{
-   color: rgb(170, 5, 60);
-  }
 
   /* $(window).scroll(funtion(){
     $().addClass();
