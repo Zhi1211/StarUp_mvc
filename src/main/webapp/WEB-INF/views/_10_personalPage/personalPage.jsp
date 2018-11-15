@@ -46,7 +46,10 @@
 		                            </div>
 		                            <div class="workText">  
 		                                    {{work.worksIntro}}
-		                            </div>	                            
+		                            </div>	
+		                             <div class="workComment">
+                                    <a v-bind:href="'testComment?worksId='+work.works_id" >留言測試</a>
+                                </div>                            
 	                            </div>
 <!-- 	                            <div class="workComment"> -->
 <!-- 	                            	<a v-bind:href="'testComment?worksId=' + work.works_id" >留言測試</a> -->
@@ -152,10 +155,23 @@
 				    <p>Some content in menu 2.</p>
 				  </div>
 				  <div id="maintain" class="tab-pane fade">
-				    <h3>修改個人資訊</h3>  
-				    	<form id="editUser" enctype="multipart/form-data" style="display:flex;background-color: rgba(0, 0, 0, 0.397); padding:10px;border-radius:5px">   
+				    <h3>修改個人資訊<span class="text-warning">*double click to modify</span></h3>
+				    	<form id="editUser" enctype="multipart/form-data" action="updateUser/${userBean.user_id}" method="POST">   				    		
+				    		<div style="display:flex;background-color: rgba(0, 0, 0, 0.397); padding:10px;border-radius:5px">
 				    		<div class="col-lg-8" style="line-height:28px;font-weight:400">
 				    		  	<ul>
+									<li>
+					    		  		帳號：<span>${userBean.account}</span>
+									</li>
+									<li>
+					    		  		姓名：<span>${userBean.name}</span>
+									</li>
+									<li>
+					    		  		性別：<span>${userBean.gender}</span>
+									</li>
+									<li>
+					    		  		生日：<span>${userBean.birthday}</span>
+									</li>
 									<li>
 					    		  		暱稱：<span class="edit" id="editNickname">${userBean.nickname}</span>
 									</li>
@@ -177,6 +193,15 @@
 				    			<label for="userImage">請選擇要上傳的圖片</label>  
 					            <input id="userImage" type="file" class="form-control-file" name="userImage"/>
 				    		</div>
+				    		</div> 
+				    		<div style="margin: 10px auto;display:flex; justify-content:center;">
+					    		<button v-on:click="confirmUpdate(${userBean.user_id })" class="btn btn-info" style="margin-right:10px;">保存</button>
+					    		<button class="btn btn-warning">取消</button>
+				    		</div>     				    	
+				    		<input type="hidden" name="nickname" id="nickname">
+				    		<input type="hidden" name="phone" id="phone">
+				    		<input type="hidden" name="address" id="address">
+				    		<input type="hidden" name="userIntro" id="userIntro">				    						    				    		
 				    	</form>
 				  </div>
             </div>
@@ -203,7 +228,27 @@
             	            	console.log(_self.works)
             	            }  
             	        });
-        			},        			  			
+        			},  
+        			confirmUpdate:function(userId){
+        				var nickname = $('#editNickname').text();
+        				var phone = $('#editPhone').text();
+        				var address = $('#editAddress').text();
+        				var intro = $('#editIntro').text();
+        				$("input[name='nickname']").val(nickname);
+        				$("input[name='phone']").val(phone);
+        				$("input[name='address']").val(address);
+        				$("input[name='userIntro']").val(intro);
+        				$.ajax({
+            			    type: "POST",    
+            			    cache:false,
+            			    url: $(this).attr('action'),            			    
+            			    data: $('#editUser').serialize(),            			    
+            			    dataType: 'json',            			  
+            	            success : function() { 
+            	          
+            	            }  
+            	        });				
+        			}
         		},        		
         	})
         	$("#userImage").change(function(){

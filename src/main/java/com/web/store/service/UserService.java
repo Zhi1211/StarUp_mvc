@@ -25,4 +25,8 @@ public interface UserService {
 	UserBean getUser2(String account);
 	
 	List<UserBean> getAllUsers();
+	
+	int updateUser(UserBean ub, long sizeInBytes);
+
+	int updateUser(UserBean userBean);
 }

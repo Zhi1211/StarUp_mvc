@@ -137,20 +137,9 @@
 				</div>
 				</div>
 				
-				
 	</div>
 
-
-
-
-
-
-
-
-
 <!-- first-box -->
-
-
 
 <!-- 		<div style="width: 500px; height: 650px; float: left;"> -->
 <!-- 			<img class="waimg-box" style="margin-left: 140px;" -->
@@ -170,9 +159,5 @@
 <!-- 			</P> -->
 
 <!-- 		</div> -->
-
-
-
-
 
 <jsp:include page="/fragment/footer.jsp" />

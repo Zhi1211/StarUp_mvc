@@ -62,4 +62,14 @@ public class UserServiceImpl implements UserService {
 		return dao.getAllUsers();
 	}
 
+	@Override
+	public int updateUser(UserBean ub, long sizeInBytes) {
+		return dao.updateUser(ub, sizeInBytes);
+	}
+
+	@Override
+	public int updateUser(UserBean userBean) {
+		return dao.updateUser(userBean);
+	}
+
 }

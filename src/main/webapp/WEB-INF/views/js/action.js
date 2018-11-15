@@ -12,7 +12,7 @@ $("input[name='user_past_employ_status']").on("click", function(){
 
 
 function doFirst() {
-	$("#uploadImg").change(function() {
+	$("#productImage").change(function() {
 		readURL(this);
 	});
 	function readURL(input) {

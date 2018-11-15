@@ -124,11 +124,39 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		@Override
-		public int updateUser(UserBean ub) {
-			// TODO Auto-generated method stub
+		public int updateUser(UserBean ub, long sizeInBytes) {
+			int n = 0;
+			String hql = "UPDATE UserBean SET nickname = :nickname,"
+				    			+ "phone = :phone, address = :address, photo = :photo, introduction = :introduction"
+				    			+ " WHERE user_id = :uid";
+			if(sizeInBytes == -1) {
+				n = updateUser(ub);
+				return n;
+			}
+			Session session = factory.getCurrentSession();
+			n = session.createQuery(hql).setParameter("nickname", ub.getNickname())
+															.setParameter("phone", ub.getPhone())
+															.setParameter("address", ub.getAddress())
+															.setParameter("photo", ub.getPhoto())
+															.setParameter("introduction", ub.getIntroduction())
+															.setParameter("uid", ub.getUser_id())
+															.executeUpdate();
 			return 0;
 		}
-
+		public int updateUser(UserBean ub) {
+			int n = 0;
+			String hql = "UPDATE UserBean SET nickname = :nickname,"
+				    			+ "phone = :phone, address = :address, introduction = :introduction"
+				    			+ " WHERE user_id = :uid";
+			Session session = factory.getCurrentSession();
+			n = session.createQuery(hql).setParameter("nickname", ub.getNickname())
+															.setParameter("phone", ub.getPhone())
+															.setParameter("address", ub.getAddress())
+															.setParameter("introduction", ub.getIntroduction())
+															.setParameter("uid", ub.getUser_id())
+															.executeUpdate();
+			return n;
+		}
 		@SuppressWarnings("unchecked")
 		@Override
 		public UserBean getUser(int id) {
@@ -189,4 +217,6 @@ public class UserDaoImpl implements UserDao {
 			ub = (list.isEmpty() ? null : list.get(0));
 			return ub;
 		}
+
+		
 }
