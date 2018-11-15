@@ -48,9 +48,9 @@
 		                                    {{work.worksIntro}}
 		                            </div>	                            
 	                            </div>
-	                            <div class="workComment">
-	                            	<a v-bind:href="testComment?worksId='+work.works_id/>" >留言測試</a>
-	                            </div>
+<!-- 	                            <div class="workComment"> -->
+<!-- 	                            	<a v-bind:href="'testComment?worksId=' + work.works_id" >留言測試</a> -->
+<!-- 	                            </div> -->
 	                    </div>
                 </div>
 				  </div>

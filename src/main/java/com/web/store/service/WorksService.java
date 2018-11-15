@@ -48,4 +48,5 @@ int getTotalPages();
 	 
 	 List<WorksBean> getWorksByUserId(int userId);
 	 
+	 int updateWorksComment(WorksBean bean);
 }

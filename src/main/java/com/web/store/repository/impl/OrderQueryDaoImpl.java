@@ -50,12 +50,15 @@ public class OrderQueryDaoImpl implements OrderQueryDao {
 		return list;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public OrderBean getShoppingOverOrder() {
+		List<OrderBean> list = null;
 		OrderBean ob = null;
-		String hql = "FROM OrderBean WHERE account = :account ORDER BY orderDate desc LIMIT 1";
+		String hql = "FROM OrderBean WHERE account = :account ORDER BY orderDate desc";
 		Session session = factory.getCurrentSession();
-		ob = (OrderBean)session.createQuery(hql).setParameter("account", account).getSingleResult();
+		list = session.createQuery(hql).setParameter("account", account).getResultList();
+		ob = list.get(0);
 		return ob;
 	}
 

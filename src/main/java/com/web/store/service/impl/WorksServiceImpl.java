@@ -106,4 +106,9 @@ public class WorksServiceImpl implements WorksService {
 	public List<WorksBean> getWorksByUserId(int userId) {		
 		return worksRepository.getWorksByUserId(userId);
 	}
+
+	@Override
+	public int updateWorksComment(WorksBean bean) {
+		return worksRepository.updateWorksComment(bean);
+	}
 }
