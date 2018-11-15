@@ -43,5 +43,5 @@ public interface  WorksRepository {
 
 	List<WorksBean> getWorksByUserId(int userId);
 	 
-	 
+	int updateWorksComment(WorksBean bean);
 }

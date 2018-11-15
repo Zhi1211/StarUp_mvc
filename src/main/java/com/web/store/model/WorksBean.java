@@ -2,6 +2,7 @@ package com.web.store.model;
 
 import java.io.Serializable;
 import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
@@ -41,10 +42,11 @@ public class WorksBean implements Serializable{
 	private MultipartFile  captionPoto_1;
 	private MultipartFile  captionPoto_2;
 	
+	private Clob comment;
 	
 	public WorksBean(Integer works_id, String worksName, String worksIntro, String worksImgName, Blob worksImg,
 		  String worksUpDate,String detail_1, String captionImgName_1, Blob captionImg_1, String detail_2, 
-		   String captionImgName_2, Blob captionImg_2,Integer user_Id, String author) {
+		   String captionImgName_2, Blob captionImg_2,Integer user_Id, String author, Clob comment) {
 		super();
 		this.works_id = works_id;
 		this.worksName = worksName;
@@ -60,6 +62,7 @@ public class WorksBean implements Serializable{
 		this.captionImg_2 = captionImg_2;
 		this.user_Id=user_Id;
 		this.author = author;
+		this.comment = comment;
 	}
 	
 	public WorksBean() {}
@@ -212,6 +215,14 @@ public class WorksBean implements Serializable{
 
 	public void setCaptionPoto_2(MultipartFile captionPoto_2) {
 		this.captionPoto_2 = captionPoto_2;
+	}
+
+	public Clob getComment() {
+		return comment;
+	}
+
+	public void setComment(Clob comment) {
+		this.comment = comment;
 	}
 	
 	

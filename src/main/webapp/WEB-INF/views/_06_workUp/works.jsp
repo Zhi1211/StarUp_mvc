@@ -92,57 +92,54 @@
 				
 					<div class="form-group" style="width: 450px; height: 700px;margin-left: 125px;">
 
-			<form action="saveComment" method="POST">
+			<form action="updateComment" method="POST">
 			<p class="u-dis" style="margin-top: 20px;">留言</p>
-			<textarea class="form-control" placeholder="新增留言 . . ."
+			<textarea class="form-control" placeholder="新增留言 . . ." name="newComment"
 				id="exampleTextarea" rows="9" style="width: 600px; height: 200px;"></textarea>
+			<input type="hidden" name="workId" value="${oneWork.works_id}">
 			<input type="submit" class="btn btn-danger" name="submit" id="submit"
 				value="send" style="width: 600px; margin-top: 20px;">
 			</form>
 				
-				   <div style="margin-left:650px; margin-top:-250px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);">
-				     <p>Simple  喜歡這個作品!!!</p>
+				<c:forEach var="workComment" items="${commentsElement}">
+					<div style="margin-left:650px; margin-top:-250px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);">
+				    	<p>${workComment.userNickName}   ${workComment.comment}</p>  
 				   
 				   </div>
+				</c:forEach>
+				
+<!-- 				   <div style="margin-left:650px; margin-top:-250px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);"> -->
+<!-- 				     <p>Simple  喜歡這個作品!!!</p> -->
 				   
-				     <div style="margin-left:650px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);">
-				     <p>Kitty  Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur</p>
+<!-- 				   </div> -->
 				   
-				   </div>
+<!-- 				     <div style="margin-left:650px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);"> -->
+<!-- 				     <p>Kitty  Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur</p> -->
 				   
-				     <div style="margin-left:650px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);">
-				     <p>Arrow  ipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit amet</p>
+<!-- 				   </div> -->
 				   
-				   </div>
+<!-- 				     <div style="margin-left:650px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);"> -->
+<!-- 				     <p>Arrow  ipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit amet</p> -->
+				   
+<!-- 				   </div> -->
 				   
 				   
-				    <div style="margin-left:650px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);">
-				     <p>Arrow  ipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit amet</p>
+<!-- 				    <div style="margin-left:650px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);"> -->
+<!-- 				     <p>Arrow  ipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit amet</p> -->
 				   
-				   </div>
+<!-- 				   </div> -->
 				   
-				    <div style="margin-left:650px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);">
-				     <p>Arrow  ipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit amet</p>
+<!-- 				    <div style="margin-left:650px; width:650px;height: 50px;background-color: rgba(255, 255, 255, 0.2);box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);"> -->
+<!-- 				     <p>Arrow  ipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit ametipsum dolor sit amet consectetur Lorem ipsum dolor sit amet</p> -->
 				   
-				   </div>
+<!-- 				   </div> -->
 				  
 				</div>
 				</div>
 				
-				
 	</div>
 
-
-
-
-
-
-
-
-
 <!-- first-box -->
-
-
 
 <!-- 		<div style="width: 500px; height: 650px; float: left;"> -->
 <!-- 			<img class="waimg-box" style="margin-left: 140px;" -->
@@ -162,9 +159,5 @@
 <!-- 			</P> -->
 
 <!-- 		</div> -->
-
-
-
-
 
 <jsp:include page="/fragment/footer.jsp" />

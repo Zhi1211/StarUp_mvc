@@ -51,6 +51,9 @@
                                     <a v-bind:href="'testComment?worksId='+work.works_id" >留言測試</a>
                                 </div>                            
 	                            </div>
+<!-- 	                            <div class="workComment"> -->
+<!-- 	                            	<a v-bind:href="'testComment?worksId=' + work.works_id" >留言測試</a> -->
+<!-- 	                            </div> -->
 	                    </div>
                 </div>
 				  </div>
@@ -182,6 +185,7 @@
 				  </div>
             </div>
         </div> 
+        </div>
         <script src="js/jquery-3.3.1.min.js"></script>   
         <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
         <script>
@@ -247,6 +251,5 @@
         		$(this).prop('contenteditable',false)
         	})
         </script>
-</body>
 <jsp:include page="/fragment/footer.jsp" />
 

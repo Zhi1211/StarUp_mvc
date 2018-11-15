@@ -220,4 +220,19 @@ public class WorksRepositoryImpl implements WorksRepository {
 			list = session.createQuery(hql).setParameter("uid", userId).getResultList();
 			return list;
 		}
+
+		@Override
+		public int updateWorksComment(WorksBean bean) {
+			int n = 0;
+			String hql = "UPDATE WorksBean SET " 
+					+" comment = :comment"
+					+" WHERE works_id = :works_id";
+			Session session = factory.getCurrentSession();
+			n = session.createQuery(hql).setParameter("comment", bean.getComment())
+										.setParameter("works_id", bean.getWorks_id())
+										.executeUpdate();
+			n++;
+			System.out.println("更新一筆留言資料成功，n = "+n);
+			return n;
+		}
 }

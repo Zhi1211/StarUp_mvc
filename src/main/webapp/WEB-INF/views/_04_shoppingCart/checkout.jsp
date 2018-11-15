@@ -7,6 +7,7 @@
 <jsp:include page="/fragment/header.jsp" />
 <div class="content container-fluid"
 	style="padding: 0px; display: flex; flex-wrap: wrap;">
+	<form action="/processShoppingOrder/ORDER/orderReady" name="formCheckout">
 		<div class="checkoutBox container"
 			style="width: 100%; border-radius: 5px; background-color: rgb(255, 255, 255); box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); margin: 20px 0px 5px 150px; padding: 20px">
 			<h5>訂單資訊</h5>
@@ -69,7 +70,7 @@
 				</tr>
 			</table>
 		</div>
-<!-- 	</form> -->
+	</form>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
 	<!-- 取消訂單 -->
