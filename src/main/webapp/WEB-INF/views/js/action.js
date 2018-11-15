@@ -2,8 +2,9 @@
 //  作品進階發布隱藏
 
 
-$("input[name='user_past_employ_status']").on("click", function(){
-    $(".template").toggle(this.value === "false" && this.checked);
+$("input[name='moreWorksInfo']").on("click", function(){
+//    $(".template").toggle(this.value === "true" && this.checked);
+    $('#advancedForm').toggleClass("hidden");
 });
 
 

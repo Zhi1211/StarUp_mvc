@@ -55,6 +55,18 @@ public class ProductController {
 			model.addAttribute("products", list);			
 			return "/_03_product/listProducts";
 		}
+		@RequestMapping("/type_products")
+		public String listTypeProduct(Model model, @RequestParam("type") String type) {
+			List<ProductBean> list = prodService.getTypeProds(type);
+			model.addAttribute("products", list);			
+			return "/_03_product/listProducts";
+		}
+		@RequestMapping("/category_products")
+		public String listCategoryProduct(Model model, @RequestParam("category") String cateory) {
+			List<ProductBean> list = prodService.getCategoryProds(cateory);
+			model.addAttribute("products", list);			
+			return "/_03_product/listProducts";
+		}
 		@RequestMapping(value="/getProductPicture/{prodId}", method = RequestMethod.GET)
 		public ResponseEntity<byte[]> getProductPicture
 		(HttpServletResponse resp,@PathVariable Integer prodId){

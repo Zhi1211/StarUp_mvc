@@ -264,12 +264,12 @@ public class ProductRepositoryImpl implements ProductRepository{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductBean> getCategoryProds() {
+	public List<ProductBean> getCategoryProds(String cateory) {
 		List<ProductBean> list = null;
-		System.out.println("開始查詢分類商品" + prodCategory);
+		System.out.println("開始查詢分類商品" + cateory);
 		String hql = "FROM ProductBean p WHERE p.prodCategory = :category";
 		Session session = factory.getCurrentSession();
-		list = session.createQuery(hql).setParameter("category", prodCategory).getResultList();
+		list = session.createQuery(hql).setParameter("category", cateory).getResultList();
 		System.out.println(list);
 		return list;
 	}
@@ -286,7 +286,7 @@ public class ProductRepositoryImpl implements ProductRepository{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductBean> getTypeProds() {
+	public List<ProductBean> getTypeProds(String prodType) {
 		List<ProductBean> list = null;
 		System.out.println("開始查詢類別商品" + prodType);
 		String hql = "FROM ProductBean p WHERE p.prodType = :type";
@@ -295,4 +295,5 @@ public class ProductRepositoryImpl implements ProductRepository{
 		System.out.println(list);
 		return list;
 	}
+	
 }

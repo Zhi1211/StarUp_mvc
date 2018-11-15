@@ -1,10 +1,11 @@
 .u-container {
-	border-radius: 20px;
-	box-shadow: 3px 3px 3px rgb(2, 14, 53);
-	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 5px;
+	box-shadow: 3px 3px 3px rgb(2, 14, 53); 
+	background-color: rgba(0, 0, 0, 0.397);
 	height: 730px;
 	width: 100%;
-	border: 2px solid #a492b4;
+	padding:20px;
+	/* border: 2px solid #a492b4; */
 }
 
 .dis {
@@ -47,18 +48,19 @@
 	border: grey dashed 2px;
 	width: 100%;
 	height: 250px;
-	overflow: hidden;
-	margin-left: 30px;
+	overflow: hidden;	
 }
 
 .u-Advanced {
-	margin-top: 30px;
-	border-radius: 20px;
+	padding:20px;
+	margin-top: 20px;
+	border-radius:5px;
 	box-shadow: 3px 3px 3px rgb(2, 14, 53);
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(0, 0, 0, 0.397);
 	height:100%;
 	width: 100%;
-	border: 2px solid #a492b4;
+
+/* 	border: 2px solid #a492b4; */
 }
 
 .aimg-box {
@@ -67,4 +69,8 @@
 	height: 270px;
 	overflow: hidden;
 	margin: 0 auto;
+}
+
+.hidden {
+    display:none;
 }
