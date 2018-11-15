@@ -130,7 +130,7 @@ public class ProductController {
 			ProductBean pb = new ProductBean();
 			model.addAttribute("product", prodService.getProductById(id));
 			model.addAttribute("productBean", pb);
-	    	return "/_20_productMaintain/ProductMaintainPage";
+	    	return "_20_productMaintain/ProductMaintainPage";
 		}
 		@RequestMapping(value = "/modifyProduct", method = RequestMethod.POST,
 				produces="text/html;charset=UTF-8")

@@ -25,11 +25,13 @@ public interface UserDao {
 		
 		int deleteUser(int pk);
 
-		int updateUser(UserBean ub);
+		int updateUser(UserBean ub, long sizeInBytes);
 
 		void updateUnpaidOrderAmount(OrderBean ob);
 
 		UserBean queryUser(String id);
 
 		UserBean getUser2(String account);
+
+		int updateUser(UserBean userBean);
 }

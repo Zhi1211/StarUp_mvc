@@ -62,4 +62,13 @@ public class PersonalController {
 		byte[] worksJson = new Gson().toJson(list).getBytes("UTF-8");
 		return worksJson;	
 	}
+	@RequestMapping(value="/testComment")
+    public String testComment(Model model, @RequestParam("worksId") Integer worksId) {
+        WorksBean wb = null;
+        if (worksId != null) {
+            wb = worksService.getWorksById(worksId);            
+        }
+        model.addAttribute("oneWork", wb);
+        return "_06_workUp/works";
+    }
 }
