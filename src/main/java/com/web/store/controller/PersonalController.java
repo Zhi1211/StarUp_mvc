@@ -115,8 +115,7 @@ public class PersonalController {
 	/* 測試存入留言 */
 	@RequestMapping(value="/updateComment", params= {"newComment", "workId"}, method=RequestMethod.POST, 
 			produces="text/html;charset=UTF-8")
-	@ResponseBody
-	public void updateComment(HttpServletRequest request, Model model, 
+	public String updateComment(HttpServletRequest request, Model model, 
 			@RequestParam("workId")String workIdStr, 
 			@RequestParam("newComment")String newComment) {
 		WorksBean wb = null;
@@ -149,5 +148,6 @@ public class PersonalController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return "redirect:/testComment";
 	}
 }

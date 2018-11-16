@@ -1,5 +1,6 @@
 package com.web.store.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -21,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.web.store.model.OrderBean;
 import com.web.store.model.OrderItemBean;
 import com.web.store.model.OrderedItem;
+import com.web.store.model.ProductBean;
 import com.web.store.model.ShoppingCart;
 import com.web.store.model.UserBean;
 import com.web.store.service.OrderService;
@@ -270,6 +273,28 @@ public class ShoppingController {
 		model.addAttribute("memberOrders", list);
 		return "/_04_shoppingCart/shoppingOrderList";
 	}
+//	@RequestMapping(value="/showShoppingOrderListA/{account}", produces= {"application/json"}, method=RequestMethod.GET)
+//	@ResponseBody
+//	public List<OrderBean>  showShoppingOrderListAjax(@PathVariable(value="account")String account,HttpServletRequest request) throws UnsupportedEncodingException {
+//		System.out.println("11111");
+////		UserBean ub = (UserBean)request.getSession(false).getAttribute("LoginOK");
+//		orderService.setAccount(account);
+//		List<OrderBean> list =  orderService.getMemberOrders();
+//		
+//		return list;
+//	}
+	@RequestMapping(value="/orderListA/{account}", produces= {"application/json"})
+	@ResponseBody
+	public byte[]  showShoppingOrderListAjax(@PathVariable(value="account")String account,HttpServletRequest request, Model model) throws UnsupportedEncodingException {
+		System.out.println("11111");
+//		UserBean ub = (UserBean)request.getSession(false).getAttribute("LoginOK");
+		orderService.setAccount(account);
+		List<OrderBean> list =  orderService.getMemberOrders();
+		byte[] orderJson = new Gson().toJson(list).getBytes("UTF-8");
+		System.out.println(orderJson);
+		return orderJson;
+	}
+	
 	
 	@RequestMapping(value="/showOneOrderDetail/{orderNo}/anOrderShow")
 	public String showOneOrderDetail(HttpServletRequest request, Model model, 

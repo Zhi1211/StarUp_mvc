@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 //本類別存放訂單資料
 @Entity
@@ -25,7 +27,9 @@ public class OrderBean {
 	String shippingAddress;	//出貨地址
 	String bno;		//發票統一編號
 	String invoiceTitle;	//發票抬頭
+	@JsonIgnore
 	Date orderDate;	//訂貨日期
+	@JsonIgnore
 	Date shippingDate;	//出貨日期
 	String cancelTag;	//取消標籤
 	Set<OrderItemBean> items = new LinkedHashSet<>();

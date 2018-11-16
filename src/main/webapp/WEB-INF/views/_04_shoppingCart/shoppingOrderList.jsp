@@ -13,19 +13,19 @@
 			<th>訂單編號</th>
 			<th>訂購日期</th>
 			<th>總金額</th>
-			<th>送貨地址</th>
+			<th>送貨地址</th>  
 		</tr>
 		
 		<c:forEach var="anOrderBean" varStatus="stat" items="${memberOrders}">
 			<tr height="30">
-				<td width="86" align="center">
-					<a href="<c:url value='/showOneOrderDetail/${anOrderBean.orderNo}/anOrderShow' />" >
+				<td width="86">
+					<a class="text-warning" href="<c:url value='/showOneOrderDetail/${anOrderBean.orderNo}/anOrderShow' />" >
 						${anOrderBean.orderNo}
 					</a>
-				</td>
-				<td width="100" align="center">${anOrderBean.orderDate}</td>
-				<td width="80" align="right">${anOrderBean.totalAmount}</td>
-				<td width="400" align="left">&nbsp;${anOrderBean.shippingAddress}</td>
+				</td>    
+				<td width="100">${anOrderBean.orderDate}</td>
+				<td width="80">${anOrderBean.totalAmount}</td>
+				<td width="400">&nbsp;${anOrderBean.shippingAddress}</td>
 			</tr>
 		</c:forEach>
 	</table>
