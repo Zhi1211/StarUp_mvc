@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,11 +28,12 @@ public class OrderBean {
 	String shippingAddress;	//出貨地址
 	String bno;		//發票統一編號
 	String invoiceTitle;	//發票抬頭
-	@JsonIgnore
 	Date orderDate;	//訂貨日期
-	@JsonIgnore
+	@Transient
+	String orderDateStr;
 	Date shippingDate;	//出貨日期
 	String cancelTag;	//取消標籤
+	@JsonIgnore
 	Set<OrderItemBean> items = new LinkedHashSet<>();
 	
 	public OrderBean() {
@@ -135,5 +137,14 @@ public class OrderBean {
 	public void setCancelTag(String cancelTag) {
 		this.cancelTag = cancelTag;
 	}
+
+	public String getOrderDateStr() {
+		return orderDateStr;
+	}
+
+	public void setOrderDateStr(String orderDateStr) {
+		this.orderDateStr = orderDateStr;
+	}
+	
 	
 }

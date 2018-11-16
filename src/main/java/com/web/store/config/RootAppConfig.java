@@ -70,11 +70,11 @@ public class RootAppConfig {		//RootApplicationContext_JavaConfig
 		factory.setHibernateProperties(additionalProperties());
 		return factory;
 	}
-
+	
 	private Properties additionalProperties() {
-		Properties p = new Properties();
-		p.put("hibernate.dialect", org.hibernate.dialect.MySQL55Dialect.class);
-		p.put("hbm2ddl.auto", "update");
+		Properties p = new Properties();					
+		p.put("hibernate.dialect", org.hibernate.dialect.MySQL5InnoDBDialect.class);
+		p.put("hibernate.hbm2ddl.auto", "update");
 		p.put("show_sql", Boolean.TRUE);
 		p.put("format_sql", Boolean.TRUE);
 		p.put("default_batch_fetch_size", 10);

@@ -29,9 +29,9 @@
             <div class="mainContent col-lg-9" id="personalMainContent" style="padding:15px; border-radius:10px;">       
             <ul class="nav nav-tabs">
 				  <li class="active"><a data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-info btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
-				  <li><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-primary btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>
+				  <li><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-primary btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>  
 				  <li><a data-toggle="tab" href="#post"><button type="button" class="btn btn-warning btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
-				  <li><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-danger btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">訂單查詢</button></a></li>
+				  <li><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-danger btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">購物</button></a></li>
 				  <li><a data-toggle="tab" href="#maintain"> <button type="button" class="btn btn-success btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
 			</ul>				
 				<div class="tab-content" style="margin:20px 0px 70px 0px;">  
@@ -119,39 +119,36 @@
                     </form>
                 </div>
 				  </div>               
-<!-- <<<<<<< HEAD -->
 				  <div id="orders" class="tab-pane fade">
 				    <h3>訂單查詢</h3>
-				      <div class="content container-fluid" style="display: flex; padding: 0px;">
-						<table class="table table-striped table-dark" v-for="(order, index) in orders">
-<!-- 							<tr height="50"> -->				
-<%-- 								<th colspan="4" align="center">${LoginOK.nickname}的訂購紀錄</th> --%>
-<!-- 							</tr> -->
-<!-- 							<tr height="36"> -->
-<!-- 								<th>訂單編號</th> -->
-<!-- 								<th>訂購日期</th> -->
-<!-- 								<th>總金額</th> -->
-<!-- 								<th>送貨地址</th>   -->
-<!-- 							</tr> -->
-							
-								<tr height="30">
-									<td width="86">
-										<a class="text-warning" v-bind:href="'/showOneOrderDetail/'+ order.orderNo + '/anOrderShow'" >
+				      <div class="content container-fluid" style="padding: 0px;">
+						<table class="table table-striped table-dark" style="margin-bottom:2px;">			   			
+							<tr>
+								<td width="150">訂單編號</td>
+								<td width="225">訂購日期</td>
+								<th width="150">總金額</td>
+								<td>送貨地址</td>     
+								<td width="70"></td>     
+							</tr>    
+ 						</table>
+						<table class="table table-striped table-dark" v-for="(order, index) in orders" style="margin-bottom:2px;">							
+								<tr height="30" style="margin-bottom:2px;">   
+									<td width="150">
+										<a class="text-warning" v-bind:href="'showOneOrderDetail/'+ order.orderNo + '/anOrderShow'" >
 											{{order.orderNo}}
-										</a>
+										</a>    
 									</td>    
-									<td width="100">{{order.orderDate}}</td>
-									<td width="80">{{order.totalAmount}}</td>
-									<td width="400">&nbsp;{{order.shippingAddress}}</td>
+									<td width="225">{{order.orderDateStr}}</td>  
+									<td width="150">{{order.totalAmount}}</td>
+									<td>&nbsp;{{order.shippingAddress}}</td>
+									<td><button v-on:click="showOrderDetail ">查看明細</button></td>
+									<tr>
+										<td></td>
+									</tr>
 								</tr>
 							
 						</table>
 					</div>
-<!-- ======= -->
-<!-- 				  <div id="collection" class="tab-pane fade"> -->
-<!-- 				    <h3>收藏</h3> -->
-<!-- 				    <p>Some content in menu 2.</p> -->
-<!-- >>>>>>> f4b72a366aeb19fc66a0a00934244f08f45abc3a -->
 				  </div>
 				  <div id="maintain" class="tab-pane fade">
 				    <h3>修改個人資訊</h3>
@@ -221,6 +218,8 @@
         		data:{
         			works:[],
         			orders:[],
+        			orderDateStr:'',
+        			orderDetail:[],
         		},        	 	
         		methods:{
         			getWorks:function(userId){        			
@@ -256,14 +255,14 @@
             	            }  
             	        });				
         			},
-        			showShoppingOrderList:function(){
+        			showShoppingOrderList:function(){        				
         				var _self = this;
         				$.ajax({
-            			    type: "GET",    
-            			    url:'orderListA',            			      			    
+            			    type: "GET",      
+            			    url:'orderListAjax',            			      			    
             			    dataType: 'json',            			  
             	            success : function(data) { 
-            	          		_self.orders = data;
+            	          		_self.orders = data;            	          
             	            }  
             	        });	
         			},
