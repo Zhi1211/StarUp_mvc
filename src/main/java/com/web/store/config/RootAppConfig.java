@@ -66,7 +66,7 @@ public class RootAppConfig {		//RootApplicationContext_JavaConfig
 	public LocalSessionFactoryBean sessionFactory () {
 		LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
 		factory.setDataSource(dataSource());
-		factory.setPackagesToScan(new String[] {"com.web.store"});
+		factory.setPackagesToScan(new String[] {"com.web.store", "com.web.store.model"});
 		factory.setHibernateProperties(additionalProperties());
 		return factory;
 	}
