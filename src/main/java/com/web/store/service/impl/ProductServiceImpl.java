@@ -127,8 +127,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<ProductBean> getCategoryProds() {
-		return prodRepository.getCategoryProds();
+	public List<ProductBean> getCategoryProds(String cateory) {
+		return prodRepository.getCategoryProds(cateory);
 	}
 
 	@Override
@@ -142,8 +142,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<ProductBean> getTypeProds() {
-		return prodRepository.getTypeProds();
+	public List<ProductBean> getTypeProds(String prodType) {
+		return prodRepository.getTypeProds(prodType);
 
 	}
 

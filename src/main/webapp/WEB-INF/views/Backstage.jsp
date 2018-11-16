@@ -24,7 +24,7 @@
 			    <a class="nav-link" data-toggle="tab" href="#user" v-on:click="getUsers">會員管理</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" data-toggle="tab" href="#order">訂單資料</a>
+			    <a class="nav-link" data-toggle="tab" href="#order" v-on:click="getAllOrders">訂單資料</a>
 			  </li>
 			  <li class="nav-item">
 			    <a class="nav-link" data-toggle="tab" href="#mail">系統信件</a>
@@ -146,7 +146,18 @@
 				</ul> 
 			  </div>
 			  <div class="tab-pane fade" id="order">
-			    <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
+			    <div class="orderItem" v-for="order in orders">
+			    	<ul>
+			    		<li>訂單編號：{{order.orderNo}}</li>
+			    		<li>會員帳號：{{order.account}}</li>
+			    		<li>訂單金額：{{order.totalAmount}}</li>
+			    		<li>出貨地址：{{order.shippingAddress}}</li>
+			    		<li>發票抬頭：{{order.bno}}</li>
+			    		<li>統一編號：{{order.invoiceTitle}}</li>
+			    		<li>訂貨日期：{{order.orderDate}}</li>
+			    		<li>預計出貨日期：{{}order.shippingDate}</li>
+			    	</ul>
+			    </div>
 			  </div>
 			  <div class="tab-pane fade" id="mail">
 			    <p> denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
@@ -167,7 +178,8 @@
         		el:'#display',  
         		data: {
         			products: [],
-        			users:[],        			
+        			users:[],      
+        			orders:[],
         		},
         		created: function(){    
     				var _self = this;
@@ -222,9 +234,7 @@
     					        success: function() {    					        	
     					        	alert('刪除成功');     					        	
     					        }
-
     					    });
-        					  
         				}
         			},
         			/*  */
@@ -238,6 +248,16 @@
         					}
         				})
         			},
+        			/*  */
+        			getAllOrders: function(){
+        				$.ajax({
+        					type:"GET",
+        					url:"listAllOrders",
+        					success:function(data){
+        						_self.orders = data;
+        					}
+        				})
+        			}
         			},
         			
         		}) 

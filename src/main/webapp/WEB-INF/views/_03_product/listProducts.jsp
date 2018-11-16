@@ -32,20 +32,20 @@
             <div class="section col-lg-2" style="width:100px; padding: 20px 0px;">
             <!-- 設定管理者帳號starup@gamil.com才能進入商城的 維護-商品管理ProductMaintainList.jsp-->
                 <nav class="nav flex-column nav-tabs">
-                    <a class="nav-link active" href="<c:url value='/_03_listProducts/DisplayPageProducts'/>">分類商品</a>
-                    <a class="nav-link" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&prod_type=文創周邊'/>" style="color:#dfc2ef; font-weight:400;">
+                    <a class="nav-link active" href="products">所有商品</a>
+                    <a class="nav-link" href="<c:url value='/type_products?type=文創周邊'/>" style="color:#dfc2ef; font-weight:400;">
                     <i class="fas fa-gift"></i>  文創周邊</a>
                     		
-                    			<a class="dropdown-item" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&category=暖心'/>">暖心小物</a>
-    							<a class="dropdown-item" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&category=城市'/>">城市紋理</a>
-    							<a class="dropdown-item" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&category=質感'/>">質感選物</a>
+                    			<a class="dropdown-item" href="<c:url value='/category_products?category=暖心'/>">暖心</a>
+    							<a class="dropdown-item" href="<c:url value='/category_products?category=城市'/>">城市</a>
+    							<a class="dropdown-item" href="<c:url value='/category_products?category=質感'/>">質感</a>
     						
-                    <a class="nav-link" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&prod_type=原創桌遊'/>" style="color:#dfc2ef; font-weight:400;">
-                    <i class="fas fa-user-astronaut"></i>  原創桌遊</a>
+                    <a class="nav-link" href="<c:url value='/type_products?type=原創桌遊'/>" style="color:#dfc2ef; font-weight:400;">
+                    <i class="fas fa-user-astronaut"></i>  原創桌遊</a> 
                     		
-                    			<a class="dropdown-item" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&category=1~3人'/>">建議遊玩：1 ~ 3人</a>
-    							<a class="dropdown-item" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&category=3~5人'/>">建議遊玩：3 ~ 5人</a>
-    							<a class="dropdown-item" href="<c:url value='/_03_listProducts/DisplayPageProducts?page=1&category=5~10人'/>">建議遊玩：5 ~ 10人</a>
+                    			<a class="dropdown-item" href="<c:url value='/category_products?category=1~3人'/>">建議遊玩：1 ~ 3人</a>
+    							<a class="dropdown-item" href="<c:url value='/category_products?category=3~5人'/>">建議遊玩：3 ~ 5人</a>
+    							<a class="dropdown-item" href="<c:url value='/category_products?category=5~10人'/>">建議遊玩：5 ~ 10人</a>
     						
                 </nav>
            
@@ -111,6 +111,7 @@
           	   </script>	
           
                 <!-- 頁數 -->
+
 <!--                 <div id="product" style="display: flex; width: 100%; justify-content: center; "> -->
 <!--                         <ul class="pagination"> -->
 <%--                        <c:set var="page" value="${pageNo}"/> --%>

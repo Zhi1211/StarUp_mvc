@@ -303,4 +303,10 @@ public class ShoppingController {
 		model.addAttribute("memberOrder", ob);
 		return "/_04_shoppingCart/oneOrderDetail";
 	}
+	
+	@RequestMapping(value="/listAllOrders")
+	public ResponseEntity<List<OrderBean>> listAllOrders(){
+		List<OrderBean> list = orderService.getAllOrders();
+		return new ResponseEntity<List<OrderBean>>(list,HttpStatus.OK);
+	}
 }

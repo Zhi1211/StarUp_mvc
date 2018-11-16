@@ -55,11 +55,11 @@ public interface ProductService {
 
 	void setTagName(String tagName);
 	
-	List<ProductBean> getCategoryProds();
+	List<ProductBean> getCategoryProds(String cateory);
 	
 	void setProdCategory(String prodCategory);
 
 	void setProdType(String prodType);
 	
-	List<ProductBean> getTypeProds();
+	List<ProductBean> getTypeProds(String prodType);
 }

@@ -25,8 +25,8 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div class="mainContent col-lg-9" id="personalMainContent">   
+            </div>     
+            <div class="mainContent col-lg-9" id="personalMainContent" style="padding:15px; border-radius:10px;">       
             <ul class="nav nav-tabs">
 				  <li class="active"><a data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-info btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
 				  <li><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-primary btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>
@@ -34,9 +34,9 @@
 				  <li><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-danger btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">訂單查詢</button></a></li>
 				  <li><a data-toggle="tab" href="#maintain"> <button type="button" class="btn btn-success btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
 			</ul>				
-				<div class="tab-content" style="margin:20px 0px 70px 0px;">
+				<div class="tab-content" style="margin:20px 0px 70px 0px;">  
 				  <div id="works" class="tab-pane fade in active">
-				    <h3>作品</h3>
+				    <!-- <h3>作品</h3> -->
 				     <div class="works">                 
 	                    <div class="pieceOfWork" v-for="work in works">
 	                            <h6 style="display:block">{{work.worksName}}</h6>    
@@ -55,89 +55,61 @@
                 </div>
 				  </div>
 				  <div id="mail" class="tab-pane fade">
-				    <h3>信件</h3>
+				   <!--  <h3>信件</h3> -->
 				    <p>Some content.</p>
 				  </div>
 				  <div id="post" class="tab-pane fade">
-				    <h3>發表</h3>
+				    <!-- <h3>發表</h3> -->
 				 		<!-- 上傳作品頁面 -->
-                <div class="u-box box"
-                    style="width: 100%; height: 100%; margin: 0 auto;">
-                    <form ENCTYPE="multipart/form-data" method="POST"
-                        action="<c:url value='works.do' />" id="works.do">
+                <div class="u-box box" style="width: 100%; height: 100%; margin: 0 auto;">
+                    <form ENCTYPE="multipart/form-data" method="POST" action="<c:url value='works.do' />" id="works.do">
                         <div class="u-container container">
-
-                            <div class="col-xs-0"
-                                style="width: 100%; height: 750px; margin-top: 20px;">
-
-
-                                <p class="u-title">作品名稱</p>
-
-                                <div class="form-group" style="margin-right: 350px;">
-                                    <input type="text" class="form-control" name="worksName"
-                                        id="worksName" placeholder="請輸入作品名">
-
-                                    <div class="img-box" id="dropZone"
-                                        style="margin-top: 50px; margin-bottom: 20px; margin-left: 50px;">
-                                        <img alt="" src="" id="previewImg_1" style="width: 100%;">
-                                    </div>
-                                    <span style="float: left; margin-left: 50px;"> <input
-                                        type="file" class="form-control-file" name="worksImg"
-                                        id="worksImg" id="exampleInputFile"
-                                        aria-describedby="fileHelp">
-
-                                    </span>
+                            <div class="col-xs-0" style="width: 100%;">                               
+                                <div class="form-group">
+                                <label for="worksName">作品名稱</label>
+                                <input type="text" class="form-control col-lg-6" name="worksName"  id="worksName" placeholder="請輸入作品名">
+                                 <div style="border:2px dashed grey; height:304px;">
+                                        <img alt="" src="" id="previewImg_1" style="max-height: 300px;">
+                                 </div>                               
+                                <!--  <span style="float: left; margin-left: 50px;"> --> 
+                                   <input type="file" class="form-control-file" name="worksImg" id="worksImg" id="exampleInputFile"  aria-describedby="fileHelp">
+                                 <!-- </span> -->
                                 </div>
-                                <br>
-
-                                <p class="u-dis" style="margin-top: 20px;">作品介紹</p>
-                                <textarea class="form-control" name="worksIntro" id="worksIntro"
-                                    rows="9" style="width: 450px; height: 150px;"></textarea>
-
+                                
+                                <label for="worksIntro">作品介紹</label>
+                                <textarea class="form-control" name="worksIntro" id="worksIntro" rows="9" style="width: 100%; height: 20%;"></textarea>
                             </div>
-
                         </div>
                         <div style="margin:20px;">
-                            發布更多作品<input type="radio" value="false"
-                                name="user_past_employ_status" id="pemp_yes" checked style="margin-left: 30px;"><label
-                                for="pemp_yes"style="margin-left: 5px;">Yes</label> <input style="margin-left: 20px;" type="radio" value="true"
-                                name="user_past_employ_status" id="pemp_no"><label
-                                for="pemp_no" style="margin-left: 5px;">No</label>
+                            上傳更多照片和敘述<input type="checkbox" value="true"
+                                name="moreWorksInfo" id="pemp_yes"
+                                style="margin-left: 30px;"> <label for="yes"
+                                style="margin-left: 5px;">Yes</label> 
                         </div>
-                        <div class="u-Advanced container template">
+                        <div class="u-Advanced container template hidden" id="advancedForm">
                             <!-- first-box -->
-                            <div class="aimg-box col-xs-0" id="dropZone"
-                                style="margin-top: 50px; margin-bottom: 20px; margin-left: 50px;">
-                                <img alt="" src="" id="previewImg_2" style="width: 100%">
+                            <div id="firstBox">
+		                        <label for="detail_1">照片｜敘述（一）</label>
+	                            <div style="display:flex;">
+		                            <textarea class="form-control" name="detail_1" id="detail_1" rows="9" style="width: 450px; height: 150px;"></textarea>
+		                                <div>
+			                                <img alt="" src="" id="previewImg_2" style="max-width:300px; margin-left:5px;">                
+			                          		<input type="file" class="form-control-file" name="captionImg_1" id="captionImg_1" aria-describedby="fileHelp" style="margin-left:5px">
+		                                </div>
+	                            </div>
                             </div>
-                            <span style="margin-left: 50px;"> <input type="file"
-                                class="form-control-file" name="captionImg_1" id="captionImg_1"
-                                id="exampleInputFile" aria-describedby="fileHelp">
-
-                            </span><br>
-                            <p class="dis-font" style="margin-top: 20px; margin-left: 50px;">作品★敘述</p>
-                            <textarea class="form-control" name="detail_1" id="detail_1"
-                                rows="9"
-                                style="width: 450px; height: 150px; margin-left: 150px;"></textarea>
-
+                            <hr>  
                             <!-- second-box -->
-                            <div style="width: 500px; height: 650px;">
-                                <div class="aimg-box box col-xs-0" id="dropZone"
-                                    style="margin-top: 50px; margin-bottom: 20px;">
-                                    <img alt="" src="" id="previewImg_3" style="width: 100%">
-                                </div>
-
-                                <span style="float: left; margin-left: 50px;"> <input
-                                    type="file" class="form-control-file" name="captionImg_2"
-                                    id="captionImg_2" id="exampleInputFile"
-                                    aria-describedby="fileHelp">
-                                </span><br>
-                                <p class="dis-font" style="margin-top: 20px; margin-left: 50px;">作品★敘述</p>
-                                <textarea class="form-control" name="detail_2" id="detail_2"
-                                    rows="9"
-                                    style="width: 450px; height: 150px; margin-left: 50px;"></textarea>
-                            </div>
-
+                            <div id="secondBox">
+		                        <label for="detail_2">照片｜敘述（二）</label>
+	                            <div style="display:flex;">
+		                            <textarea class="form-control" name="detail_2" id="detail_2" rows="9" style="width: 450px; height: 150px;"></textarea>
+		                                <div>
+			                                <img alt="" src="" id="previewImg_3" style="max-width:300px; margin-left:5px;">                
+			                          		<input type="file" class="form-control-file" name="captionImg_2" id="captionImg_2" aria-describedby="fileHelp" style="margin-left:5px">
+		                                </div>
+	                            </div>
+                            </div>      
                         </div>
 
                         <div style="width: 85%; margin: 0 auto; margin-top: 30px;">
@@ -147,6 +119,7 @@
                     </form>
                 </div>
 				  </div>               
+<!-- <<<<<<< HEAD -->
 				  <div id="orders" class="tab-pane fade">
 				    <h3>訂單查詢</h3>
 				      <div class="content container-fluid" style="display: flex; padding: 0px;">
@@ -174,13 +147,18 @@
 							
 						</table>
 					</div>
+<!-- ======= -->
+<!-- 				  <div id="collection" class="tab-pane fade"> -->
+<!-- 				    <h3>收藏</h3> -->
+<!-- 				    <p>Some content in menu 2.</p> -->
+<!-- >>>>>>> f4b72a366aeb19fc66a0a00934244f08f45abc3a -->
 				  </div>
 				  <div id="maintain" class="tab-pane fade">
-				    <h3>修改個人資訊<span class="text-warning">*double click to modify</span></h3>
+				    <h3>修改個人資訊</h3>
 				    	<form id="editUser" enctype="multipart/form-data" action="updateUser/${userBean.user_id}" method="POST">   				    		
 				    		<div style="display:flex;background-color: rgba(0, 0, 0, 0.397); padding:10px;border-radius:5px">
 				    		<div class="col-lg-8" style="line-height:28px;font-weight:400">
-				    		  	<ul>
+				    		  	<ul style="list-style:none;">
 									<li>
 					    		  		帳號：<span>${userBean.account}</span>
 									</li>
@@ -193,17 +171,24 @@
 									<li>
 					    		  		生日：<span>${userBean.birthday}</span>
 									</li>
-									<li>
-					    		  		暱稱：<span class="edit" id="editNickname">${userBean.nickname}</span>
+								  		<hr>
+										<span class="text-warning" style="text-align:right"><small>點兩下來修改</small></span>
+									
+									<li style="display:flex">
+					    		  		<div>暱稱：</div>
+					    		  		<div class="edit" id="editNickname" contenteditable="false" style="flex-grow:1">${userBean.nickname}</div>
 									</li>
-									<li>
-				    		  			聯絡電話：<span class="edit" id="editPhone">${userBean.phone}</span>  		
+									<li style="display:flex">
+				    		  			<div>聯絡電話：</div>
+				    		  			<div class="edit" id="editPhone" contenteditable="false" style="flex-grow:1">${userBean.phone}</div>  		
 				    		  		</li>
-									<li>
-				    		  			送貨地址：<span class="edit" id="editAddress">${userBean.address}</span>  		
+				 					<li style="display:flex">
+				    		  			<div>送貨地址：</div>
+				    		  			<div class="edit" id="editAddress" contenteditable="false" style="flex-grow:1">${userBean.address}</div>  		
 				    		  		</li>
-				    		  		<li>				    		 
-				    		  			關於我：<span class="edit" id="editIntro">${introduction}</span> 
+				    		  		<li style="display:flex">				    		 
+				    		  			<div>關於我：</div>
+				    		  			<div class="edit" id="editIntro" contenteditable="false" style="flex-grow:1">${introduction}</div> 
 				    		  		</li> 		      							    		  					    	 				    		  	
 				    		  	</ul>	
 				    		</div>       
