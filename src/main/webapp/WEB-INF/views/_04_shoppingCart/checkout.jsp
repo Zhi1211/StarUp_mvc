@@ -7,9 +7,9 @@
 <jsp:include page="/fragment/header.jsp" />
 <div class="content container-fluid"
 	style="padding: 0px; display: flex; flex-wrap: wrap;">
-	<form action="/processShoppingOrder/ORDER/orderReady" name="formCheckout">
-		<div class="checkoutBox container"
-			style="width: 100%; border-radius: 5px; background-color: rgb(255, 255, 255); box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); margin: 20px 0px 5px 150px; padding: 20px">
+	<form action="/processShoppingOrder/ORDER/orderReady" name="formCheckout" style="margin:0px auto">
+		<div class="checkoutBox container col-lg-10"
+			style="border-radius: 5px; background-color: rgb(255, 255, 255); box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); padding: 20px">
 			<h5>訂單資訊</h5>
 			<p></p>
 			<div style="display:flex">
@@ -28,15 +28,15 @@
 					</ul>
 			    </div>
 			</div>
-			
+			   
 			<div class="checkoutBtn"
 				style="line-height: 100px; margin-right: 30px">
 				<!-- <button type="button" class="btn btn-info">付款</button>
                         <button type="button" class="btn btn-warning">放棄此次購物</button> -->
-			</div>
+			</div> 
 		</div>
-		<div class="checkoutInfo"
-			style="width: 89%; border-radius: 5px; background-color: rgb(255, 255, 255); box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); margin: 0px 0px 5px 150px; padding: 20px">
+		<div class="checkoutInfo col-lg-10"
+			style="border-radius: 5px; background-color: rgb(255, 255, 255); box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); margin: 20px auto; padding: 20px">
 			<h5>訂單明細</h5>
 			<table
 				style="background-color: rgba(10, 10, 10, 0); margin: 20px auto;">

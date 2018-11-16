@@ -31,7 +31,7 @@
 				  <li class="active"><a data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-info btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
 				  <li><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-primary btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>
 				  <li><a data-toggle="tab" href="#post"><button type="button" class="btn btn-warning btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
-				  <li><a data-toggle="tab" href="#collection"><button type="button" class="btn btn-danger btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">收藏</button></a></li>
+				  <li><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-danger btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">訂單查詢</button></a></li>
 				  <li><a data-toggle="tab" href="#maintain"> <button type="button" class="btn btn-success btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
 			</ul>				
 				<div class="tab-content" style="margin:20px 0px 70px 0px;">
@@ -47,13 +47,10 @@
 		                            <div class="workText">  
 		                                    {{work.worksIntro}}
 		                            </div>	
-		                             <div class="workComment">
-                                    <a v-bind:href="'testComment?worksId='+work.works_id" >留言測試</a>
-                                </div>                            
+<!-- 		                             <div class="workComment"> -->
+<!--                                     	<a v-bind:href="'testComment?worksId='+work.works_id" >留言測試</a> -->
+<!--                                 	</div>                             -->
 	                            </div>
-<!-- 	                            <div class="workComment"> -->
-<!-- 	                            	<a v-bind:href="'testComment?worksId=' + work.works_id" >留言測試</a> -->
-<!-- 	                            </div> -->
 	                    </div>
                 </div>
 				  </div>
@@ -150,9 +147,33 @@
                     </form>
                 </div>
 				  </div>               
-				  <div id="collection" class="tab-pane fade">
-				    <h3>收藏</h3>
-				    <p>Some content in menu 2.</p>
+				  <div id="orders" class="tab-pane fade">
+				    <h3>訂單查詢</h3>
+				      <div class="content container-fluid" style="display: flex; padding: 0px;">
+						<table class="table table-striped table-dark" v-for="(order, index) in orders">
+<!-- 							<tr height="50"> -->				
+<%-- 								<th colspan="4" align="center">${LoginOK.nickname}的訂購紀錄</th> --%>
+<!-- 							</tr> -->
+<!-- 							<tr height="36"> -->
+<!-- 								<th>訂單編號</th> -->
+<!-- 								<th>訂購日期</th> -->
+<!-- 								<th>總金額</th> -->
+<!-- 								<th>送貨地址</th>   -->
+<!-- 							</tr> -->
+							
+								<tr height="30">
+									<td width="86">
+										<a class="text-warning" v-bind:href="'/showOneOrderDetail/'+ order.orderNo + '/anOrderShow'" >
+											{{order.orderNo}}
+										</a>
+									</td>    
+									<td width="100">{{order.orderDate}}</td>
+									<td width="80">{{order.totalAmount}}</td>
+									<td width="400">&nbsp;{{order.shippingAddress}}</td>
+								</tr>
+							
+						</table>
+					</div>
 				  </div>
 				  <div id="maintain" class="tab-pane fade">
 				    <h3>修改個人資訊<span class="text-warning">*double click to modify</span></h3>
@@ -214,6 +235,7 @@
         		el:'#personalMainContent',
         		data:{
         			works:[],
+        			orders:[],
         		},        	 	
         		methods:{
         			getWorks:function(userId){        			
@@ -248,7 +270,18 @@
             	          
             	            }  
             	        });				
-        			}
+        			},
+        			showShoppingOrderList:function(){
+        				var _self = this;
+        				$.ajax({
+            			    type: "GET",    
+            			    url:'orderListA',            			      			    
+            			    dataType: 'json',            			  
+            	            success : function(data) { 
+            	          		_self.orders = data;
+            	            }  
+            	        });	
+        			},
         		},        		
         	})
         	$("#userImage").change(function(){

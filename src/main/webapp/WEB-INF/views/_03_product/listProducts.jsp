@@ -56,7 +56,7 @@
                 </nav>
             </div>
             <!-- 商品列表 -->
-            <div class="container col-lg-10" style=" display: flex; justify-content: space-between; flex-wrap: wrap;">
+            <div class="container col-lg-10" style=" display: flex; flex-wrap: wrap; justify-content:center;">
             <!-- 1.顯示所有商品-------------------------------------------------------------- -->
   			
   			 <c:forEach var="product" items="${products}" >
@@ -111,53 +111,53 @@
           	   </script>	
           
                 <!-- 頁數 -->
-                <div id="product" style="display: flex; width: 100%; justify-content: center; ">
-                        <ul class="pagination">
-                       <c:set var="page" value="${pageNo}"/>
-                        <c:set var="limitPage" value="${totalPages}"/>
-                        <!--  -->
-                        <c:choose>
-                        	<c:when test="${page > 1}">
-	                      		<li class="page-item">
-	                           			 <a class="page-link" href="<c:url value='DisplayPageProducts?pageNo=${page - 1}' />">&laquo;</a>
-	                       		 </li>                        	
-                        	</c:when>
-                        	<c:otherwise>
-                        		<li class="page-item disabled">
-	                           			 <a class="page-link disabled" href="#">&laquo;</a>
-	                       		 </li>
-                        	</c:otherwise>
-                        </c:choose>
-                        <!--  -->
-	                      		<c:forEach var="i" begin="1" end="${totalPages}" step="1">
-                        <c:choose>
-		                   <c:when test="${page == i}">
-			                         <li class="page-item active">
-			                          		  <a class="page-link" href="<c:url value='DisplayPageProducts?pageNo=${i}' />">${i}</a>
-			                         </li>                        	
-	                        </c:when>
-	                        <c:otherwise>
-	                        		  <li class="page-item">
-			                          		  <a class="page-link" href="<c:url value='DisplayPageProducts?pageNo=${i}' />">${i}</a>
-			                         </li>                        		
-	                        </c:otherwise>
-                        </c:choose>
-		                      	</c:forEach>                        	
-                      	<!--  -->
-                      	<c:choose>
-                        	<c:when test="${page < limitPage}">
-	                      		<li class="page-item">
-	                           			 <a class="page-link" href="<c:url value='DisplayPageProducts?pageNo=${page + 1}' />">&raquo;</a>
-	                       		 </li>                        	
-                        	</c:when>
-                        	<c:otherwise>
-                        		<li class="page-item disabled">
-	                           			 <a class="page-link" href="#">&raquo;</a>
-	                       		 </li>
-                        	</c:otherwise>
-                        </c:choose>
-                        </ul>
-                </div>
+<!--                 <div id="product" style="display: flex; width: 100%; justify-content: center; "> -->
+<!--                         <ul class="pagination"> -->
+<%--                        <c:set var="page" value="${pageNo}"/> --%>
+<%--                         <c:set var="limitPage" value="${totalPages}"/> --%>
+<!--                          -->
+<%--                         <c:choose> --%>
+<%--                         	<c:when test="${page > 1}"> --%>
+<!-- 	                      		<li class="page-item"> -->
+<%-- 	                           			 <a class="page-link" href="<c:url value='DisplayPageProducts?pageNo=${page - 1}' />">&laquo;</a> --%>
+<!-- 	                       		 </li>                        	 -->
+<%--                         	</c:when> --%>
+<%--                         	<c:otherwise> --%>
+<!--                         		<li class="page-item disabled"> -->
+<!-- 	                           			 <a class="page-link disabled" href="#">&laquo;</a> -->
+<!-- 	                       		 </li> -->
+<%--                         	</c:otherwise> --%>
+<%--                         </c:choose> --%>
+<!--                          -->
+<%-- 	                      		<c:forEach var="i" begin="1" end="${totalPages}" step="1"> --%>
+<%--                         <c:choose> --%>
+<%-- 		                   <c:when test="${page == i}"> --%>
+<!-- 			                         <li class="page-item active"> -->
+<%-- 			                          		  <a class="page-link" href="<c:url value='DisplayPageProducts?pageNo=${i}' />">${i}</a> --%>
+<!-- 			                         </li>                        	 -->
+<%-- 	                        </c:when> --%>
+<%-- 	                        <c:otherwise> --%>
+<!-- 	                        		  <li class="page-item"> -->
+<%-- 			                          		  <a class="page-link" href="<c:url value='DisplayPageProducts?pageNo=${i}' />">${i}</a> --%>
+<!-- 			                         </li>                        		 -->
+<%-- 	                        </c:otherwise> --%>
+<%--                         </c:choose> --%>
+<%-- 		                      	</c:forEach>                        	 --%>
+<!--                       	 -->
+<%--                       	<c:choose> --%>
+<%--                         	<c:when test="${page < limitPage}"> --%>
+<!-- 	                      		<li class="page-item"> -->
+<%-- 	                           			 <a class="page-link" href="<c:url value='DisplayPageProducts?pageNo=${page + 1}' />">&raquo;</a> --%>
+<!-- 	                       		 </li>                        	 -->
+<%--                         	</c:when> --%>
+<%--                         	<c:otherwise> --%>
+<!--                         		<li class="page-item disabled"> -->
+<!-- 	                           			 <a class="page-link" href="#">&raquo;</a> -->
+<!-- 	                       		 </li> -->
+<%--                         	</c:otherwise> --%>
+<%--                         </c:choose> --%>
+<!--                         </ul> -->
+<!--                 </div> -->
             </div>
         </div>
      <jsp:include page="/fragment/footer.jsp" />
