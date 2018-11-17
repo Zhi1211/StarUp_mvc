@@ -238,9 +238,10 @@ public class RegisterController {
 			UserBean bean = null;
 			if(userService.getUser2(account) != null) {
 				bean = userService.getUser2(account);
-			}else {				
-				bean = userService.getUser(Integer.parseInt(account));
 			}
+//			else {				
+//				bean = userService.getUser(Integer.parseInt(account));
+//			}
 			HttpHeaders headers = new HttpHeaders();
 			String filename = "";
 			int len = 0;
