@@ -134,19 +134,44 @@
 						<table class="table table-striped table-dark" v-for="(order, index) in orders" style="margin-bottom:2px;">							
 								<tr height="30" style="margin-bottom:2px;">   
 									<td width="150">
-										<a class="text-warning" v-bind:href="'showOneOrderDetail/'+ order.orderNo + '/anOrderShow'" >
-											{{order.orderNo}}
-										</a>    
-									</td>    
-									<td width="225">{{order.orderDateStr}}</td>  
+										<p class="text-warning">
+											{{order.orderNo}}    
+										</p>    
+									</td>       
+									<td width="225">{{order.orderDateStr}}</td>      
 									<td width="150">{{order.totalAmount}}</td>
-									<td>&nbsp;{{order.shippingAddress}}</td>
-									<td><button v-on:click="showOrderDetail ">查看明細</button></td>
-									<tr>
-										<td></td>
-									</tr>
+									<td>&nbsp;{{order.shippingAddress}}</td>     
+									<td><button v-on:click="showOrderDetail(order.orderNo,$event,index)">查看明細</button></td>   
+									<!-- <td>
+										<table>
+										<tr v-bind:id="'order'+index">
+											<td></td>
+										</tr>
+									</table>
+									</td> -->
 								</tr>
-							
+								<tr class="hidden" v-bind:id="'order'+index">
+									<td colspan="5">
+										<table>
+										<tr>   
+											<td width="600">
+												商品資訊
+											</td>  
+											<td width="150">
+												購買數量
+											</td>
+											<td width="150">
+												單價
+											</td>											
+										</tr>
+										<tr v-for="item in orderItems">
+											<td>{{item.description}}</td>
+											<td>{{item.quantity}}</td>
+											<td>{{item.unitPrice}}</td>
+										</tr>
+									</table>
+									</td>
+								</tr>								
 						</table>
 					</div>
 				  </div>
@@ -220,6 +245,7 @@
         			orders:[],
         			orderDateStr:'',
         			orderDetail:[],
+        			orderItems:[],
         		},        	 	
         		methods:{
         			getWorks:function(userId){        			
@@ -262,10 +288,26 @@
             			    url:'orderListAjax',            			      			    
             			    dataType: 'json',            			  
             	            success : function(data) { 
-            	          		_self.orders = data;            	          
+            	          		_self.orders = data;
+            	          		
             	            }  
-            	        });	
+            	        });	    
         			},
+        			showOrderDetail:function(orderId,e,index){          			
+        				console.log(orderId)  
+        				console.log(e.target)        				
+        				var _self = this;
+        				$.ajax({   
+            			    type: "GET",      
+            			    url:'showOneOrderDetail/'+ orderId+'/anOrderShow',            			      			    
+            			    dataType: 'json',            			  
+            	            success : function(data) {
+            	            	_self.orderDetail = data;
+            	            	_self.orderItems = data.items;	
+            	            }  
+            	        });	        				        				
+        				$('#order'+index).toggleClass('hidden');
+        			}
         		},        		
         	})
         	$("#userImage").change(function(){
@@ -288,6 +330,7 @@
         	.blur(function(e){
         		$(this).prop('contenteditable',false)
         	})
+        	
         </script>
 <jsp:include page="/fragment/footer.jsp" />
 

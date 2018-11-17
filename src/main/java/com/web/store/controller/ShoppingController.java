@@ -284,26 +284,13 @@ public class ShoppingController {
 		}
 		return new ResponseEntity<List<OrderBean>>(list,HttpStatus.OK);
 	}
-//	@RequestMapping(value="/orderListAjax", produces= {"application/json"})
-//	@ResponseBody
-//	public byte[]  showShoppingOrderListAjax(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
-//		System.out.println("11111");
-//		UserBean ub = (UserBean)request.getSession(false).getAttribute("LoginOK");
-//		orderService.setAccount(ub.getAccount());
-//		List<OrderBean> list =  orderService.getMemberOrders();
-//		byte[] orderJson = new Gson().toJson(list).getBytes("UTF-8");
-//		System.out.println(orderJson);
-//		return orderJson;
-//	}
-	
 	
 	@RequestMapping(value="/showOneOrderDetail/{orderNo}/anOrderShow")
 	@ResponseBody
-	public String showOneOrderDetail(HttpServletRequest request, Model model, 
+	public OrderBean showOneOrderDetail(HttpServletRequest request, Model model, 
 			@PathVariable("orderNo")Integer orderNo) {
-		OrderBean ob = orderService.getOrder(orderNo);
-		model.addAttribute("memberOrder", ob);
-		return "/_04_shoppingCart/oneOrderDetail";
+		OrderBean ob = orderService.getOrder(orderNo);		
+		return ob;
 	}
 //	@RequestMapping(value="/showOneOrderDetail/{orderNo}/anOrderShow")
 //	public String showOneOrderDetail(HttpServletRequest request, Model model, 

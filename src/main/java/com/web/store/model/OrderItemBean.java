@@ -8,6 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="orderItems")
 public class OrderItemBean {
@@ -17,7 +20,11 @@ public class OrderItemBean {
 	Integer quantity;
 	Integer unitPrice;
 //	Double discount;
+	@JsonBackReference
 	OrderBean orderBean;
+	String orders;
+	
+	
 	
 	public OrderItemBean() {
 		super();
@@ -85,10 +92,11 @@ public class OrderItemBean {
 	
 	@ManyToOne
 	@JoinColumn(name="FK_Order_Id")
-	public OrderBean getOrderBean() {
+	@JsonBackReference
+	public OrderBean getOrderBean() {  
 		return orderBean;
 	}
-
+	
 	public void setOrderBean(OrderBean orderBean) {
 		this.orderBean = orderBean;
 	}
