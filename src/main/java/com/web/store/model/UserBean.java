@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -33,11 +34,14 @@ public class UserBean implements Serializable {
 		String phone;
 		String address;
 		String photoName;
+		@JsonIgnore
 		Blob photo;
+		@JsonIgnore
 		Clob introduction;
 		String regTime; // 1029改String
 		long unpaid_amount;
 		String password2;
+		@JsonIgnore
 		MultipartFile userImage;
 		String userIntro;
 //		Set<WorksBean> works = new LinkedHashSet<>();

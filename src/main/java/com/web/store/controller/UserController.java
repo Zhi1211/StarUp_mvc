@@ -152,7 +152,7 @@ public class UserController {
 			}
 		}else {
 			userService.updateUser(userBean);
-			return new ResponseEntity<UserBean>(userBean,HttpStatus.OK);
+			return new ResponseEntity<UserBean>(userBean, HttpStatus.OK);
 		} 		
 		userService.updateUser(userBean,sizeInByte);
 		return new ResponseEntity<UserBean>(userBean,HttpStatus.OK);
