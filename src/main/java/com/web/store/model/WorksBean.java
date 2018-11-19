@@ -3,7 +3,6 @@ package com.web.store.model;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Clob;
-import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +13,8 @@ import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="works")
@@ -26,21 +27,24 @@ public class WorksBean implements Serializable{
 	private String worksName;
 	private String worksIntro;
 	private String worksImgName;
+	@JsonIgnore
 	private Blob worksImg;
 	private String worksUpDate;
 	
 	//進階
 	private String detail_1;//作品細節_1
 	private String captionImgName_1;//照片_1
+	@JsonIgnore
 	private Blob captionImg_1;
 	
 	private String detail_2;//作品細節_2
 	private String captionImgName_2;//照片_2
-	private Blob captionImg_2;
+	@JsonIgnore
+	private Blob captionImg_2; 
 	
-	private MultipartFile  worksPoto;
-	private MultipartFile  captionPoto_1;
-	private MultipartFile  captionPoto_2;
+	private MultipartFile  worksPhoto;
+	private MultipartFile  captionPhoto_1;
+	private MultipartFile  captionPhoto_2;
 	
 	private Clob comment;
 	
@@ -189,32 +193,32 @@ public class WorksBean implements Serializable{
 	
 	@Transient
 	@XmlTransient
-	public MultipartFile getWorksPoto() {
-		return worksPoto;
+	public MultipartFile getWorksPhoto() {
+		return worksPhoto;
 	}
 
-	public void setWorksPoto(MultipartFile worksPoto) {
-		this.worksPoto = worksPoto;
+	public void setWorksPhoto(MultipartFile worksPhoto) {
+		this.worksPhoto = worksPhoto;
 	}
 	
 	@Transient
 	@XmlTransient
-	public MultipartFile getCaptionPoto_1() {
-		return captionPoto_1;
+	public MultipartFile getCaptionPhoto_1() {
+		return captionPhoto_1;
 	}
 
-	public void setCaptionPoto_1(MultipartFile captionPoto_1) {
-		this.captionPoto_1 = captionPoto_1;
+	public void setCaptionPhoto_1(MultipartFile captionPhoto_1) {
+		this.captionPhoto_1 = captionPhoto_1;
 	}
 	
 	@Transient
 	@XmlTransient
-	public MultipartFile getCaptionPoto_2() {
-		return captionPoto_2;
+	public MultipartFile getCaptionPhoto_2() {
+		return captionPhoto_2;
 	}
 
-	public void setCaptionPoto_2(MultipartFile captionPoto_2) {
-		this.captionPoto_2 = captionPoto_2;
+	public void setCaptionPhoto_2(MultipartFile captionPhoto_2) {
+		this.captionPhoto_2 = captionPhoto_2;
 	}
 
 	public Clob getComment() {

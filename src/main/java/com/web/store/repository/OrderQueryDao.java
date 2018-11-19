@@ -17,4 +17,5 @@ public interface OrderQueryDao {
 	String getAccount();
 	
 	void setAccount(String account);
+	
 }

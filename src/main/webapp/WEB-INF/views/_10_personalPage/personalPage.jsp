@@ -7,7 +7,7 @@
         <div class="container-fluid" style="display: flex ; color:white"> 
             <div class="col-lg-3" >                  
                 <div class="personalImg">     
-                    <img class="img-circle pImg" src="getUserPicture/${userBean.user_id }">
+                    <img id="userImg${userBean.user_id }" class="img-circle pImg" src="getUserPicture/${userBean.user_id }">
                 </div> 
                 <div>
                 <p></p>
@@ -28,58 +28,79 @@
             </div>     
             <div class="mainContent col-lg-9" id="personalMainContent" style="padding:15px; border-radius:10px;">       
             <ul class="nav nav-tabs">
-				  <li class="active"><a data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-info btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
-				  <li><a data-toggle="tab" href="#mail" v-on:click="getMyMessages(${userBean.user_id})"> <button type="button" class="btn btn-primary btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>
-				  <li><a data-toggle="tab" href="#post"><button type="button" class="btn btn-warning btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
-				  <li><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-danger btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">訂單查詢</button></a></li>
-				  <li><a data-toggle="tab" href="#maintain"> <button type="button" class="btn btn-success btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
-			</ul>				
+				  <li class="active nav-item"><a class="active show" data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
+				  <li class="nav-item"><a data-toggle="tab" href="#mail" v-on:click="getMyMessages(${userBean.user_id})"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>  
+				  <li class="nav-item"><a data-toggle="tab" href="#post"><button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
+				  <li class="nav-item"><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">購物</button></a></li>
+				  <li class="nav-item"><a data-toggle="tab" href="#maintain"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
+			</ul>							
 				<div class="tab-content" style="margin:20px 0px 70px 0px;">  
-				  <div id="works" class="tab-pane fade in active">
+				  <div id="works" class="tab-pane fade active show">
 				    <!-- <h3>作品</h3> -->
-				     <div class="works">                 
-	                    <div class="pieceOfWork" v-for="work in works">
-	                            <h6 style="display:block">{{work.worksName}}</h6>    
+				    
+				     <div class="works col-lg-12" style="display:flex; flex-wrap:wrap">                 
+	                    <div class="pieceOfWork" v-for="(work,index) in works" style="width:320px; margin-right:20px;" v-bind:id="'works'+work.works_id">
 	                            <div style="display:flex">
+		                            <h6 style="display:block; flex-grow:1">{{work.worksName}}</h6>    
+		                            <div style="textt-align:right">
+			                            <i class="far fa-times-circle" style="margin-right:5px; pointer:cursor;" v-on:click="deleteWorks(work.works_id,index,$event)"></i> 
+			                            <i class="far fa-edit" style="pointer:cursor;" v-on:click="updateWorks(work.works_id,index)" data-toggle="modal" data-target="#exampleModalCenter"></i>		                           		                           
+		                            </div>    
+	                            </div>
+	                            <div>
+	                            	<form v-bind:id="'updateForm'+work.works_id">
 		                            <div class="workImg">
-		                                <img v-bind:src="'mainWorksPicture/'+ work.works_id" style="max-width:500px;">
+		                                <img v-bind:src="'mainWorksPicture/'+ work.works_id" style="max-width:300px; margin-bottom:5px">
 		                            </div>
-		                            <div class="workText">  
+		                            <div class="workText" v-bind:id="'worksIntro'+work.works_id">  
 		                                    {{work.worksIntro}}
 		                            </div>	
-<!-- 		                             <div class="workComment"> -->
-<!--                                     	<a v-bind:href="'testComment?worksId='+work.works_id" >留言測試</a> -->
-<!--                                 	</div>                             -->
+									
+										<input type="hidden" name="worksIntro" >
+									</form> 
 	                            </div>
 	                    </div>
                 </div>
 				  </div>
-				  <div id="mail" class="tab-pane fade">
-				   <!--  <h3>信件</h3> -->
-				   <!--  <p>Some content.</p> -->
-					<button class="sendMail" onclick="sendMail()">我要發信</button>
-				    <table class="table table-striped table-dark" border="1" style="width:960px;">
-				    	<tr>       
-              				<th style="width:80px">編號</th>
-              				<th style="width:80px">留言者</th>
-              				<th style="width:180px">主旨</th>
-              				<th style="width:250px">留言時間</th>
-              				<th style="width:250px">本文</th>
-          				</tr>
-          				<tr>
-          					<td style="width:80px">1</td>
-          					<td style="width:80px">fromId</td>
-          					<td style="width:180px">title</td>
-          					<td style="width:250px; text-align:left">&nbsp;timestamp</td>
-          					<td style="width:250px; text-align:left">content</td>
-          				</tr>
-				    </table>
+				  <div id="mail" class="tab-pane fade">				  
+				      <div class="container-fluid">
+                            <div class="col-xs-0" style="width: 100%;">
+                            <form>
+                                <div class="form-group" style="display:flex">
+                                	<div style="margin-right:20px;">
+		                                <label for="">收件人：</label>
+		                                <input type="text" class="form-control" name="" style="width:200px;">                                                   
+                                	</div>
+									<div>
+		                                <label for="">主旨：</label>
+		                                <input type="text" class="form-control" name="" style="width:300px;">                                                                                  									
+									</div>
+                                </div>                                                                                      
+		                                <label for="">內文：</label>
+									<div style="display:flex;align-items:flex-end">
+		                                <textarea class="form-control" name=""  rows="9" style="width: 50%;"></textarea>
+		                                <button class="btn btn-info btn-lg" type="submit" style=" margin-left:10px; ">Send</button>
+									</div>
+                             </form>    
+                            </div>
+                            <div>
+	                            <table class="table table-striped table-dark" style="margin-top:20px;">			   			
+									<tr>
+										<td width="150">信件編號</td>
+										<td width="225">寄送日期</td>
+										<th width="150">寄件人</td>
+										<td>標題</td>     
+										<td width="70"><i class="far fa-times-circle" style="margin-right:5px; pointer:cursor;"></i></td>     
+									</tr>    
+	 							</table>
+                            </div>
+                        </div>
 				  </div>
 				  <div id="post" class="tab-pane fade">
 				    <!-- <h3>發表</h3> -->
 				 		<!-- 上傳作品頁面 -->
                 <div class="u-box box" style="width: 100%; height: 100%; margin: 0 auto;">
-                    <form ENCTYPE="multipart/form-data" method="POST" action="<c:url value='works.do' />" id="works.do">
+                    <form ENCTYPE="multipart/form-data" method="POST" action="saveWorks" id="uploadWorksForm">
                         <div class="u-container container">
                             <div class="col-xs-0" style="width: 100%;">                               
                                 <div class="form-group">
@@ -89,7 +110,7 @@
                                         <img alt="" src="" id="previewImg_1" style="max-height: 300px;">
                                  </div>                               
                                 <!--  <span style="float: left; margin-left: 50px;"> --> 
-                                   <input type="file" class="form-control-file" name="worksImg" id="worksImg" id="exampleInputFile"  aria-describedby="fileHelp">
+                                   <input type="file" class="form-control-file" name="worksPhoto" id="worksImg" id="exampleInputFile"  aria-describedby="fileHelp">
                                  <!-- </span> -->
                                 </div>
                                 
@@ -97,7 +118,7 @@
                                 <textarea class="form-control" name="worksIntro" id="worksIntro" rows="9" style="width: 100%; height: 20%;"></textarea>
                             </div>
                         </div>
-                        <div style="margin:20px;">
+                        <div style="margin:20px 0px; text-align:center">
                             上傳更多照片和敘述<input type="checkbox" value="true"
                                 name="moreWorksInfo" id="pemp_yes"
                                 style="margin-left: 30px;"> <label for="yes"
@@ -111,7 +132,7 @@
 		                            <textarea class="form-control" name="detail_1" id="detail_1" rows="9" style="width: 450px; height: 150px;"></textarea>
 		                                <div>
 			                                <img alt="" src="" id="previewImg_2" style="max-width:300px; margin-left:5px;">                
-			                          		<input type="file" class="form-control-file" name="captionImg_1" id="captionImg_1" aria-describedby="fileHelp" style="margin-left:5px">
+			                          		<input type="file" class="form-control-file" name="captionPhoto_1" id="captionImg_1" aria-describedby="fileHelp" style="margin-left:5px">
 		                                </div>
 	                            </div>
                             </div>
@@ -123,7 +144,7 @@
 		                            <textarea class="form-control" name="detail_2" id="detail_2" rows="9" style="width: 450px; height: 150px;"></textarea>
 		                                <div>
 			                                <img alt="" src="" id="previewImg_3" style="max-width:300px; margin-left:5px;">                
-			                          		<input type="file" class="form-control-file" name="captionImg_2" id="captionImg_2" aria-describedby="fileHelp" style="margin-left:5px">
+			                          		<input type="file" class="form-control-file" name="captionPhoto_2" id="captionImg_2" aria-describedby="fileHelp" style="margin-left:5px">
 		                                </div>
 	                            </div>
                             </div>      
@@ -136,39 +157,61 @@
                     </form>
                 </div>
 				  </div>               
-<!-- <<<<<<< HEAD -->
 				  <div id="orders" class="tab-pane fade">
 				    <h3>訂單查詢</h3>
-				      <div class="content container-fluid" style="display: flex; padding: 0px;">
-						<table class="table table-striped table-dark" v-for="(order, index) in orders">
-<!-- 							<tr height="50"> -->				
-<%-- 								<th colspan="4" align="center">${LoginOK.nickname}的訂購紀錄</th> --%>
-<!-- 							</tr> -->
-<!-- 							<tr height="36"> -->
-<!-- 								<th>訂單編號</th> -->
-<!-- 								<th>訂購日期</th> -->
-<!-- 								<th>總金額</th> -->
-<!-- 								<th>送貨地址</th>   -->
-<!-- 							</tr> -->
-							
-								<tr height="30">
-									<td width="86">
-										<a class="text-warning" v-bind:href="'/showOneOrderDetail/'+ order.orderNo + '/anOrderShow'" >
-											{{order.orderNo}}
-										</a>
-									</td>    
-									<td width="100">{{order.orderDate}}</td>
-									<td width="80">{{order.totalAmount}}</td>
-									<td width="400">&nbsp;{{order.shippingAddress}}</td>
+				      <div class="content container-fluid" style="padding: 0px;">
+						<table class="table table-striped table-dark" style="margin-bottom:2px;">			   			
+							<tr>
+								<td width="150">訂單編號</td>
+								<td width="225">訂購日期</td>
+								<th width="150">總金額</td>
+								<td>送貨地址</td>     
+								<td width="70"></td>     
+							</tr>    
+ 						</table>
+						<table class="table table-striped table-dark" v-for="(order, index) in orders" style="margin-bottom:2px;">							
+								<tr height="30" style="margin-bottom:2px;">   
+									<td width="150">
+										<p class="text-warning">
+											{{order.orderNo}}    
+										</p>    
+									</td>       
+									<td width="225">{{order.orderDateStr}}</td>      
+									<td width="150">{{order.totalAmount}}</td>
+									<td>&nbsp;{{order.shippingAddress}}</td>     
+									<td style=""><button class="btn btn-outline-light btn-sm" v-on:click="showOrderDetail(order.orderNo,$event,index)">查看明細</button></td>   
+									<!-- <td>
+										<table>
+										<tr v-bind:id="'order'+index">
+											<td></td>
+										</tr>
+									</table>
+									</td> -->
 								</tr>
-							
+								<tr class="hidden itemList" v-bind:id="'order'+index">
+									<td colspan="5">
+										<table>
+										<tr>   
+											<td width="600">
+												商品資訊
+											</td>  
+											<td width="150">
+												購買數量
+											</td>
+											<td width="150">
+												單價
+											</td>											
+										</tr>
+										<tr v-for="item in orderItems">
+											<td>{{item.description}}</td>
+											<td>{{item.quantity}}</td>
+											<td>{{item.unitPrice}}</td>
+										</tr>
+									</table>
+									</td>
+								</tr>								
 						</table>
 					</div>
-<!-- ======= -->
-<!-- 				  <div id="collection" class="tab-pane fade"> -->
-<!-- 				    <h3>收藏</h3> -->
-<!-- 				    <p>Some content in menu 2.</p> -->
-<!-- >>>>>>> f4b72a366aeb19fc66a0a00934244f08f45abc3a -->
 				  </div>
 				  <div id="maintain" class="tab-pane fade">
 				    <h3>修改個人資訊</h3>
@@ -189,7 +232,7 @@
 					    		  		生日：<span>${userBean.birthday}</span>
 									</li>
 								  		<hr>
-										<span class="text-warning" style="text-align:right"><small>點兩下來修改</small></span>
+										<span class="text-warning" style="text-align:right">* 點兩下來修改 *</span>
 									
 									<li style="display:flex">
 					    		  		<div>暱稱：</div>
@@ -239,7 +282,25 @@
         			works:[],
         			orders:[],
         			myMessages:[],
+        			orderDateStr:'',
+        			orderDetail:[],
+        			orderItems:[],
         		},        	 	
+        		created: function(){	
+        				var _self = this;        				
+        				var id = $('.personalImg img').attr('id').substring(7)        				
+        				$.ajax({
+            			    type: "POST",    
+            			    url: 'userWorks?userId='+id,
+            			    contentType:'application/json',		
+            			    dataType: 'json',
+            	            success : function(data) { 
+            	            	_self.works = data;
+            	            	console.log(_self.works)
+            	            }  
+            	        });
+        		
+        		},
         		methods:{
         			getWorks:function(userId){        			
         				var _self = this;
@@ -253,7 +314,8 @@
             	            	console.log(_self.works)
             	            }  
             	        });
-        			},  
+        			}, 
+        			/*  */
         			confirmUpdate:function(userId){
         				var nickname = $('#editNickname').text();
         				var phone = $('#editPhone').text();
@@ -269,21 +331,75 @@
             			    url: $(this).attr('action'),            			    
             			    data: $('#editUser').serialize(),            			    
             			    dataType: 'json',            			  
-            	            success : function() { 
-            	          
+            	            success : function() {        
             	            }  
             	        });				
         			},
-        			showShoppingOrderList:function(){
+        			/*  */
+        			showShoppingOrderList:function(){        				
         				var _self = this;
         				$.ajax({
-            			    type: "GET",    
-            			    url:'orderListA',            			      			    
+            			    type: "GET",      
+            			    url:'orderListAjax',            			      			    
             			    dataType: 'json',            			  
             	            success : function(data) { 
             	          		_self.orders = data;
+            	          		
             	            }  
-            	        });	
+            	        });	    
+        			},
+        			/*  */
+        			showOrderDetail:function(orderId,e,index){          			
+        				console.log(orderId)  
+        				console.log(e.target)        				
+        				var _self = this;
+        				$.ajax({   
+            			    type: "GET",      
+            			    url:'showOneOrderDetail/'+ orderId+'/anOrderShow',            			      			    
+            			    dataType: 'json',            			  
+            	            success : function(data) {
+            	            	_self.orderDetail = data;
+            	            	_self.orderItems = data.items;	
+            	            }  
+            	        });	        				        				        		
+        				$('#order'+index).toggleClass('hidden');
+        			},
+        			/*  */        			
+        			deleteWorks: function(worksId,index,e){
+        				var _self = this;
+        				e.preventDefault();
+        			    if(confirm("確定要刪除作品？")){
+        			    	_self.works.splice(index,1);
+        					  $.ajax({
+    					        type: "POST",  
+    					        data : {_method:"DELETE"},  
+    					        dataType: 'json', 
+    					        url:'deleteWorks?id='+worksId,            					    
+    					        success: function() {    					        	    					        		        
+    					        }
+    					    });
+        				}
+        			},		
+        			/*  */
+        			updateWorks:function(worksId){        				
+        				$('#worksIntro'+worksId).prop('contenteditable',true).focus().css('background-color','rgba(32, 31, 58,0.8)');
+        				$('#worksIntro'+worksId).blur(function(e){
+        					var worksIntro = $('#worksIntro'+worksId).text();
+        					$("input[name='worksIntro']").val(worksIntro);        				        			
+        					$.ajax({   
+                			    type: "POST",	
+                			    cache:false,
+                			    url:'updateWorks/'+worksId,            			      			      
+                			    data: $('#updateForm'+worksId).serialize(),  
+                			    dataType: 'json',            			  
+                	            success : function(data) {
+                	            
+                	            }  
+                	        });
+        	        		$(this).prop('contenteditable',false)
+        	        		$(this).css('background-color','');  
+        	        	})
+        				
         			},
         			getMyMessages:function(userId){
         				var _self = this;
@@ -315,9 +431,39 @@
         	$('#editUser .edit').dblclick(function(e){
         		console.log("click")
         		$(this).prop('contenteditable',true).focus();
+        		$(this).css('background-color','rgba(32, 31, 58,0.8)');   
         	})
         	.blur(function(e){
         		$(this).prop('contenteditable',false)
+        		$(this).css('background-color','');  
+        	})
+        	$('#uploadWorksForm').submit(function(){        	
+        		var a = document.getElementById('worksName').value;
+				var b = document.getElementById('worksPhoto').value;
+				var c = document.getElementById('worksIntro').value;
+				var warn = "";
+				if(a ===""){
+					warn += '作品名不得為空 | '
+				}
+				if(b ===""){
+					warn += '請上傳作品圖片 | '
+				}
+				if(c ===""){
+					warn += '作品介紹不得為空'
+				}
+				if(warn != ""){
+					alert(warn);
+					return false;
+				}
+        		
+				  $.ajax({
+				  type:"POST", 
+				  cache: false,
+				  url: $(this).attr('action'),
+				  data: $('#uploadWorksForm').serialize(),
+				  datatype: 'json',
+
+				});
         	})
         </script>
 <jsp:include page="/fragment/footer.jsp" />

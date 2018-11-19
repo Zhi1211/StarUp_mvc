@@ -12,8 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 //本類別存放訂單資料
@@ -29,10 +31,15 @@ public class OrderBean {
 	String invoiceTitle;	//發票抬頭
 	@JsonIgnore
 	Date orderDate;	//訂貨日期
+	@Transient
+	String orderDateStr;
 	@JsonIgnore
 	Date shippingDate;	//出貨日期
 	String cancelTag;	//取消標籤
+	@JsonManagedReference
 	Set<OrderItemBean> items = new LinkedHashSet<>();
+	@Transient
+	byte[] itemJson;
 	
 	public OrderBean() {
 		super();
@@ -135,5 +142,22 @@ public class OrderBean {
 	public void setCancelTag(String cancelTag) {
 		this.cancelTag = cancelTag;
 	}
+
+	public String getOrderDateStr() {
+		return orderDateStr;
+	}
+
+	public void setOrderDateStr(String orderDateStr) {
+		this.orderDateStr = orderDateStr;
+	}
+
+	public byte[] getItemJson() {
+		return itemJson;
+	}
+
+	public void setItemJson(byte[] itemJson) {
+		this.itemJson = itemJson;
+	}
+	
 	
 }

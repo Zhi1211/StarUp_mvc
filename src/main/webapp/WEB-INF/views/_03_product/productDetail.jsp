@@ -10,7 +10,7 @@
             <!-- 側邊欄 --> 
             <div class="section col-lg-2" style="width:100px; padding: 20px 20px;margin-left:20px;">
              <nav class="nav flex-column nav-tabs">
-                    <a class="nav-link active" href="#">分類商品</a>
+                    <a class="nav-link active" href="#">所有商品</a>
                     <a class="nav-link" href="<c:url value='/type_products?type=文創周邊'/>" style="color:#dfc2ef; font-weight:400;">
                     <i class="fas fa-gift"></i>  文創周邊</a>
                     		
@@ -27,11 +27,9 @@
     						
                 </nav>
               
-                <nav class="nav flex-column nav-tabs">
-                        <a class="nav-link active">購物專區</a>
-                        <a class="nav-link" href="<c:url value='/showShoppingCart' />" style="color:#dfc2ef; font-weight:400;">結帳</a>
-                        <a class="nav-link" href="#" style="color:#dfc2ef; font-weight:400;">訂單查詢</a>
-                </nav> 
+                 <nav class="nav flex-column nav-tabs">                        
+                        <a class="nav-link active" href="<c:url value='/showShoppingCart' />">結帳</a>                       
+                </nav>
             </div>
                
             <div class="container col-lg-10" style=" display: flex;margin-top:20px">    

@@ -88,9 +88,9 @@ public class WorksRepositoryImpl implements WorksRepository {
 					+ " captionImgName_1=:captionImgName_1,"
 					+ " captionImg_1=:captionImg_1,"
 					+ "detail_2=:detail_2,"
-					+ " captionImgName_2=:captionImgName_2,"
+					+ " captionImgName_2=:captionImgName_2,"  
 					+ " captionImg_2=:captionImg_2"
-					+" WHERE works_id = : works_id";
+					+" WHERE works_id = :works_id";
 			
 			if (sizeInBytes ==0 ||sizeInBytes_1 == 0||sizeInBytes_2 == 0) {
 				n = updateWorks(bean);
@@ -123,13 +123,14 @@ public class WorksRepositoryImpl implements WorksRepository {
 					+ "  worksIntro=:worksIntro, "
 					+ " detail_1=:detail_1,"
 					+ " detail_2=:detail_2"
-					+" WHERE works_id = : works_id";	
+					+" WHERE works_id = :works_id";	
 			
 			Session session = factory.getCurrentSession();		
 			n = session.createQuery(hql).setParameter("worksName", bean.getWorksName())
 										.setParameter("worksIntro", bean.getWorksIntro())
 										.setParameter("detail_1", bean.getDetail_1())
 										.setParameter("detail_2", bean.getDetail_2())
+										.setParameter("works_id", bean.getWorks_id())
 										.executeUpdate();
 			n++;
 			System.out.println("更新一筆資料成功，n = "+n);
@@ -138,16 +139,19 @@ public class WorksRepositoryImpl implements WorksRepository {
 
 		//新增作品
 		@Override
-		public void addWorks(WorksBean wbean) {
+		public int saveWorks(WorksBean wbean) {
+			int n = 0;
 			Session session = factory.getCurrentSession();
 			session.save(wbean);
+			n++;
+			return n;
 		}
 		
 		
 		// 查詢某一頁的商品資料，執行本方法前，一定要先設定實例變數pageNo的初值
 		@SuppressWarnings("unchecked")
 		@Override	
-		public List<WorksBean> getPageProds() {
+		public List<WorksBean> getPageWorks() {
 			List<WorksBean> list = new ArrayList<>();
 			// 由頁碼推算出該頁是由哪一筆紀錄開始(1 based)
 			int startRecordNo = (pageNo - 1) * recordsPerPage;

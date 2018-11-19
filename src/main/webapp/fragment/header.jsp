@@ -22,6 +22,7 @@
  <link href="css/personal.css" rel="stylesheet">
  <link href="css/upload.css" rel="stylesheet">
  <link href="css/worksList.css" rel="stylesheet">
+ <link href="css/works.css" rel="stylesheet">
 </head>
  
 <body>
@@ -40,8 +41,10 @@
 					<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/">首頁
 							<span class="sr-only">(current)</span>
 					</a></li>
+					<c:if test="${!empty LoginOK}">
 					<li class="nav-item"><a class="nav-link" href="<c:url value='personalPage?id=${LoginOK.user_id }'/>">個人主頁</a></li>
 					</li>
+					</c:if>
 					<li class="nav-item"><a class="nav-link" href="<c:url value='/works'/>">探索作品</a></li>															
 					<li class="nav-item"><a class="nav-link" href="<c:url value='/products'/>">商城</a></li>
 				<c:if test = "${!empty BOSS}">

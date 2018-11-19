@@ -49,10 +49,8 @@
     						
                 </nav>
            
-                <nav class="nav flex-column nav-tabs">
-                        <a class="nav-link active">購物專區</a>
-                        <a class="nav-link" href="<c:url value='/showShoppingCart' />" style="color:#dfc2ef; font-weight:400;">結帳</a>
-                        <a class="nav-link" href="<c:url value='/showShoppingOrderList' />" style="color:#dfc2ef; font-weight:400;">訂單查詢</a>
+                <nav class="nav flex-column nav-tabs">                        
+                        <a class="nav-link active" href="<c:url value='/showShoppingCart' />">結帳</a>                     
                 </nav>
             </div>
             <!-- 商品列表 -->

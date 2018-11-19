@@ -1,6 +1,9 @@
 package com.web.store.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -9,6 +12,7 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +26,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.web.store.model.OrderBean;
 import com.web.store.model.OrderItemBean;
 import com.web.store.model.OrderedItem;
-import com.web.store.model.ProductBean;
 import com.web.store.model.ShoppingCart;
 import com.web.store.model.UserBean;
 import com.web.store.service.OrderService;
@@ -134,8 +136,9 @@ public class ShoppingController {
 //	}
 	
 	@RequestMapping(value="/showShoppingCart")
-	public String showShoppingCart(HttpServletRequest request, Model model) {
+	public String showShoppingCart(HttpServletRequest request, Model model, HttpServletResponse response) throws IOException {
 		ShoppingCart sc = null;
+		PrintWriter out = response.getWriter();
 		if(request.getSession(false) != null) {
 			HttpSession session = request.getSession(false);
 			sc = (ShoppingCart)session.getAttribute("ShoppingCart");
@@ -143,6 +146,7 @@ public class ShoppingController {
 		if (sc != null) {
 			return "_04_shoppingCart/shoppingCart";
 		} else {
+			out.println("<script>alert('購物車是空的喔')</script>");
 			return "redirect:/products";
 		}
 //		return "_04_shoppingCart/shoppingCart";
@@ -273,36 +277,33 @@ public class ShoppingController {
 		model.addAttribute("memberOrders", list);
 		return "/_04_shoppingCart/shoppingOrderList";
 	}
-//	@RequestMapping(value="/showShoppingOrderListA/{account}", produces= {"application/json"}, method=RequestMethod.GET)
-//	@ResponseBody
-//	public List<OrderBean>  showShoppingOrderListAjax(@PathVariable(value="account")String account,HttpServletRequest request) throws UnsupportedEncodingException {
-//		System.out.println("11111");
-////		UserBean ub = (UserBean)request.getSession(false).getAttribute("LoginOK");
-//		orderService.setAccount(account);
-//		List<OrderBean> list =  orderService.getMemberOrders();
-//		
-//		return list;
-//	}
-	@RequestMapping(value="/orderListA/{account}", produces= {"application/json"})
-	@ResponseBody
-	public byte[]  showShoppingOrderListAjax(@PathVariable(value="account")String account,HttpServletRequest request, Model model) throws UnsupportedEncodingException {
+	@RequestMapping(value="/orderListAjax", produces= {"application/json"}, method=RequestMethod.GET)	
+	public ResponseEntity<List<OrderBean>>  showShoppingOrderListAjax(HttpServletRequest request) throws UnsupportedEncodingException {
 		System.out.println("11111");
-//		UserBean ub = (UserBean)request.getSession(false).getAttribute("LoginOK");
-		orderService.setAccount(account);
+		UserBean ub = (UserBean)request.getSession(false).getAttribute("LoginOK");
+		orderService.setAccount(ub.getAccount());
 		List<OrderBean> list =  orderService.getMemberOrders();
-		byte[] orderJson = new Gson().toJson(list).getBytes("UTF-8");
-		System.out.println(orderJson);
-		return orderJson;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH : mm : ss");
+		for(OrderBean order:list) {			
+			order.setOrderDateStr(sdf.format(order.getOrderDate()));
+		}
+		return new ResponseEntity<List<OrderBean>>(list,HttpStatus.OK);
 	}
-	
 	
 	@RequestMapping(value="/showOneOrderDetail/{orderNo}/anOrderShow")
-	public String showOneOrderDetail(HttpServletRequest request, Model model, 
+	@ResponseBody
+	public OrderBean showOneOrderDetail(HttpServletRequest request, Model model, 
 			@PathVariable("orderNo")Integer orderNo) {
-		OrderBean ob = orderService.getOrder(orderNo);
-		model.addAttribute("memberOrder", ob);
-		return "/_04_shoppingCart/oneOrderDetail";
+		OrderBean ob = orderService.getOrder(orderNo);		
+		return ob;
 	}
+//	@RequestMapping(value="/showOneOrderDetail/{orderNo}/anOrderShow")
+//	public String showOneOrderDetail(HttpServletRequest request, Model model, 
+//			@PathVariable("orderNo")Integer orderNo) {
+//		OrderBean ob = orderService.getOrder(orderNo);
+//		model.addAttribute("memberOrder", ob);
+//		return "/_04_shoppingCart/oneOrderDetail";
+//	}
 	
 	@RequestMapping(value="/listAllOrders")
 	public ResponseEntity<List<OrderBean>> listAllOrders(){
