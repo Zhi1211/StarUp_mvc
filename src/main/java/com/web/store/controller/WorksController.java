@@ -6,14 +6,16 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +38,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
-import com.web.store.model.ProductBean;
+import com.web.store.model.UserBean;
 import com.web.store.model.WorksBean;
 import com.web.store.service.WorksService;
 
 @Controller
-public class WorksControlller {
+public class WorksController {
 	@Autowired
 	WorksService worksService;
 	@Autowired
@@ -60,84 +62,112 @@ public class WorksControlller {
 		byte[] worksJson = new Gson().toJson(list).getBytes("UTF-8");
 		return worksJson;
 	}
-//___________________________________________________________________________________________________
-	
-	@RequestMapping(value="/getWorksPicture/{wordId}", method = RequestMethod.GET)
-	public ResponseEntity<List> getPicture
-	(HttpServletResponse resp,@PathVariable Integer worksId){
-		String filePath = "/resources/images/NoImage.jpg";
-		WorksBean bean = worksService.getWorksById(worksId);
-		HttpHeaders headers = new HttpHeaders();
-		String[] filename= null;
-		int len = 0;
-		byte[] media_0 = null;
-		byte[] media_1 = null;
-		byte[] media_2 = null;
-		
-			if(bean!=null) {
-				Blob[] blob = {bean.getWorksImg(),bean.getCaptionImg_1(),bean.getCaptionImg_2()};
-			filename[0]=bean.getWorksImgName();
-			filename[1]=bean.getCaptionImgName_1();
-			filename[2]=bean.getCaptionImgName_2();
-			
-			if(blob[0] !=null) {
-				try {
-					len = (int)blob[0].length();
-					media_0=blob[0].getBytes(1, len);
-				}catch (SQLException e) {
-					throw new RuntimeException("ProductController的getPicture()發生error"+e.getMessage());
+	//___________________________________作品照片讀取(worksImg)_________________________________________
+			@RequestMapping(value="/mainWorksPicture/{works_Id}",method=RequestMethod.GET)
+			public ResponseEntity<byte[]> getMainPicture(@PathVariable Integer works_Id){
+				String filePath = "/resources/images/NoImage.jpg";
+				WorksBean wb = worksService.getWorksById(works_Id);
+				HttpHeaders headers = new HttpHeaders();
+				String filename = "";
+				int len = 0;
+				byte[] media = null;
+				if(wb!=null) {
+					Blob blob = wb.getWorksImg();
+					filename = wb.getWorksImgName();
+					if(blob!= null) {
+						try {
+							len = (int) blob.length();
+							media = blob.getBytes(1, len);
+						} catch (SQLException e) {
+							throw new RuntimeException("ProductController的getPicture()發生error"+e.getMessage());
+						}
+					}else {
+						media = toByteArray(filePath);
+						filename = filePath;
+					}
+				}else {
+					media = toByteArray(filePath);
+					filename = filePath;
 				}
-			}else {				
-					media_0 = toByteArray(filePath);
-					filename[0] = filePath;	
-			}
-			if(blob[1] !=null) {
-				try {
-					len = (int)blob[1].length();
-					media_1=blob[1].getBytes(1, len);
-				}catch (SQLException e) {
-					throw new RuntimeException("ProductController的getPicture()發生error"+e.getMessage());
-				}
-			}else {				
-					media_1 = toByteArray(filePath);
-					filename[1] = filePath;	
+				headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+				String mimeType = context.getMimeType(filename);
+				MediaType mediaType = MediaType.valueOf(mimeType);
+//				System.out.println("mediaType = "+mediaType);
+				headers.setContentType(mediaType);
+				ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,headers,HttpStatus.OK);
+				return responseEntity;
 			}
 			
-			if(blob[2] !=null) {
-				try {
-					len = (int)blob[2].length();
-					media_2=blob[2].getBytes(1, len);
-				}catch (SQLException e) {
-					throw new RuntimeException("ProductController的getPicture()發生error"+e.getMessage());
-				}
-			}else {				
-					media_2 = toByteArray(filePath);
-					filename[2] = filePath;	
-			}
-		
-		}else {			
-			media_0 = toByteArray(filePath);
-			filename[0] = filePath;
-			}
-		
-				
-		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-		for(int y = 0 ;y<3;y++) {
-			String[] mimeType = null;
-			mimeType[y]= context.getMimeType(filename[y]);
-			MediaType[] mediaType = null;
-			mediaType[y] = MediaType.valueOf(mimeType[y]);
-			headers.setContentType(mediaType[y]);
-		}
-
-//		System.out.println("mediaType = "+mediaType);
-		List<byte[]> list = new ArrayList<>();
-		list.add(media_0);
-		list.add(media_1);
-		list.add(media_2);
-		ResponseEntity<List> responseEntity = new ResponseEntity<>(list,headers,HttpStatus.OK);
-		return responseEntity;
-	}
+		//___________________________________作品照片讀取(CaptionImg_1)_________________________________________
+					@RequestMapping(value="/readCaptionImg_1/{works_Id}",method=RequestMethod.GET)
+					public ResponseEntity<byte[]> getReadCaptionImg_1(@PathVariable Integer works_Id){
+						String filePath = "/resources/images/NoImage.jpg";
+						WorksBean wb = worksService.getWorksById(works_Id);
+						HttpHeaders headers = new HttpHeaders();
+						String filename = "";
+						int len = 0;
+						byte[] media = null;
+						if(wb!=null) {
+							Blob blob = wb.getCaptionImg_1();
+							filename = wb.getCaptionImgName_1();
+							if(blob!= null) {
+								try {
+									len = (int) blob.length();
+									media = blob.getBytes(1, len);
+								} catch (SQLException e) {
+									throw new RuntimeException("ProductController的getPicture()發生error"+e.getMessage());
+								}
+							}else {
+								media = toByteArray(filePath);
+								filename = filePath;
+							}
+						}else {
+							media = toByteArray(filePath);
+							filename = filePath;
+						}
+						headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+						String mimeType = context.getMimeType(filename);
+						MediaType mediaType = MediaType.valueOf(mimeType);
+//						System.out.println("mediaType = "+mediaType);
+						headers.setContentType(mediaType);
+						ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,headers,HttpStatus.OK);
+						return responseEntity;
+					}
+					//___________________________________作品照片讀取(CaptionImg_2)_________________________________________
+					@RequestMapping(value="/readCaptionImg_2/{works_Id}",method=RequestMethod.GET)
+					public ResponseEntity<byte[]> getReadCaptionImg_2(@PathVariable Integer works_Id){
+						String filePath = "/resources/images/NoImage.jpg";
+						WorksBean wb = worksService.getWorksById(works_Id);
+						HttpHeaders headers = new HttpHeaders();
+						String filename = "";
+						int len = 0;
+						byte[] media = null;
+						if(wb!=null) {
+							Blob blob = wb.getCaptionImg_2();
+							filename = wb.getCaptionImgName_2();
+							if(blob!= null) {
+								try {
+									len = (int) blob.length();
+									media = blob.getBytes(1, len);
+								} catch (SQLException e) {
+									throw new RuntimeException("ProductController的getPicture()發生error"+e.getMessage());
+								}
+							}else {
+								media = toByteArray(filePath);
+								filename = filePath;
+							}
+						}else {
+							media = toByteArray(filePath);
+							filename = filePath;
+						}
+						headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+						String mimeType = context.getMimeType(filename);
+						MediaType mediaType = MediaType.valueOf(mimeType);
+//						System.out.println("mediaType = "+mediaType);
+						headers.setContentType(mediaType);
+						ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,headers,HttpStatus.OK);
+						return responseEntity;
+					}
 	
 	private byte[] toByteArray(String filePath) {
 		byte[] b= null;
@@ -154,43 +184,7 @@ public class WorksControlller {
 		return b;
 	}
 	
-//___________________________________________________________________________________________________
-	@RequestMapping(value="/mainWorksPicture/{works_id}",method=RequestMethod.GET)
-	public ResponseEntity<byte[]> getMainPicture(@PathVariable Integer works_id){
-		String filePath = "/resources/images/NoImage.jpg";
-		WorksBean bean = worksService.getWorksById(works_id);
-		HttpHeaders headers = new HttpHeaders();
-		String filename = "";
-		int len = 0;
-		byte[] media = null;
-		if(bean!=null) {
-			Blob blob = bean.getWorksImg();
-			filename = bean.getWorksImgName();
-			if(blob!= null) {
-				try {
-					len = (int) blob.length();
-					media = blob.getBytes(1, len);
-				} catch (SQLException e) {
-					throw new RuntimeException("ProductController的getPicture()發生error"+e.getMessage());
-				}
-			}else {
-				media = toByteArray(filePath);
-				filename = filePath;
-			}
-		}else {
-			media = toByteArray(filePath);
-			filename = filePath;
-		}
-		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-		String mimeType = context.getMimeType(filename);
-		MediaType mediaType = MediaType.valueOf(mimeType);
-//		System.out.println("mediaType = "+mediaType);
-		headers.setContentType(mediaType);
-		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,headers,HttpStatus.OK);
-		return responseEntity;
-	}
-		
-	
+
 //___________________________________________________________________________________________________
 	@RequestMapping("/worksDetail")
     public String getWorksById(@RequestParam("id")Integer id, Model model) {
@@ -219,9 +213,9 @@ public class WorksControlller {
 		if (suppressedField.length > 0) {
 			throw new RuntimeException("嘗試傳入不合法的欄位 :" + StringUtils.arrayToCommaDelimitedString(suppressedField));
 		}
-		MultipartFile  worksPoto = wb.getWorksPoto();
-		MultipartFile  captionPoto_1 = wb.getCaptionPoto_1();
-		MultipartFile  captionPoto_2 = wb.getCaptionPoto_2();
+		MultipartFile  worksPoto = wb.getWorksPhoto();
+		MultipartFile  captionPoto_1 = wb.getCaptionPhoto_1();
+		MultipartFile  captionPoto_2 = wb.getCaptionPhoto_2();
 		String originalFilename_0 = worksPoto .getOriginalFilename();
 		String originalFilename_1 = captionPoto_1 .getOriginalFilename();
 		String originalFilename_2 = captionPoto_2 .getOriginalFilename();
@@ -307,7 +301,7 @@ public class WorksControlller {
 				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
 			}
 		}
-		worksService.addWorks(wb);
+		worksService.saveWorks(wb);
 		return "redirect:/Works";
 	}
 	
@@ -336,9 +330,9 @@ public class WorksControlller {
 								+StringUtils.arrayToCommaDelimitedString(suppressedField));
 		}
 		
-		MultipartFile  worksPoto = wb.getWorksPoto();
-		MultipartFile  captionPoto_1 = wb.getCaptionPoto_1();
-		MultipartFile  captionPoto_2 = wb.getCaptionPoto_2();
+		MultipartFile  worksPoto = wb.getWorksPhoto();
+		MultipartFile  captionPoto_1 = wb.getCaptionPhoto_1();
+		MultipartFile  captionPoto_2 = wb.getCaptionPhoto_2();
 		String originalFilename_0 = worksPoto .getOriginalFilename();
 		String originalFilename_1 = captionPoto_1 .getOriginalFilename();
 		String originalFilename_2 = captionPoto_2 .getOriginalFilename();
@@ -447,5 +441,154 @@ public class WorksControlller {
 	public void processDeleteWorks(@RequestParam(value = "id") int id) {
 		worksService.deleteWorks(id);
 	}
+	@RequestMapping(value = "/saveWorks" ,method = RequestMethod.POST)
+	public String worksUpLoad(Model model, HttpServletRequest request,
+			@ModelAttribute("worksBean") WorksBean wb,BindingResult result,
+			@ModelAttribute("errorMsg")HashMap<String,String> errorMsg) throws UnsupportedEncodingException {
+			request.setCharacterEncoding("UTF-8") ;
+			String [] suppressedField = result.getSuppressedFields();
+			if(suppressedField.length > 0 ) {
+				throw new RuntimeException("嘗試傳入不合法的欄位 :"
+									+StringUtils.arrayToCommaDelimitedString(suppressedField));
+			}
+			
+			errorMsg = new HashMap<String, String>();
+			Map<String, String> oKMsg = new HashMap<String, String>();
+			HttpSession session = request.getSession();
+			model.addAttribute("MsgMap", errorMsg);
+			session.setAttribute("MsgOK", oKMsg);
+			
+			String worksName = wb.getWorksName();
+			String worksIntro = wb.getWorksIntro();
+			String detail_1 = wb.getDetail_1();
+			String detail_2 = wb.getDetail_2();
+			
+			Blob worksImg = null;
+			Blob captionImg_1 =null;
+			Blob captionImg_2 = null;
+			
+		
+			MultipartFile[] multipartFile  =  {wb.getWorksPhoto(),wb.getCaptionPhoto_1(),wb.getCaptionPhoto_2()};
+			String [] originalFilename = {multipartFile[0].getOriginalFilename(),multipartFile[1].getOriginalFilename(),multipartFile[2].getOriginalFilename()};
+		
+			
+			String rootDirectory = request.getSession().getServletContext().getRealPath("/");	
+			String[] ext= new String[3]; 
 
+			for(int x=0; x<multipartFile.length;x++) {
+					if(originalFilename [x] !="") {
+						if(originalFilename[x]==multipartFile[0].getOriginalFilename()) {
+							wb.setWorksImgName(originalFilename[0]);
+						}else if(originalFilename[x]==multipartFile[1].getOriginalFilename()) {
+							wb.setCaptionImgName_1(originalFilename[1]);
+						}else if(originalFilename[x]==multipartFile[2].getOriginalFilename()) {
+							wb.setCaptionImgName_2(originalFilename[2]);
+						}
+						ext[x] =  originalFilename[x].substring(originalFilename[x].lastIndexOf(".")) ;
+						}else {
+								originalFilename[x]=null;
+								if(x==0) {
+									
+								}else if(x==1) {
+									wb.setCaptionImgName_1(null);
+								}else if(x==2) {
+									wb.setCaptionImgName_2(null);
+								}
+								ext[x] =  null ;
+								}
+				}			
+				try {
+					byte[] a = multipartFile[0].getBytes();
+					worksImg= new SerialBlob(a);
+					wb.setWorksImg(worksImg);
+					
+					
+					if(multipartFile[1] !=null ) {
+					byte[] b = multipartFile[1].getBytes();
+					captionImg_1= new SerialBlob(b);
+					wb.setCaptionImg_1(captionImg_1);
+					}
+					
+					if(multipartFile[2] !=null ) {
+					byte[] c = multipartFile[2].getBytes();
+					captionImg_2= new SerialBlob(c);
+					wb.setCaptionImg_2(captionImg_2);
+					}
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+				}
+				
+
+				try {
+					File imageFolder = new File(rootDirectory+"images");
+					if(!imageFolder.exists()) {
+						imageFolder.mkdirs();
+					}
+					File file_0 = new File(imageFolder, wb.getWorks_id()+ext[0]);				
+					multipartFile[0].transferTo(file_0);
+					
+					
+					if(ext[1] != null) {
+					File file_1 = new File(imageFolder, wb.getWorks_id()+ext[1]);
+					multipartFile[1].transferTo(file_1);
+					}
+					
+					if(ext[2] != null) {
+					File file_2 = new File(imageFolder, wb.getWorks_id()+ext[2]);
+					multipartFile[2].transferTo(file_2);
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+				}
+			
+
+			
+			if (detail_1  == null || detail_1 .trim().length() == 0) {
+				detail_1  =null;
+			} else {
+				session.setAttribute("detail_1 ",detail_1 );
+			}
+			
+			if (detail_2  == null || detail_2 .trim().length() == 0) {
+				detail_2  =null;
+			} else{
+				if (detail_1  == null ) {
+					detail_1 =detail_2;
+				}else {
+					session.setAttribute("detail_2 ",detail_2);
+				} 
+			}
+
+
+			Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
+			String regday = ts.toString(); // 1029改String
+			wb.setWorksUpDate(regday);
+			
+			UserBean mb = (UserBean) session.getAttribute("LoginOK");
+			String Nickname= mb.getNickname();
+			wb.setAuthor(Nickname);
+			Integer id = mb.getUser_id();
+			wb.setUser_Id(id);
+
+			int n = worksService.saveWorks(wb);
+
+			if (n == 1) {
+				oKMsg.put("UpLoadWorksOK", "<Font color='red'>輸入OK</Font>");					
+			} else {
+				errorMsg.put("errorIDDup", "新增此筆資料有誤");
+			}
+			if (!errorMsg.isEmpty()) {
+				return "forward:/upLoadWorksError";
+			}
+		return "forward:/personalPage";
+	}
+
+		@RequestMapping(value = "/worksError")
+		public String worksError(@ModelAttribute("errorMsg")HashMap<String,String> errorMsg,Model model) {
+			model.addAttribute("errorMsg", errorMsg);
+			return "_06_works/";
+		}
 }

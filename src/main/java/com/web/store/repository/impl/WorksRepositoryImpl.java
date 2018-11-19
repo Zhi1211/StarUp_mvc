@@ -138,16 +138,19 @@ public class WorksRepositoryImpl implements WorksRepository {
 
 		//新增作品
 		@Override
-		public void addWorks(WorksBean wbean) {
+		public int saveWorks(WorksBean wbean) {
+			int n = 0;
 			Session session = factory.getCurrentSession();
 			session.save(wbean);
+			n++;
+			return n;
 		}
 		
 		
 		// 查詢某一頁的商品資料，執行本方法前，一定要先設定實例變數pageNo的初值
 		@SuppressWarnings("unchecked")
 		@Override	
-		public List<WorksBean> getPageProds() {
+		public List<WorksBean> getPageWorks() {
 			List<WorksBean> list = new ArrayList<>();
 			// 由頁碼推算出該頁是由哪一筆紀錄開始(1 based)
 			int startRecordNo = (pageNo - 1) * recordsPerPage;

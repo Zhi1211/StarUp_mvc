@@ -51,13 +51,13 @@ public class WorksServiceImpl implements WorksService {
 	}
 
 	@Override
-	public void addWorks(WorksBean wbean) {
-		worksRepository. addWorks(wbean);
+	public int saveWorks(WorksBean wbean) {
+		return worksRepository. saveWorks(wbean);
 	}
 
 	@Override
-	public List<WorksBean> getPageProds() {
-		return  worksRepository.getPageProds();
+	public List<WorksBean> getPageWorks() {
+		return  worksRepository.getPageWorks();
 	}
 
 	@Override

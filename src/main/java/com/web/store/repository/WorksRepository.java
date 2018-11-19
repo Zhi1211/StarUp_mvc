@@ -21,9 +21,9 @@ public interface  WorksRepository {
 
 	int updateWorks(WorksBean bean);
 	
-	void addWorks(WorksBean wbean);
+	int saveWorks(WorksBean wbean);
 	
-	List<WorksBean> getPageProds();
+	List<WorksBean> getPageWorks();
 	
 	 int getPageNo();
 	 

@@ -7,7 +7,7 @@
         <div class="container-fluid" style="display: flex ; color:white"> 
             <div class="col-lg-3" >                  
                 <div class="personalImg">     
-                    <img class="img-circle pImg" src="getUserPicture/${userBean.user_id }">
+                    <img id="userImg${userBean.user_id }" class="img-circle pImg" src="getUserPicture/${userBean.user_id }">
                 </div> 
                 <div>
                 <p></p>
@@ -28,14 +28,14 @@
             </div>     
             <div class="mainContent col-lg-9" id="personalMainContent" style="padding:15px; border-radius:10px;">       
             <ul class="nav nav-tabs">
-				  <li class="active"><a data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-info btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
-				  <li><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-primary btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>  
-				  <li><a data-toggle="tab" href="#post"><button type="button" class="btn btn-warning btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
-				  <li><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-danger btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">購物</button></a></li>
-				  <li><a data-toggle="tab" href="#maintain"> <button type="button" class="btn btn-success btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
-			</ul>				
+				  <li class="active nav-item"><a class="active show" data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
+				  <li class="nav-item"><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>  
+				  <li class="nav-item"><a data-toggle="tab" href="#post"><button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
+				  <li class="nav-item"><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">購物</button></a></li>
+				  <li class="nav-item"><a data-toggle="tab" href="#maintain"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
+			</ul>							
 				<div class="tab-content" style="margin:20px 0px 70px 0px;">  
-				  <div id="works" class="tab-pane fade in active">
+				  <div id="works" class="tab-pane fade active show">
 				    <!-- <h3>作品</h3> -->
 				     <div class="works">                 
 	                    <div class="pieceOfWork" v-for="work in works">
@@ -62,7 +62,7 @@
 				    <!-- <h3>發表</h3> -->
 				 		<!-- 上傳作品頁面 -->
                 <div class="u-box box" style="width: 100%; height: 100%; margin: 0 auto;">
-                    <form ENCTYPE="multipart/form-data" method="POST" action="<c:url value='works.do' />" id="works.do">
+                    <form ENCTYPE="multipart/form-data" method="POST" action="saveWorks" id="uploadWorksForm">
                         <div class="u-container container">
                             <div class="col-xs-0" style="width: 100%;">                               
                                 <div class="form-group">
@@ -72,7 +72,7 @@
                                         <img alt="" src="" id="previewImg_1" style="max-height: 300px;">
                                  </div>                               
                                 <!--  <span style="float: left; margin-left: 50px;"> --> 
-                                   <input type="file" class="form-control-file" name="worksImg" id="worksImg" id="exampleInputFile"  aria-describedby="fileHelp">
+                                   <input type="file" class="form-control-file" name="worksPhoto" id="worksImg" id="exampleInputFile"  aria-describedby="fileHelp">
                                  <!-- </span> -->
                                 </div>
                                 
@@ -94,7 +94,7 @@
 		                            <textarea class="form-control" name="detail_1" id="detail_1" rows="9" style="width: 450px; height: 150px;"></textarea>
 		                                <div>
 			                                <img alt="" src="" id="previewImg_2" style="max-width:300px; margin-left:5px;">                
-			                          		<input type="file" class="form-control-file" name="captionImg_1" id="captionImg_1" aria-describedby="fileHelp" style="margin-left:5px">
+			                          		<input type="file" class="form-control-file" name="captionPhoto_1" id="captionImg_1" aria-describedby="fileHelp" style="margin-left:5px">
 		                                </div>
 	                            </div>
                             </div>
@@ -106,7 +106,7 @@
 		                            <textarea class="form-control" name="detail_2" id="detail_2" rows="9" style="width: 450px; height: 150px;"></textarea>
 		                                <div>
 			                                <img alt="" src="" id="previewImg_3" style="max-width:300px; margin-left:5px;">                
-			                          		<input type="file" class="form-control-file" name="captionImg_2" id="captionImg_2" aria-describedby="fileHelp" style="margin-left:5px">
+			                          		<input type="file" class="form-control-file" name="captionPhoto_2" id="captionImg_2" aria-describedby="fileHelp" style="margin-left:5px">
 		                                </div>
 	                            </div>
                             </div>      
@@ -141,7 +141,7 @@
 									<td width="225">{{order.orderDateStr}}</td>      
 									<td width="150">{{order.totalAmount}}</td>
 									<td>&nbsp;{{order.shippingAddress}}</td>     
-									<td><button v-on:click="showOrderDetail(order.orderNo,$event,index)">查看明細</button></td>   
+									<td><button class="btn btn-outline-light btn-sm" v-on:click="showOrderDetail(order.orderNo,$event,index)">查看明細</button></td>   
 									<!-- <td>
 										<table>
 										<tr v-bind:id="'order'+index">
@@ -150,7 +150,7 @@
 									</table>
 									</td> -->
 								</tr>
-								<tr class="hidden" v-bind:id="'order'+index">
+								<tr class="hidden itemList" v-bind:id="'order'+index">
 									<td colspan="5">
 										<table>
 										<tr>   
@@ -194,7 +194,7 @@
 					    		  		生日：<span>${userBean.birthday}</span>
 									</li>
 								  		<hr>
-										<span class="text-warning" style="text-align:right"><small>點兩下來修改</small></span>
+										<span class="text-warning" style="text-align:right">* 點兩下來修改 *</span>
 									
 									<li style="display:flex">
 					    		  		<div>暱稱：</div>
@@ -247,6 +247,21 @@
         			orderDetail:[],
         			orderItems:[],
         		},        	 	
+        		created: function(){	
+        				var _self = this;        				
+        				var id = $('.personalImg img').attr('id').substring(7)        				
+        				$.ajax({
+            			    type: "POST",    
+            			    url: 'userWorks?userId='+id,
+            			    contentType:'application/json',		
+            			    dataType: 'json',
+            	            success : function(data) { 
+            	            	_self.works = data;
+            	            	console.log(_self.works)
+            	            }  
+            	        });
+        		
+        		},
         		methods:{
         			getWorks:function(userId){        			
         				var _self = this;
@@ -305,7 +320,7 @@
             	            	_self.orderDetail = data;
             	            	_self.orderItems = data.items;	
             	            }  
-            	        });	        				        				
+            	        });	        				        				        		
         				$('#order'+index).toggleClass('hidden');
         			}
         		},        		
@@ -326,11 +341,41 @@
         	$('#editUser .edit').dblclick(function(e){
         		console.log("click")
         		$(this).prop('contenteditable',true).focus();
+        		$(this).css('background-color','rgba(32, 31, 58,0.8)');   
         	})
         	.blur(function(e){
         		$(this).prop('contenteditable',false)
+        		$(this).css('background-color','');  
         	})
-        	
+        	$('#uploadWorksForm').submit(function(){
+        		debugger
+        		var a = document.getElementById('worksName').value;
+				var b = document.getElementById('worksPhoto').value;
+				var c = document.getElementById('worksIntro').value;
+				var warn = "";
+				if(a ===""){
+					warn += '作品名不得為空 | '
+				}
+				if(b ===""){
+					warn += '請上傳作品圖片 | '
+				}
+				if(c ===""){
+					warn += '作品介紹不得為空'
+				}
+				if(warn != ""){
+					alert(warn);
+					return false;
+				}
+        		
+				  $.ajax({
+				  type:"POST", 
+				  cache: false,
+				  url: $(this).attr('action'),
+				  data: $('#uploadWorksForm').serialize(),
+				  datatype: 'json',
+
+				});
+        	})
         </script>
 <jsp:include page="/fragment/footer.jsp" />
 
