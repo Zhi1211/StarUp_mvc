@@ -72,4 +72,9 @@ public class UserServiceImpl implements UserService {
 		return dao.updateUser(userBean);
 	}
 
+	@Override
+	public UserBean getUserByNickname(String nickname) {
+		return dao.getUserByNickname(nickname);
+	}
+
 }

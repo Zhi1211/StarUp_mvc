@@ -34,4 +34,6 @@ public interface UserDao {
 		UserBean getUser2(String account);
 
 		int updateUser(UserBean userBean);
+		
+		UserBean getUserByNickname(String nickname);
 }

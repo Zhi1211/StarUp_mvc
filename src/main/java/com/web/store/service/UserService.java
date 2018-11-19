@@ -29,4 +29,6 @@ public interface UserService {
 	int updateUser(UserBean ub, long sizeInBytes);
 
 	int updateUser(UserBean userBean);
+	
+	UserBean getUserByNickname(String nickname);
 }

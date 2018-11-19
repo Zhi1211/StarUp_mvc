@@ -29,7 +29,7 @@
             <div class="mainContent col-lg-9" id="personalMainContent" style="padding:15px; border-radius:10px;">       
             <ul class="nav nav-tabs">
 				  <li class="active"><a data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-info btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
-				  <li><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-primary btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>
+				  <li><a data-toggle="tab" href="#mail" v-on:click="getMyMessages(${userBean.user_id})"> <button type="button" class="btn btn-primary btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>
 				  <li><a data-toggle="tab" href="#post"><button type="button" class="btn btn-warning btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
 				  <li><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-danger btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">訂單查詢</button></a></li>
 				  <li><a data-toggle="tab" href="#maintain"> <button type="button" class="btn btn-success btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
@@ -56,7 +56,24 @@
 				  </div>
 				  <div id="mail" class="tab-pane fade">
 				   <!--  <h3>信件</h3> -->
-				    <p>Some content.</p>
+				   <!--  <p>Some content.</p> -->
+					<button class="sendMail" onclick="sendMail()">我要發信</button>
+				    <table class="table table-striped table-dark" border="1" style="width:960px;">
+				    	<tr>       
+              				<th style="width:80px">編號</th>
+              				<th style="width:80px">留言者</th>
+              				<th style="width:180px">主旨</th>
+              				<th style="width:250px">留言時間</th>
+              				<th style="width:250px">本文</th>
+          				</tr>
+          				<tr>
+          					<td style="width:80px">1</td>
+          					<td style="width:80px">fromId</td>
+          					<td style="width:180px">title</td>
+          					<td style="width:250px; text-align:left">&nbsp;timestamp</td>
+          					<td style="width:250px; text-align:left">content</td>
+          				</tr>
+				    </table>
 				  </div>
 				  <div id="post" class="tab-pane fade">
 				    <!-- <h3>發表</h3> -->
@@ -221,6 +238,7 @@
         		data:{
         			works:[],
         			orders:[],
+        			myMessages:[],
         		},        	 	
         		methods:{
         			getWorks:function(userId){        			
@@ -267,6 +285,18 @@
             	            }  
             	        });	
         			},
+        			getMyMessages:function(userId){
+        				var _self = this;
+        				$.ajax({
+        					type: "POST",
+        					url:'getMyMails?userId='+userId,
+        					contentType:'application/json',		
+            			    dataType: 'json',
+            			    success : function(data) {
+            			    	_self.myMessages = data;
+            			    }
+        				})
+        			}
         		},        		
         	})
         	$("#userImage").change(function(){

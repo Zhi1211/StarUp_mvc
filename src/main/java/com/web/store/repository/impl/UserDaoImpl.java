@@ -218,5 +218,16 @@ public class UserDaoImpl implements UserDao {
 			return ub;
 		}
 
+		@Override
+		public UserBean getUserByNickname(String nickname) {
+			UserBean ub = null;
+			String hql = "FROM UserBean WHERE nickname = :nickname ";
+			Session session = factory.getCurrentSession();
+			ub = (UserBean)session.createQuery(hql)
+								  .setParameter("nickname", nickname)
+								  .getSingleResult();
+			return ub;
+		}
+
 		
 }

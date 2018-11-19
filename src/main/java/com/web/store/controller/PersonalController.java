@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +25,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.web.store.model.MessageBean;
 import com.web.store.model.UserBean;
 import com.web.store.model.WorkCommentBean;
 import com.web.store.model.WorksBean;
+import com.web.store.service.MessageService;
 import com.web.store.service.UserService;
 import com.web.store.service.WorksService;
 @Controller
@@ -37,6 +40,8 @@ public class PersonalController {
 	UserService userService;
 	@Autowired
 	WorksService worksService;
+	@Autowired
+	MessageService messageService;
 	public PersonalController() {
 		
 	}
@@ -149,5 +154,47 @@ public class PersonalController {
 			e.printStackTrace();
 		}
 		return "redirect:/testComment";
+	}
+	/*測試送出(存入)信件*/
+	@RequestMapping(value="/sendMail", 
+					params= {"receiverNickname","messageTitle","messageContent"}, 
+					method=RequestMethod.POST, 
+					produces="text/html;charset=UTF-8")
+	public String sendMail(HttpServletRequest request, Model model, 
+			@RequestParam("receiverNickname")String receiverNickname, 
+			@RequestParam("messageTitle")String messageTitle, 
+			@RequestParam("messageContent")String messageContent) {
+		UserBean messageDeliverUb = (UserBean)request.getSession(false).getAttribute("LoginOK");
+		UserBean messageReceiverUb = userService.getUserByNickname(receiverNickname);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String posttime = sdf.format(new Date());
+		MessageBean mb = new MessageBean(
+			null, 
+			messageDeliverUb.getUser_id(), 
+			messageDeliverUb.getAccount(), 
+			messageDeliverUb.getNickname(), 
+			messageReceiverUb.getUser_id(), 
+			messageReceiverUb.getAccount(), 
+			messageReceiverUb.getNickname(), 
+			posttime, 
+			messageTitle, 
+			messageContent,
+			0
+		);
+		messageService.insertMessage(mb);
+		return "";
+	}
+	/*依使用者Id取得信件*/
+	@RequestMapping(value="/getMyMails", method=RequestMethod.POST)
+	public @ResponseBody byte[] getMyMails(Model model, @RequestParam(value="userId")Integer userId) {
+		List<MessageBean> list = messageService.getMessages(userId);
+		model.addAttribute("myMails", list);
+		byte[] worksJson = null;
+		try {
+			worksJson = new Gson().toJson(list).getBytes("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return worksJson;
 	}
 }
