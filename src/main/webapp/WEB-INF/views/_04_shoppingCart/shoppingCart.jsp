@@ -48,12 +48,14 @@
 						<td style="width: 120px" id="subtotal${vs.index}" class="subtotal">${anEntry.value.prodPrice * anEntry.value.qty}</td>						
 						<td style="width: 120px"><i class="far fa-trash-alt"  
 							onclick="return confirmDelete(${anEntry.key},${anEntry.value.prodPrice * anEntry.value.qty});" style="cursor:pointer;"></i></td>
-					</tr>
+					</tr>				
 				</c:forEach>
+			
 			</table>
-
+			
 		</div>
 	</div>
+	
 	<div class="checkoutBox"
 		style="width: 70%; height: 100px; border-radius: 5px; background-color: rgb(255, 255, 255); box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); display: flex; margin-bottom: 5px; margin-top: 30px">
 		<div style="line-height: 100px; margin: 0px auto; font-size: 20px">
@@ -70,6 +72,7 @@
 				onclick="return Abort();">清空購物車</button>
 		</div>
 	</div>
+
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
 		<!-- 減少購物車中之商品數量 -->

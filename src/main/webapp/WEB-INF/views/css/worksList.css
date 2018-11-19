@@ -1,95 +1,58 @@
-.carousel-item{
-  background-image: url("../image/night.jpg");     
-  background-size: cover;
-  width:100%;
+.carousel-item {
+    background-image: url("../image/night.jpg");
+    background-size: cover;
+    width: 100%;
 }
 
-.p-container{
-    margin-top:50px;
-    padding: 0px;
-    border-radius: 20px;
-    box-shadow: 3px 3px 3px rgb(2, 14, 53);
-    background-color:rgba(255, 255, 255, 0.5);
-    height: 460px;
-    width: 1500px;
-    border:2px solid #a492b4;
-     
-  }
-  
-  .square{
-  
+.p-container {
     
-    height: 350px;
-    width: 1498px;
-    display: flex;
-    border-top: 2px solid #a492b4;
-    border-bottom: 2px solid #a492b4;
-  
-  }
-  
-  .p-username{
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.397);
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px black;
+}
+
+
+.p-username {
     float: right;
-     margin-right: 1150px;
-     margin-top:15px;
-     font-size: 18px;
-     font-family: '微軟正黑體';
-     font-weight: 900;
-     text-shadow: 1px 2px 1px rgb(245, 247, 255);
-     color: #44318b;
-  }
-  
-  .p-time{
-    float: left;
-     margin-left: 30px;
-     margin-top:10px;
-     font-family: '微軟正黑體';
-     font-weight: 600;
-     text-shadow: 1px 2px 1px rgb(245, 247, 255);
-     color: #44318b;
-  }
-  
-  .p-img{
-    height: 270px;
-    width: 370px;
-    margin-top:15px;
-    margin-left:70px;
-    box-shadow: 1px 1px 1px rgb(2, 14, 53);
-   
-  }
-  
-  .p-font{
-    margin-left: 390px;
-    margin-top: 90px;
-    width: 900px;
-    height: 230px;
-    font-family: '微軟正黑體';
-     font-weight: 600;
-     
-     color: #382c58;
-     font-size: 21px;
-     text-align: justify;
-  }
-  
-  .p-title{
-    font-family: '微軟正黑體';
-     font-weight: 600;
-     text-shadow: 1px 2px 1px rgb(245, 247, 255);
-     color: #15035a;
-     font-size: 25px;
-     margin-top: 10px;
-     width: 120px;
-     height: 30px;
-     margin-left: 30px;
-  
-  }
-  
-  .p-container:hover { 
     
-    background-color: rgba(237, 232, 250, 0.733);
-  }
+    font-size: 16px;
+    font-family: '微軟正黑體';
+    font-weight: 900;
+    color:white;
+}
 
+.p-time {
+    float: left;
+    margin-left: 30px;
+    margin-top: 10px;
+    font-family: '微軟正黑體';
+    font-weight: 600;
+    color:white;
+}
 
+.p-img {
+    overflow: hidden;
+    margin:0 auto;
+    box-shadow: 1px 1px 1px rgb(2, 14, 53);
+}
 
-  /* $(window).scroll(funtion(){
-    $().addClass();
-}); */
+.p-font {
+    
+    margin:0 auto;
+    font-family: '微軟正黑體';
+    font-weight: 600;
+    color:white;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.p-title {
+    font-family: '微軟正黑體';
+    font-weight: 600;
+    color:white;
+    font-size: 16px;
+    margin-top: 20px;
+    margin:0 auto;
+    
+}

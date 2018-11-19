@@ -1,5 +1,7 @@
 package com.web.store.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,6 +12,7 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,8 +136,9 @@ public class ShoppingController {
 //	}
 	
 	@RequestMapping(value="/showShoppingCart")
-	public String showShoppingCart(HttpServletRequest request, Model model) {
+	public String showShoppingCart(HttpServletRequest request, Model model, HttpServletResponse response) throws IOException {
 		ShoppingCart sc = null;
+		PrintWriter out = response.getWriter();
 		if(request.getSession(false) != null) {
 			HttpSession session = request.getSession(false);
 			sc = (ShoppingCart)session.getAttribute("ShoppingCart");
@@ -142,6 +146,7 @@ public class ShoppingController {
 		if (sc != null) {
 			return "_04_shoppingCart/shoppingCart";
 		} else {
+			out.println("<script>alert('購物車是空的喔')</script>");
 			return "redirect:/products";
 		}
 //		return "_04_shoppingCart/shoppingCart";

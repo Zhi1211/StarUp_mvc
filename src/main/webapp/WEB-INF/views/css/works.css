@@ -1,0 +1,72 @@
+.w-container {
+	padding: 10px;
+	background-color: rgba(0, 0, 0, 0.397);
+	border-radius: 10px;
+	box-shadow: 1px 1px 3px black;
+}
+
+.wdis-font {
+	margin-top: 20px;
+	font-family: '微軟正黑體';
+	font-weight: 600;
+	color: white;
+	font-size: 16px;
+	margin-top: 20px;
+	margin: 0 auto;
+}
+
+.w-title {
+	margin-top: 20px;
+	font-family: '微軟正黑體';
+	font-weight: 600;
+	color: white;
+	font-size: 16px;
+	margin-top: 20px;
+	margin: 0 auto;
+}
+
+.w-username {
+	margin-top: 20px;
+	font-family: '微軟正黑體';
+	font-weight: 600;
+	color: white;
+	font-size: 16px;
+	margin-top: 20px;
+	margin: 0 auto;
+}
+
+.w-font {
+	margin-top: 10px;
+	font-family: '微軟正黑體';
+	font-weight: 600;
+	color: white;
+	font-size: 16px;
+	margin: 0 auto;
+	
+}
+
+.waimg-box {
+	border: grey solid 1px;
+	width: 500px;
+	height: 320px;
+	overflow: hidden;
+	margin-left: 30px;
+	margin-top: 50px;
+}
+
+.msg-box {
+	margin-top: 50px;
+	padding: 10px;
+	background-color: rgba(0, 0, 0, 0.397);
+	border-radius: 10px;
+	box-shadow: 1px 1px 3px black;
+}
+
+.minbox {
+	width: 47%;
+	margin:auto 0;
+	height: 50px;
+	background-color: rgba(255, 255, 255, 0.2);
+	box-shadow: 2px 2px 2px 1px rgb(2, 14, 53);
+	float:right;
+}

@@ -3,7 +3,6 @@ package com.web.store.model;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Clob;
-import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +13,8 @@ import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="works")
@@ -26,17 +27,20 @@ public class WorksBean implements Serializable{
 	private String worksName;
 	private String worksIntro;
 	private String worksImgName;
+	@JsonIgnore
 	private Blob worksImg;
 	private String worksUpDate;
 	
 	//進階
 	private String detail_1;//作品細節_1
 	private String captionImgName_1;//照片_1
+	@JsonIgnore
 	private Blob captionImg_1;
 	
 	private String detail_2;//作品細節_2
 	private String captionImgName_2;//照片_2
-	private Blob captionImg_2;
+	@JsonIgnore
+	private Blob captionImg_2; 
 	
 	private MultipartFile  worksPhoto;
 	private MultipartFile  captionPhoto_1;

@@ -28,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -189,7 +190,7 @@ public class WorksController {
 	@RequestMapping("/worksDetail")
     public String getWorksById(@RequestParam("id")Integer id, Model model) {
     	model.addAttribute("works", worksService.getWorksById(id));
-    	return "/_03_works/worksDetail";
+    	return "_06_workUp/worksDetail";
     }
 	
 	@RequestMapping(value= "/worksMaintain", produces="application/json")
@@ -314,132 +315,137 @@ public class WorksController {
 //		model.addAttribute("WorksBean", wb);
 //    	return "";
 //	}
-	@RequestMapping(value = "/modifyWorks", method = RequestMethod.POST,
-			produces="text/html;charset=UTF-8")
-	public String processWorksMaintain(@ModelAttribute("WorksBean") WorksBean wb,
-			@RequestParam(value = "id") int id,
-			BindingResult result, HttpServletRequest request) throws UnsupportedEncodingException {			
-		String [] suppressedField = result.getSuppressedFields();
-		wb.setWorks_id(id);
-		long sizeInBytes= 0;
-		long sizeInBytes_1= 0;
-		long sizeInBytes_2= 0;
-		
-		if(suppressedField.length > 0 ) {
-			throw new RuntimeException("嘗試傳入不合法的欄位 :"
-								+StringUtils.arrayToCommaDelimitedString(suppressedField));
-		}
-		
-		MultipartFile  worksPoto = wb.getWorksPhoto();
-		MultipartFile  captionPoto_1 = wb.getCaptionPhoto_1();
-		MultipartFile  captionPoto_2 = wb.getCaptionPhoto_2();
-		String originalFilename_0 = worksPoto .getOriginalFilename();
-		String originalFilename_1 = captionPoto_1 .getOriginalFilename();
-		String originalFilename_2 = captionPoto_2 .getOriginalFilename();
-		
-		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String date = df.format(new Date());
-		wb.setWorksUpDate(date);
-		
-		// 建立Blob物件，交由Hibernate寫入資料庫
-		//建立worksImg圖片
-		if(worksPoto != null && !worksPoto.isEmpty()) {
-			wb.setWorksImgName(originalFilename_0);
-			String ext_0 = originalFilename_0.substring(originalFilename_0.lastIndexOf("."));	
-			try {
-				byte[] b = worksPoto.getBytes();
-				Blob blob = new SerialBlob(b);
-				wb.setWorksImg(blob);
-			}catch(Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-			}
-			
-			try {
-				File imageFolder = new File(rootDirectory+"images");
-				if(!imageFolder.exists()) {
-					imageFolder.mkdirs();
-				}
-				File file = new File(imageFolder, wb.getWorks_id()+ext_0);
-				worksPoto.transferTo(file);
-			}catch(Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-			}
-		}
-		//建立captionImg_1圖片
-		if(captionPoto_1 != null && !captionPoto_1.isEmpty()) {
-			wb.setCaptionImgName_1(originalFilename_1);
-			String ext_1 = originalFilename_1.substring(originalFilename_1.lastIndexOf("."));	
-			try {
-				byte[] b = captionPoto_1.getBytes();
-				Blob blob = new SerialBlob(b);
-				wb.setCaptionImg_1(blob);
-			}catch(Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-			}
-			
-			try {
-				File imageFolder = new File(rootDirectory+"images");
-				if(!imageFolder.exists()) {
-					imageFolder.mkdirs();
-				}
-				File file = new File(imageFolder, wb.getWorks_id()+ext_1);
-				captionPoto_1.transferTo(file);
-			}catch(Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-			}
-		}	
-		//建立captionImg_2圖片
-		if(captionPoto_2 != null && !captionPoto_2.isEmpty()) {
-			wb.setCaptionImgName_2(originalFilename_2);
-			String ext_2 = originalFilename_2.substring(originalFilename_2.lastIndexOf("."));	
-			try {
-				byte[] b = captionPoto_2.getBytes();
-				Blob blob = new SerialBlob(b);
-				wb.setCaptionImg_2(blob);
-			}catch(Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-			}
-			
-			try {
-				File imageFolder = new File(rootDirectory+"images");
-				if(!imageFolder.exists()) {
-					imageFolder.mkdirs();
-				}
-				File file = new File(imageFolder, wb.getWorks_id()+ext_2);
-				captionPoto_2.transferTo(file);
-			}catch(Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-			}
-		}
-								
-		worksService.updateWorks( wb,sizeInBytes,sizeInBytes_1,sizeInBytes_2) ;
-		return "redirect:/backstage";
-	}
+//	@RequestMapping(value = "/modifyWorks", method = RequestMethod.POST,
+//			produces="text/html;charset=UTF-8")
+//	public String processWorksMaintain(@ModelAttribute("WorksBean") WorksBean wb,
+//			@RequestParam(value = "id") int id,
+//			BindingResult result, HttpServletRequest request) throws UnsupportedEncodingException {			
+//		String [] suppressedField = result.getSuppressedFields();
+//		wb.setWorks_id(id);
+//		long sizeInBytes= 0;
+//		long sizeInBytes_1= 0;
+//		long sizeInBytes_2= 0;
+//		
+//		if(suppressedField.length > 0 ) {
+//			throw new RuntimeException("嘗試傳入不合法的欄位 :"
+//								+StringUtils.arrayToCommaDelimitedString(suppressedField));
+//		}
+//		
+//		MultipartFile  worksPoto = wb.getWorksPhoto();
+//		MultipartFile  captionPoto_1 = wb.getCaptionPhoto_1();
+//		MultipartFile  captionPoto_2 = wb.getCaptionPhoto_2();
+//		String originalFilename_0 = worksPoto .getOriginalFilename();
+//		String originalFilename_1 = captionPoto_1 .getOriginalFilename();
+//		String originalFilename_2 = captionPoto_2 .getOriginalFilename();
+//		
+//		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String date = df.format(new Date());
+//		wb.setWorksUpDate(date);
+//		
+//		// 建立Blob物件，交由Hibernate寫入資料庫
+//		//建立worksImg圖片
+//		if(worksPoto != null && !worksPoto.isEmpty()) {
+//			wb.setWorksImgName(originalFilename_0);
+//			String ext_0 = originalFilename_0.substring(originalFilename_0.lastIndexOf("."));	
+//			try {
+//				byte[] b = worksPoto.getBytes();
+//				Blob blob = new SerialBlob(b);
+//				wb.setWorksImg(blob);
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+//			}
+//			
+//			try {
+//				File imageFolder = new File(rootDirectory+"images");
+//				if(!imageFolder.exists()) {
+//					imageFolder.mkdirs();
+//				}
+//				File file = new File(imageFolder, wb.getWorks_id()+ext_0);
+//				worksPoto.transferTo(file);
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+//			}
+//		}
+//		//建立captionImg_1圖片
+//		if(captionPoto_1 != null && !captionPoto_1.isEmpty()) {
+//			wb.setCaptionImgName_1(originalFilename_1);
+//			String ext_1 = originalFilename_1.substring(originalFilename_1.lastIndexOf("."));	
+//			try {
+//				byte[] b = captionPoto_1.getBytes();
+//				Blob blob = new SerialBlob(b);
+//				wb.setCaptionImg_1(blob);
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+//			}
+//			
+//			try {
+//				File imageFolder = new File(rootDirectory+"images");
+//				if(!imageFolder.exists()) {
+//					imageFolder.mkdirs();
+//				}
+//				File file = new File(imageFolder, wb.getWorks_id()+ext_1);
+//				captionPoto_1.transferTo(file);
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+//			}
+//		}	
+//		//建立captionImg_2圖片
+//		if(captionPoto_2 != null && !captionPoto_2.isEmpty()) {
+//			wb.setCaptionImgName_2(originalFilename_2);
+//			String ext_2 = originalFilename_2.substring(originalFilename_2.lastIndexOf("."));	
+//			try {
+//				byte[] b = captionPoto_2.getBytes();
+//				Blob blob = new SerialBlob(b);
+//				wb.setCaptionImg_2(blob);
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+//			}
+//			
+//			try {
+//				File imageFolder = new File(rootDirectory+"images");
+//				if(!imageFolder.exists()) {
+//					imageFolder.mkdirs();
+//				}
+//				File file = new File(imageFolder, wb.getWorks_id()+ext_2);
+//				captionPoto_2.transferTo(file);
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+//			}
+//		}
+//								
+//		worksService.updateWorks( wb,sizeInBytes,sizeInBytes_1,sizeInBytes_2) ;
+//		return "redirect:/backstage";
+//	}
 	
-	@RequestMapping(value="/modifyWorks/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<WorksBean> updateWorks(@PathVariable("id") int id, @RequestBody WorksBean worksBean){
-		System.out.println("更新作品資訊 "+id);
-		WorksBean wb = worksService.getWorksById(id);
-		if(wb == null) {
-			System.out.println("該作品不存在");
-			return new ResponseEntity<WorksBean>(HttpStatus.NOT_FOUND);
-		}
-		wb.setWorksName(worksBean.getWorksName());
-		
-		return null;
-	}
+	@RequestMapping(value="/updateWorks/{id}", method = RequestMethod.POST)
+    public ResponseEntity<WorksBean> updateWorks(@PathVariable("id") int worksId,
+            @ModelAttribute WorksBean wb,BindingResult result, HttpServletRequest request){
+        String [] suppressedField = result.getSuppressedFields();
+        WorksBean worksBean = worksService.getWorksById(worksId);
+        worksBean.setWorksIntro(wb.getWorksIntro());        
+        if(suppressedField.length > 0 ) {
+            throw new RuntimeException("嘗試傳入不合法的欄位 :"
+                                +StringUtils.arrayToCommaDelimitedString(suppressedField));
+        } 
+        	worksService.updateWorks(worksBean);
+            return new ResponseEntity<WorksBean>(worksBean, HttpStatus.OK);
+        }
 //----------------------刪除作品-----------------------
-	@RequestMapping(value = "/deleteWorks", method = RequestMethod.POST)
-	@ResponseBody
-	public void processDeleteWorks(@RequestParam(value = "id") int id) {
-		worksService.deleteWorks(id);
+	@DeleteMapping(value = "/deleteWorks")
+	public ResponseEntity<WorksBean> processDeleteWorks(@RequestParam(value = "id") int id) {
+		if(worksService.getWorksById(id) != null) {
+			worksService.deleteWorks(id);			
+			return new ResponseEntity<>(HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}		
 	}
 	@RequestMapping(value = "/saveWorks" ,method = RequestMethod.POST)
 	public String worksUpLoad(Model model, HttpServletRequest request,
@@ -451,7 +457,6 @@ public class WorksController {
 				throw new RuntimeException("嘗試傳入不合法的欄位 :"
 									+StringUtils.arrayToCommaDelimitedString(suppressedField));
 			}
-			
 			errorMsg = new HashMap<String, String>();
 			Map<String, String> oKMsg = new HashMap<String, String>();
 			HttpSession session = request.getSession();
@@ -583,7 +588,7 @@ public class WorksController {
 			if (!errorMsg.isEmpty()) {
 				return "forward:/upLoadWorksError";
 			}
-		return "forward:/personalPage";
+		return "forward:/personalPage?id="+id;
 	}
 
 		@RequestMapping(value = "/worksError")

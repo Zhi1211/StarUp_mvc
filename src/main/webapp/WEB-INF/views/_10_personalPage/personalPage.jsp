@@ -37,26 +37,64 @@
 				<div class="tab-content" style="margin:20px 0px 70px 0px;">  
 				  <div id="works" class="tab-pane fade active show">
 				    <!-- <h3>作品</h3> -->
-				     <div class="works">                 
-	                    <div class="pieceOfWork" v-for="work in works">
-	                            <h6 style="display:block">{{work.worksName}}</h6>    
+				    
+				     <div class="works col-lg-12" style="display:flex; flex-wrap:wrap">                 
+	                    <div class="pieceOfWork" v-for="(work,index) in works" style="width:320px; margin-right:20px;" v-bind:id="'works'+work.works_id">
 	                            <div style="display:flex">
+		                            <h6 style="display:block; flex-grow:1">{{work.worksName}}</h6>    
+		                            <div style="textt-align:right">
+			                            <i class="far fa-times-circle" style="margin-right:5px; pointer:cursor;" v-on:click="deleteWorks(work.works_id,index,$event)"></i> 
+			                            <i class="far fa-edit" style="pointer:cursor;" v-on:click="updateWorks(work.works_id,index)" data-toggle="modal" data-target="#exampleModalCenter"></i>		                           		                           
+		                            </div>    
+	                            </div>
+	                            <div>
+	                            	<form v-bind:id="'updateForm'+work.works_id">
 		                            <div class="workImg">
-		                                <img v-bind:src="'mainWorksPicture/'+ work.works_id" style="max-width:500px;">
+		                                <img v-bind:src="'mainWorksPicture/'+ work.works_id" style="max-width:300px; margin-bottom:5px">
 		                            </div>
-		                            <div class="workText">  
+		                            <div class="workText" v-bind:id="'worksIntro'+work.works_id">  
 		                                    {{work.worksIntro}}
 		                            </div>	
-<!-- 		                             <div class="workComment"> -->
-<!--                                     	<a v-bind:href="'testComment?worksId='+work.works_id" >留言測試</a> -->
-<!--                                 	</div>                             -->
+									
+										<input type="hidden" name="worksIntro" >
+									</form> 
 	                            </div>
 	                    </div>
                 </div>
 				  </div>
-				  <div id="mail" class="tab-pane fade">
-				   <!--  <h3>信件</h3> -->
-				    <p>Some content.</p>
+				  <div id="mail" class="tab-pane fade">				  
+				      <div class="container-fluid">
+                            <div class="col-xs-0" style="width: 100%;">
+                            <form>
+                                <div class="form-group" style="display:flex">
+                                	<div style="margin-right:20px;">
+		                                <label for="">收件人：</label>
+		                                <input type="text" class="form-control" name="" style="width:200px;">                                                   
+                                	</div>
+									<div>
+		                                <label for="">主旨：</label>
+		                                <input type="text" class="form-control" name="" style="width:300px;">                                                                                  									
+									</div>
+                                </div>                                                                                      
+		                                <label for="">內文：</label>
+									<div style="display:flex;align-items:flex-end">
+		                                <textarea class="form-control" name=""  rows="9" style="width: 50%;"></textarea>
+		                                <button class="btn btn-info btn-lg" type="submit" style=" margin-left:10px; ">Send</button>
+									</div>
+                             </form>    
+                            </div>
+                            <div>
+	                            <table class="table table-striped table-dark" style="margin-top:20px;">			   			
+									<tr>
+										<td width="150">信件編號</td>
+										<td width="225">寄送日期</td>
+										<th width="150">寄件人</td>
+										<td>標題</td>     
+										<td width="70"><i class="far fa-times-circle" style="margin-right:5px; pointer:cursor;"></i></td>     
+									</tr>    
+	 							</table>
+                            </div>
+                        </div>
 				  </div>
 				  <div id="post" class="tab-pane fade">
 				    <!-- <h3>發表</h3> -->
@@ -80,7 +118,7 @@
                                 <textarea class="form-control" name="worksIntro" id="worksIntro" rows="9" style="width: 100%; height: 20%;"></textarea>
                             </div>
                         </div>
-                        <div style="margin:20px;">
+                        <div style="margin:20px 0px; text-align:center">
                             上傳更多照片和敘述<input type="checkbox" value="true"
                                 name="moreWorksInfo" id="pemp_yes"
                                 style="margin-left: 30px;"> <label for="yes"
@@ -141,7 +179,7 @@
 									<td width="225">{{order.orderDateStr}}</td>      
 									<td width="150">{{order.totalAmount}}</td>
 									<td>&nbsp;{{order.shippingAddress}}</td>     
-									<td><button class="btn btn-outline-light btn-sm" v-on:click="showOrderDetail(order.orderNo,$event,index)">查看明細</button></td>   
+									<td style=""><button class="btn btn-outline-light btn-sm" v-on:click="showOrderDetail(order.orderNo,$event,index)">查看明細</button></td>   
 									<!-- <td>
 										<table>
 										<tr v-bind:id="'order'+index">
@@ -275,7 +313,8 @@
             	            	console.log(_self.works)
             	            }  
             	        });
-        			},  
+        			}, 
+        			/*  */
         			confirmUpdate:function(userId){
         				var nickname = $('#editNickname').text();
         				var phone = $('#editPhone').text();
@@ -291,11 +330,11 @@
             			    url: $(this).attr('action'),            			    
             			    data: $('#editUser').serialize(),            			    
             			    dataType: 'json',            			  
-            	            success : function() { 
-            	          
+            	            success : function() {        
             	            }  
             	        });				
         			},
+        			/*  */
         			showShoppingOrderList:function(){        				
         				var _self = this;
         				$.ajax({
@@ -308,6 +347,7 @@
             	            }  
             	        });	    
         			},
+        			/*  */
         			showOrderDetail:function(orderId,e,index){          			
         				console.log(orderId)  
         				console.log(e.target)        				
@@ -322,7 +362,44 @@
             	            }  
             	        });	        				        				        		
         				$('#order'+index).toggleClass('hidden');
-        			}
+        			},
+        			/*  */        			
+        			deleteWorks: function(worksId,index,e){
+        				var _self = this;
+        				e.preventDefault();
+        			    if(confirm("確定要刪除作品？")){
+        			    	_self.works.splice(index,1);
+        					  $.ajax({
+    					        type: "POST",  
+    					        data : {_method:"DELETE"},  
+    					        dataType: 'json', 
+    					        url:'deleteWorks?id='+worksId,            					    
+    					        success: function() {    					        	    					        		        
+    					        }
+    					    });
+        				}
+        			},		
+        			/*  */
+        			updateWorks:function(worksId){        				
+        				$('#worksIntro'+worksId).prop('contenteditable',true).focus().css('background-color','rgba(32, 31, 58,0.8)');
+        				$('#worksIntro'+worksId).blur(function(e){
+        					var worksIntro = $('#worksIntro'+worksId).text();
+        					$("input[name='worksIntro']").val(worksIntro);        				        			
+        					$.ajax({   
+                			    type: "POST",	
+                			    cache:false,
+                			    url:'updateWorks/'+worksId,            			      			      
+                			    data: $('#updateForm'+worksId).serialize(),  
+                			    dataType: 'json',            			  
+                	            success : function(data) {
+                	            
+                	            }  
+                	        });
+        	        		$(this).prop('contenteditable',false)
+        	        		$(this).css('background-color','');  
+        	        	})
+        				
+        			},
         		},        		
         	})
         	$("#userImage").change(function(){
@@ -347,8 +424,7 @@
         		$(this).prop('contenteditable',false)
         		$(this).css('background-color','');  
         	})
-        	$('#uploadWorksForm').submit(function(){
-        		debugger
+        	$('#uploadWorksForm').submit(function(){        	
         		var a = document.getElementById('worksName').value;
 				var b = document.getElementById('worksPhoto').value;
 				var c = document.getElementById('worksIntro').value;
