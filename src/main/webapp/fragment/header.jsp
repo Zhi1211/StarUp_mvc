@@ -42,10 +42,18 @@
 					<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/">首頁
 							<span class="sr-only">(current)</span>
 					</a></li>
-					<c:if test="${!empty LoginOK}">
-					<li class="nav-item"><a class="nav-link" href="<c:url value='personalPage?id=${LoginOK.user_id }'/>">個人主頁</a></li>
-					</li>
-					</c:if>
+					<c:choose>
+						<c:when test="${!empty LoginOK}">
+							<li class="nav-item"><a class="nav-link" href="<c:url value='personalPage?id=${LoginOK.user_id }'/>">個人主頁</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="nav-item"><a style="pointer-events:none;color:gray;" class="nav-link" href="<c:url value='personalPage?id=${LoginOK.user_id }'/>">個人主頁</a></li>
+						</c:otherwise>
+					</c:choose>
+<%-- 					<c:if test="${!empty LoginOK}"> --%>
+<%-- 					<li class="nav-item"><a class="nav-link" href="<c:url value='personalPage?id=${LoginOK.user_id }'/>">個人主頁</a></li> --%>
+<!-- 					</li> -->
+<%-- 					</c:if> --%>
 					<li class="nav-item"><a class="nav-link" href="<c:url value='/works'/>">探索作品</a></li>															
 					<li class="nav-item"><a class="nav-link" href="<c:url value='/products'/>">商城</a></li>
 				<c:if test = "${!empty BOSS}">

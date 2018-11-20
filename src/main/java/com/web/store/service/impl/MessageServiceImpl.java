@@ -36,4 +36,9 @@ public class MessageServiceImpl implements MessageService {
 		return mdao.getDeliveredMessages(fromId);
 	}
 
+	@Override
+	public List<MessageBean> getUnreadMessages(Integer toId) {
+		return mdao.getUnreadMessages(toId);
+	}
+
 }

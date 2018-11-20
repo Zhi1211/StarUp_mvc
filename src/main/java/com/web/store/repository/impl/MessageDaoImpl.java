@@ -54,4 +54,18 @@ public class MessageDaoImpl implements MessageDao {
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MessageBean> getUnreadMessages(Integer toId) {
+		List<MessageBean> list = null;
+		String hql = "FROM MessageBean "
+				+ "WHERE toId = :toId AND checkedTag = :checkedTag ";
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql)
+					  .setParameter("toId", toId)
+					  .setParameter("checkedTag", 0)
+					  .getResultList();
+		return list;
+	}
+
 }
