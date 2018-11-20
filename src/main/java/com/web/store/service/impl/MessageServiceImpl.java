@@ -27,8 +27,13 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<MessageBean> getMessages(Integer toId) {
-		return mdao.getMessages(toId);
+	public List<MessageBean> getReceivedMessages(Integer toId) {
+		return mdao.getReceivedMessages(toId);
+	}
+
+	@Override
+	public List<MessageBean> getDeliveredMessages(Integer fromId) {
+		return mdao.getDeliveredMessages(fromId);
 	}
 
 }

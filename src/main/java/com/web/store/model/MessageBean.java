@@ -16,10 +16,8 @@ public class MessageBean implements Serializable{
 	
 	private Integer seqno;
 	private Integer fromId;
-	private String fromAccount;
 	private String fromNickname;
 	private Integer toId;
-	private String toAccount;
 	private String toNickname;
 	private String posttime;
 	private String messageTitle;
@@ -30,16 +28,14 @@ public class MessageBean implements Serializable{
 		super();
 	}
 
-	public MessageBean(Integer seqno, Integer fromId, String fromAccount, String fromNickname, Integer toId,
-			String toAccount, String toNickname, String posttime, String messageTitle, String messageContent,
+	public MessageBean(Integer seqno, Integer fromId, String fromNickname, Integer toId,
+			String toNickname, String posttime, String messageTitle, String messageContent,
 			Integer checkedTag) {
 		super();
 		this.seqno = seqno;
 		this.fromId = fromId;
-		this.fromAccount = fromAccount;
 		this.fromNickname = fromNickname;
 		this.toId = toId;
-		this.toAccount = toAccount;
 		this.toNickname = toNickname;
 		this.posttime = posttime;
 		this.messageTitle = messageTitle;
@@ -65,14 +61,6 @@ public class MessageBean implements Serializable{
 		this.fromId = fromId;
 	}
 
-	public String getFromAccount() {
-		return fromAccount;
-	}
-
-	public void setFromAccount(String fromAccount) {
-		this.fromAccount = fromAccount;
-	}
-
 	public String getFromNickname() {
 		return fromNickname;
 	}
@@ -87,14 +75,6 @@ public class MessageBean implements Serializable{
 
 	public void setToId(Integer toId) {
 		this.toId = toId;
-	}
-
-	public String getToAccount() {
-		return toAccount;
-	}
-
-	public void setToAccount(String toAccount) {
-		this.toAccount = toAccount;
 	}
 
 	public String getToNickname() {

@@ -42,6 +42,7 @@ public class PersonalController {
 	WorksService worksService;
 	@Autowired
 	MessageService messageService;
+	
 	public PersonalController() {
 		
 	}
@@ -57,6 +58,12 @@ public class PersonalController {
 		}
 		model.addAttribute("userBean", ub);
 		model.addAttribute("introduction", intro);
+		/*取得使用者收到之信件*/
+		List<MessageBean> receivedMailLlist = messageService.getReceivedMessages(userId);
+		/*取得使用者寄出之信件*/
+		List<MessageBean> deliveredMailList = messageService.getDeliveredMessages(userId);
+		model.addAttribute("receivedMails", receivedMailLlist);
+		model.addAttribute("deliveredMails", deliveredMailList);
 		return "_10_personalPage/personalPage";
 	}
 
@@ -171,10 +178,8 @@ public class PersonalController {
 		MessageBean mb = new MessageBean(
 			null, 
 			messageDeliverUb.getUser_id(), 
-			messageDeliverUb.getAccount(), 
 			messageDeliverUb.getNickname(), 
 			messageReceiverUb.getUser_id(), 
-			messageReceiverUb.getAccount(), 
 			messageReceiverUb.getNickname(), 
 			posttime, 
 			messageTitle, 
@@ -182,19 +187,6 @@ public class PersonalController {
 			0
 		);
 		messageService.insertMessage(mb);
-		return "";
-	}
-	/*依使用者Id取得信件*/
-	@RequestMapping(value="/getMyMails", method=RequestMethod.POST)
-	public @ResponseBody byte[] getMyMails(Model model, @RequestParam(value="userId")Integer userId) {
-		List<MessageBean> list = messageService.getMessages(userId);
-		model.addAttribute("myMails", list);
-		byte[] worksJson = null;
-		try {
-			worksJson = new Gson().toJson(list).getBytes("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return worksJson;
+		return "forward:/personalPage?id="+messageDeliverUb.getUser_id();
 	}
 }

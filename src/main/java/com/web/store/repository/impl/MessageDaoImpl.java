@@ -36,11 +36,21 @@ public class MessageDaoImpl implements MessageDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MessageBean> getMessages(Integer toId) {
+	public List<MessageBean> getReceivedMessages(Integer toId) {
 		List<MessageBean> list = null;
 		String hql = "FROM MessageBean WHERE toId = :toId ";
 		Session session = factory.getCurrentSession();
 		list = session.createQuery(hql).setParameter("toId", toId).getResultList();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MessageBean> getDeliveredMessages(Integer fromId) {
+		List<MessageBean> list = null;
+		String hql = "FROM MessageBean WHERE fromId = :fromId ";
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).setParameter("fromId", fromId).getResultList();
 		return list;
 	}
 

@@ -8,7 +8,7 @@ public interface MessageService {
 	
 	int insertMessage(MessageBean mb);
 	
-	List<MessageBean> getMessages(Integer toId);
+	List<MessageBean> getReceivedMessages(Integer toId);
 	
-	
+	List<MessageBean> getDeliveredMessages(Integer fromId);
 }

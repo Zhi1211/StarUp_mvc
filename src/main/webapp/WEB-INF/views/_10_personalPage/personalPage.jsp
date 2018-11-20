@@ -29,7 +29,7 @@
             <div class="mainContent col-lg-9" id="personalMainContent" style="padding:15px; border-radius:10px;">       
             <ul class="nav nav-tabs">
 				  <li class="active nav-item"><a class="active show" data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
-				  <li class="nav-item"><a data-toggle="tab" href="#mail" v-on:click="getMyMessages(${userBean.user_id})"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>  
+				  <li class="nav-item"><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>  
 				  <li class="nav-item"><a data-toggle="tab" href="#post"><button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
 				  <li class="nav-item"><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">購物</button></a></li>
 				  <li class="nav-item"><a data-toggle="tab" href="#maintain"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
@@ -65,34 +65,77 @@
 				  <div id="mail" class="tab-pane fade">				  
 				      <div class="container-fluid">
                             <div class="col-xs-0" style="width: 100%;">
-                            <form>
+                            <form method="POST" action="sendMail" name="mailContent" id="mailContent">
                                 <div class="form-group" style="display:flex">
                                 	<div style="margin-right:20px;">
 		                                <label for="">收件人：</label>
-		                                <input type="text" class="form-control" name="" style="width:200px;">                                                   
+		                                <input type="text" class="form-control" name="receiverNickname" style="width:200px;">                                                   
                                 	</div>
 									<div>
 		                                <label for="">主旨：</label>
-		                                <input type="text" class="form-control" name="" style="width:300px;">                                                                                  									
+		                                <input type="text" class="form-control" name="messageTitle" style="width:300px;">                                                                                  									
 									</div>
                                 </div>                                                                                      
 		                                <label for="">內文：</label>
 									<div style="display:flex;align-items:flex-end">
-		                                <textarea class="form-control" name=""  rows="9" style="width: 50%;"></textarea>
+		                                <textarea class="form-control" name="messageContent"  rows="9" style="width: 50%;"></textarea>
 		                                <button class="btn btn-info btn-lg" type="submit" style=" margin-left:10px; ">Send</button>
 									</div>
                              </form>    
                             </div>
                             <div>
-	                            <table class="table table-striped table-dark" style="margin-top:20px;">			   			
+                            	<h4 style="text-align:center;">收件表</h4>
+	                            <table class="table table-striped table-dark" border="1" style="margin-top:20px;">			   			
 									<tr>
-										<td width="150">信件編號</td>
-										<td width="225">寄送日期</td>
-										<th width="150">寄件人</td>
-										<td>標題</td>     
-										<td width="70"><i class="far fa-times-circle" style="margin-right:5px; pointer:cursor;"></i></td>     
+										<td width="150" style="text-align:center;">信件編號</td>
+										<td width="225" style="text-align:center;">收件日期</td>
+										<td width="150" style="text-align:center;">寄件人</td>
+										<td style="text-align:center;">標題</td>
+										<td width="70" style="text-align:center;"><i class="far fa-times-circle" style="margin-right:5px; cursor:pointer;"></i></td>     
 									</tr>    
+									<c:forEach varStatus='vsRM' var="receivedMail" items="${receivedMails}">
+									<tr>
+										<td width="150" style="text-align:center;">${vsRM.count}</td>
+										<td width="225" style="text-align:center;">${receivedMail.posttime}</td>
+										<td width="150" style="text-align:center;">${receivedMail.fromNickname}</td>
+										<td style="text-align:center;">${receivedMail.messageTitle}</td>
+										<td rowspan="2"></td>
+									</tr>
+									<tr>
+										<td width="70" colspan="4" style="text-align:center;">${receivedMail.messageContent}</td>
+									</tr>
+									<tr>
+										<td colspan="5"></td>
+									</tr>
+									</c:forEach>
 	 							</table>
+                            </div>
+                            <div>
+                            	<h4 style="text-align:center;">寄件表</h4>
+                            	<table class="table table-striped table-dark" border="1" style="margin-top:20px;">
+                            		<tr>
+                            			<td width="150" style="text-align:center;">信件編號</td>
+										<td width="225" style="text-align:center;">寄送日期</td>
+										<td width="150" style="text-align:center;">收件人</td>
+										<td style="text-align:center;">標題</td>
+										<td width="70" style="text-align:center;"><i class="far fa-times-circle" style="margin-right:5px; cursor:pointer;"></i></td>
+                            		</tr>
+                            		<c:forEach varStatus='vsDM' var="deliveredMail" items="${deliveredMails}">
+									<tr>
+										<td width="150" style="text-align:center;">${vsDM.count}</td>
+										<td width="225" style="text-align:center;">${deliveredMail.posttime}</td>
+										<td width="150" style="text-align:center;">${deliveredMail.fromNickname}</td>
+										<td style="text-align:center;">${deliveredMail.messageTitle}</td>
+										<td rowspan="2"></td>
+									</tr>
+									<tr>
+										<td width="70" colspan="4" style="text-align:center;">${deliveredMail.messageContent}</td>
+									</tr>
+									<tr>
+										<td colspan="5"></td>
+									</tr>
+									</c:forEach>
+                            	</table>
                             </div>
                         </div>
 				  </div>
@@ -164,7 +207,7 @@
 							<tr>
 								<td width="150">訂單編號</td>
 								<td width="225">訂購日期</td>
-								<th width="150">總金額</td>
+								<td width="150">總金額</td>
 								<td>送貨地址</td>     
 								<td width="70"></td>     
 							</tr>    
@@ -281,7 +324,6 @@
         		data:{
         			works:[],
         			orders:[],
-        			myMessages:[],
         			orderDateStr:'',
         			orderDetail:[],
         			orderItems:[],
@@ -401,18 +443,6 @@
         	        	})
         				
         			},
-        			getMyMessages:function(userId){
-        				var _self = this;
-        				$.ajax({
-        					type: "POST",
-        					url:'getMyMails?userId='+userId,
-        					contentType:'application/json',		
-            			    dataType: 'json',
-            			    success : function(data) {
-            			    	_self.myMessages = data;
-            			    }
-        				})
-        			}
         		},        		
         	})
         	$("#userImage").change(function(){
