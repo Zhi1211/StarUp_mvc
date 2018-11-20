@@ -14,4 +14,6 @@ public interface MessageDao {
 	List<MessageBean> getReceivedMessages(Integer toId);
 	
 	List<MessageBean> getDeliveredMessages(Integer fromId);
+	
+	List<MessageBean> getUnreadMessages(Integer toId);
 }

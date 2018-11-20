@@ -110,7 +110,7 @@ public class WorksController {
 						byte[] media = null;
 						if(wb!=null) {
 							Blob blob = wb.getCaptionImg_1();
-							filename = wb.getCaptionImgName_1();
+							filename = (wb.getCaptionImgName_1() == null)?wb.getCaptionImgName_1():filePath;
 							if(blob!= null) {
 								try {
 									len = (int) blob.length();
@@ -145,7 +145,7 @@ public class WorksController {
 						byte[] media = null;
 						if(wb!=null) {
 							Blob blob = wb.getCaptionImg_2();
-							filename = wb.getCaptionImgName_2();
+							filename = (wb.getCaptionImgName_2() == null)?wb.getCaptionImgName_2():filePath;
 							if(blob!= null) {
 								try {
 									len = (int) blob.length();
