@@ -6,39 +6,17 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <jsp:include page="/fragment/header.jsp" />
-		<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-		  <ol class="carousel-indicators">
-		    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-		    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-		    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-		  </ol>
-		  <div class="carousel-inner">
-		    <div class="carousel-item active">
-		      <img class="d-block w-100" src="mainWorksPicture/${works.works_id}" alt="First slide" style="height:800px">
-		    </div>
-		   <div class="carousel-item">
-			  <img src="readCaptionImg_1/${works.works_id}" alt="...">
-				  <div class="carousel-caption d-none d-md-block">
-				    <h5>...</h5>
-				    <p>...</p>
-				  </div>
-			  </div>
-		    <div class="carousel-item">
-		      <img class="d-block w-100" src="readCaptionImg_2/${works.works_id}" alt="Third slide" style="height:800px">
-		    </div>
-		  </div>
-		  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		    <span class="sr-only">Previous</span>
-		  </a>
-		  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-		    <span class="sr-only">Next</span>
-		  </a>
-		</div>
-
-
-
+	<div class="container-fluid grid" style="padding:20px 50px" id="block">		
+  		<div class="item">
+  			<img src="mainWorksPicture/${works.works_id}" style="height:800px">
+  		</div>
+  		<div class="item">
+  			<img src="readCaptionImg_1/${works.works_id}" style="height:800px">
+  		</div>
+  		<div class="item">
+  			<img src="readCaptionImg_2/${works.works_id}" style="height:800px">
+  		</div>
+	</div>	
 
 
 
@@ -134,4 +112,12 @@
 	</div>
 </div>
  --%>
+ <script src="js/waterfall.min.js"></script>
+    <script>
+      var grid = document.querySelector('.grid');
+      waterfall(grid);
+      window.addEventListener('resize', function () {
+      waterfall(grid);
+      });
+    </script>
 <jsp:include page="/fragment/footer.jsp" />

@@ -1,3 +1,10 @@
+#block img {
+	max-height:800px;
+	myimg:expression(onload=function(){
+	this.style.height=(this.offsetHeight > 800)?"800px":"auto"});
+}
+
+
 .w-container {
 	padding: 10px;
 	background-color: rgba(0, 0, 0, 0.397);

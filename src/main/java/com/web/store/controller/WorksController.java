@@ -110,7 +110,7 @@ public class WorksController {
 						byte[] media = null;
 						if(wb!=null) {
 							Blob blob = wb.getCaptionImg_1();
-							filename = wb.getCaptionImgName_1();
+							filename = (wb.getCaptionImgName_1() == null)?wb.getCaptionImgName_1():filePath;
 							if(blob!= null) {
 								try {
 									len = (int) blob.length();
@@ -126,7 +126,7 @@ public class WorksController {
 							media = toByteArray(filePath);
 							filename = filePath;
 						}
-						headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+						headers.setCacheControl(CacheControl.noCache().getHeaderValue());						
 						String mimeType = context.getMimeType(filename);
 						MediaType mediaType = MediaType.valueOf(mimeType);
 //						System.out.println("mediaType = "+mediaType);
@@ -145,7 +145,7 @@ public class WorksController {
 						byte[] media = null;
 						if(wb!=null) {
 							Blob blob = wb.getCaptionImg_2();
-							filename = wb.getCaptionImgName_2();
+							filename = (wb.getCaptionImgName_2() == null)?wb.getCaptionImgName_2():filePath;
 							if(blob!= null) {
 								try {
 									len = (int) blob.length();

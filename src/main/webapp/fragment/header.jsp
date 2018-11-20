@@ -23,6 +23,7 @@
  <link href="css/upload.css" rel="stylesheet">
  <link href="css/worksList.css" rel="stylesheet">
  <link href="css/works.css" rel="stylesheet">
+ <link href="css/lightbox.css" rel="stylesheet">
 </head>
  
 <body>
