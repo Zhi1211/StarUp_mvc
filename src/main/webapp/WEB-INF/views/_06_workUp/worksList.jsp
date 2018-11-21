@@ -39,17 +39,17 @@
 	</div>
 </div>
 <!-- 作品列表 -->
-
+	
 	<div class="grid">
 <c:forEach var="works" items="${worksBean}">
 			<div class="item lightbox-gallery" style="margin: 10px;">
-				<a href="#example1+${works.works_id}"><img id="works${works.works_id}"
+				    <img id="works${works.works_id}"
 					src="mainWorksPicture/${works.works_id}"
 					style="max-width: 350px; box-shadow: 1px 1px 3px white; pointer: cursor"
-					data-image-hd="mainWorksPicture/${works.works_id}"
-					alt="${works.worksName}"></a>
-				<div style="color: white; font-size: 14px; font-weight: 200; margin-top: 5px">${works.worksName}</div>
-			</div>
+					 onclick="location.href= 'worksDetail?id=${works.works_id}'"
+					>
+				<%-- <div style="color: white; font-size: 14px; font-weight: 200; margin: 5px 0px 0px 0px">${works.worksName}</div> --%>
+			</div>   
 </c:forEach>
 	</div>   
 
@@ -83,6 +83,9 @@
 <script>
       var grid = document.querySelector('.grid');
       waterfall(grid);
+      window.addEventListener('load', function () {
+      waterfall(grid);
+      });
       window.addEventListener('resize', function () {
       waterfall(grid);
       });
@@ -90,64 +93,7 @@
 <script type="text/javascript">
 
 
-//Create a lightbox
-(function() {
-   
-    $('.lightbox-gallery img').click(function(e) {
-      var worksId = $(this).attr('id').substring(5);	
-      e.preventDefault();
-      var $lightbox = $("<div class='lightbox'></div>");
-      var $img = $("<img class='theBox'>");
-      var $caption = $("<p class='caption'></p>");
-      var $cross = $("<i class='far fa-times-circle fa-2x' id='closeBtn' style='margin-right:5px; cursor:pointer;color:white;'></i>");
-      carousel = "<div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>"+
-					      "<ol class='carousel-indicators'>"+
-					      "<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'></li>"+
-					      "<li data-target='#carouselExampleIndicators' data-slide-to='1'></li>"+
-					      "<li data-target='#carouselExampleIndicators' data-slide-to='2'></li>"+
-					    "</ol>"+
-					    "<div class='carousel-inner'>"+
-					      "<div class='carousel-item active'>"+
-					        "<img class='d-block w-100' src='mainWorksPicture/${works.works_id}"+worksId+"' >"+
-					      "</div>"+
-					      "<div class='carousel-item'>"+
-					        "<img class='d-block w-100' src='readCaptionImg_1/${works.works_id}"+worksId+"' alt='Second slide'>"+
-					      "</div>"+
-					      "<div class='carousel-item'>"+
-					        "<img class='d-block w-100' src='readCaptionImg_2/${works.works_id}"+worksId+"' alt='Third slide'>"+
-					      "</div>"+
-					    "</div>"+
-					    "<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>"+
-					      "<span class='carousel-control-prev-icon' aria-hidden='true'></span>"+
-					      "<span class='sr-only'>Previous</span>"+
-					    "</a>"+
-					    "<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>"+
-					      "<span class='carousel-control-next-icon' aria-hidden='true'></span>"+
-					      "<span class='sr-only'>Next</span>"+
-					    "</a>"+
-					  "</div>";
-      var $carousel = $(carousel)
-      // Add image and caption to lightbox
-      $lightbox     
-        .append($cross)
-        .append($caption)
-        .append($carousel);      
-      // Add lighbox to document   
-      $('body').append($lightbox);
 
-      // Get image link and description
-      var cap = $(this).attr("alt"); 
-      // Add data to lighbox
-      $caption.text(cap);
-      // Show lightbox
-      $lightbox.fadeIn('fast');
-  
-      $cross.click(function() {
-        $lightbox.remove();
-      });
-    });
-  }());
-  
 </script>
 </html>
 					<jsp:include page="/fragment/footer.jsp" />

@@ -66,6 +66,21 @@ public class PersonalController {
 		model.addAttribute("deliveredMails", deliveredMailList);
 		return "_10_personalPage/personalPage";
 	}
+	
+	@RequestMapping(value="/personalPageReadOnly")
+	public String getPersonalPageReadOnly(@RequestParam(value = "id") Integer userId, Model model) {
+		UserBean ub = userService.getUser(userId);
+		Clob introduction = ub.getIntroduction();
+		String intro = null;
+		try {
+			intro = introduction.getSubString(1, (int) ub.getIntroduction().length());
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		model.addAttribute("userBean", ub);
+		model.addAttribute("introduction", intro);
+		return "_10_personalPage/personalPageReadOnly";
+	}
 
 	@RequestMapping(value="/worksList")
 	public String getWorkList() {
