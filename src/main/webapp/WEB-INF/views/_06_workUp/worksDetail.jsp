@@ -6,13 +6,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <jsp:include page="/fragment/header_dark.jsp" />
-	<div style="display:flex"> 
-		<p style="color:white; font-weight:300; font-size:26px; flex-grow:1; align-self:flex-end; margin-left:20px;">${works.worksName}</p>  
+	<div style="display:flex">   
+		<p style="color:white; font-weight:300; font-size:26px; flex-grow:1; align-self:flex-end; margin-left:30px;">${works.worksName}</p>  
 	   	<p style="color:white; font-weight:200; line-height:60px; margin-right:10px">by ${works.author}</p>		
 	    <img class="rounded-circle" height='60px' width='60px'       							 
 						src="getUserPicture/${works.user_Id}" onclick="location.href='personalPageReadOnly?id=${works.user_Id}'"> 
 	</div>    
-	<div class="container-fluid lightbox-gallery" style="padding:30px;display:flex;">		     	     	
+	<div class="container-fluid lightbox-gallery" style="display:flex;">		     	     	
   		<div class="item" id="item1" style="margin:10px">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
   			<img id="img1" src="mainWorksPicture/${works.works_id}" style="height:50vh">  
   			<p id="intro1" style="color:white; font-weight:200; margin-top:5px">${works.worksIntro}</p>
@@ -58,7 +58,6 @@
           e.preventDefault();   
           var $lightbox = $("<div class='lightbox' style='text-align:center; margin:0px'></div>");          
           var $caption = $("<p class='caption'></p>");
-          var $cross = $("<i class='far fa-times-circle fa-2x' id='closeBtn' style='margin-right:5px; cursor:pointer;color:white;'></i>");
           carousel = "<div style='margin:0px auto'>"+    					  
     					      "<div>"+
     					        "<img src='"+src+"'style='height:85vh'>"+
@@ -66,8 +65,7 @@
     					  "</div>";
           var $carousel = $(carousel)
           // Add image and caption to lightbox
-          $lightbox     
-            .append($cross)
+          $lightbox       
             .append($caption)
             .append($carousel);      
           // Add lighbox to document   
@@ -80,7 +78,7 @@
           // Show lightbox
           $lightbox.fadeIn('fast');
       
-          $cross.click(function() {
+          $lightbox.click(function() {
           $lightbox.fadeOut('fast');
           });
         });

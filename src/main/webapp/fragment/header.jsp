@@ -88,7 +88,7 @@
 				<!-- Modal Content -->
 				<form class="modal-content animate border-warning" action="<c:url value='/login' />" method="POST"
 					style="width: 300px; height: 370px; margin: 100px auto; padding: 30px; text-align: center; background-color:rgba(255, 255, 255,0.9);">
-					<div class="container">
+					<div>
 					 <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
 						<label for="account"  style="margin: 15px;"><b>帳號</b></label>
 						 <input

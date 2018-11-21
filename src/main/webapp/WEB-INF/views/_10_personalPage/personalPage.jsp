@@ -31,8 +31,22 @@
 				  <li class="active nav-item"><a class="active show" data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
 				  <li class="nav-item"><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>  
 				  <li class="nav-item"><a data-toggle="tab" href="#post"><button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
-				  <li class="nav-item"><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">購物</button></a></li>
-				  <li class="nav-item"><a data-toggle="tab" href="#maintain"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
+				 <li class="nav-item"><a data-toggle="tab" href="#orders"><button
+						type="button" v-on:click="showShoppingOrderList()"
+						class="btn btn-circle btn-xl btnFeature"
+						style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46); font-size: 20px;">
+						訂單<br>查詢
+					</button></a></li>
+			<li class="nav-item"><a data-toggle="tab" href="#maintain">
+					<button type="button" class="btn btn-circle btn-xl btnFeature"
+						style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button>
+			</a></li>
+			<li class="nav-item"><a data-toggle="tab" href="#form">
+					<button type="button" class="btn btn-circle btn-xl btnFeature"
+						style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46); font-size: 20px;">
+						申請<br>上架
+					</button>
+			</a></li>
 			</ul>							
 				<div class="tab-content" style="margin:20px 0px 70px 0px;">  
 				  <div id="works" class="tab-pane fade active show">
@@ -313,188 +327,308 @@
 				    		<input type="hidden" name="userIntro" id="userIntro">				    						    				    		
 				    	</form>
 				  </div>
+				  
+				  			<!-- 申請上架 -->
+			<div id="form" class="tab-pane fade">
+
+				<!-- 				<h3>表單填寫</h3> -->
+				<div
+					style="display: flex; background-color: white; padding: 10px; border-radius: 5px; width: 85%; margin: 0 auto;">
+					<div class="col-lg-8"
+						style="line-height: 28px; font-weight: 400; color: rgb(0, 0, 0);">
+						<form ENCTYPE="multipart/form-data" action="addForm" method="post"
+							id="form" v-on:sumbit="submitForm()">
+
+							<p>
+								我要申請商品上架<br>以下舉例幾個常見的商品類別，幫助你檢視商品是否已經準備好開始於網路販售
+							</p>
+
+							<div class="custom-control custom-radio">
+								<input type="radio" id="product1" name="question_1" value="tableGame"
+									class="custom-control-input" checked=""> <label
+									class="custom-control-label" for="product1">原創桌遊</label>
+							</div>
+							<div class="custom-control custom-radio">
+								<input type="radio" id="product2" name="question_1" value="design"
+									class="custom-control-input"> <label
+									class="custom-control-label" for="product2">文創周邊</label>
+							</div>
+							<hr>
+							<p>你的商品照片有花時間好好用心拍嗎？</p>
+
+							<div class="custom-control custom-radio">
+								<input type="radio" id="photo" name="question_2" value="yes"
+									class="custom-control-input" checked=""> <label
+									class="custom-control-label" for="photo">有，我有好好拍，我的商品照都很好看！</label>
+							</div>
+							<div class="custom-control custom-radio">
+								<input type="radio" id="photoNG" name="question_2" value="no"
+									class="custom-control-input"> <label
+									class="custom-control-label" for="photoNG">我還沒有時間用心拍，現在手邊的商品照都是隨手拍。</label>
+							</div>
+							<hr>
+							<p>商品販售政策，你看過也讀懂了嗎？</p>
+
+							<div class="custom-control custom-radio">
+								<input type="radio" id="understand" name="question_3" value="yes"
+									class="custom-control-input" checked=""> <label
+									class="custom-control-label" for="understand">我了解，非原創商品和有侵權疑慮商品不可以賣。</label>
+							</div>
+							<div class="custom-control custom-radio">
+								<input type="radio" id="notyet" name="question_3" value="no"
+									class="custom-control-input"> <label
+									class="custom-control-label" for="notyet">我會先自己瞭解過侵權的可能性後，再來申請。</label>
+							</div>
+							<hr>
+							<p>你知道你要從多少申請者中脫穎而出，才能成功通過審核嗎？</p>
+
+							<div class="custom-control custom-radio">
+								<input type="radio" id="great" name="question_4" value="yes"
+									class="custom-control-input" checked=""> <label
+									class="custom-control-label" for="great">沒問題，無論商品品質和商品照，我都有信心可以從眾多申請者中脫穎而出！</label>
+							</div>
+							<div class="custom-control custom-radio">
+								<input type="radio" id="notgood" name="question_4" value="no"
+									class="custom-control-input"> <label
+									class="custom-control-label" for="notgood">那請等我準備得更完整以後再回來申請。</label>
+							</div>
+
+							<hr>
+							<p>填寫上架申請表前，你是否已經閱讀各項上架資訊？</p>
+
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input"
+									id="checkform"> <label class="custom-control-label"
+									for="checkform">我已經詳細閱讀這個頁面，並同意這樣的上架方式。</label>
+							</div>
+
+
+							<hr>
+
+							<p>填寫上架申請表：</p>
+
+
+							<label for="InputName">姓名</label> <input type="text"
+								name="realName" class="form-control" id="InputName"
+								placeholder="請輸入真實姓名" style="width: 250px;"> <label
+								for="ProductName">商品名稱</label> <input type="text"
+								class="form-control" id="ProductName" name="formProdName"
+								placeholder="請輸入商品名稱" style="width: 250px;"> <label
+								for="InputPrice">價格</label> <input type="text" name="formPrice"
+								class="form-control" id="InputPrice" placeholder="請輸入商品價格"
+								style="width: 250px;"> <label for="InputEmail">Email信箱</label>
+							<input type="email" class="form-control" id="InputEmail" name="formMail"
+								aria-describedby="emailHelp" placeholder="請輸入信箱"
+								style="width: 450px;"> <label for="productPhoto">照片｜敘述</label>
+							<div style="display: flex;">
+								<textarea class="form-control" name="formIntro"
+									id="productPhoto" rows="9" style="width: 450px; height: 150px;"></textarea>
+								<div>
+									<img alt="" src="" id="previewImg_4"
+										style="max-width: 300px; margin-left: 5px;"> <input
+										type="file" class="form-control-file" name="formImage"
+										id="captionImg_3" aria-describedby="fileHelp"
+										style="margin-left: 5px">
+								</div>
+
+							</div>
+							<div style="margin: 0 auto; margin-top: 30px;">
+								<input type="submit" class="btn btn-secondary" name="submit"
+									id="submitForm" value="提交表單" style="width: 85%;">
+								<!-- 									 disabled -->
+							</div>
+						</form>
+
+
+
+					</div>
+				</div>
+			</div>
             </div>
         </div> 
         </div>
         <script src="js/jquery-3.3.1.min.js"></script>   
         <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-        <script>
-        	var app = new Vue({
-        		el:'#personalMainContent',
-        		data:{
-        			works:[],
-        			orders:[],
-        			orderDateStr:'',
-        			orderDetail:[],
-        			orderItems:[],
-        		},        	 	
-        		created: function(){	
-        				var _self = this;        				
-        				var id = $('.personalImg img').attr('id').substring(7)        				
-        				$.ajax({
-            			    type: "POST",    
-            			    url: 'userWorks?userId='+id,
-            			    contentType:'application/json',		
-            			    dataType: 'json',
-            	            success : function(data) { 
-            	            	_self.works = data;
-            	            	console.log(_self.works)
-            	            }  
-            	        });
-        		
-        		},
-        		methods:{
-        			getWorks:function(userId){        			
-        				var _self = this;
-        				$.ajax({
-            			    type: "POST",    
-            			    url: 'userWorks?userId='+userId,
-            			    contentType:'application/json',		
-            			    dataType: 'json',
-            	            success : function(data) { 
-            	            	_self.works = data;
-            	            	console.log(_self.works)
-            	            }  
-            	        });
-        			}, 
-        			/*  */
-        			confirmUpdate:function(userId){
-        				var nickname = $('#editNickname').text();
-        				var phone = $('#editPhone').text();
-        				var address = $('#editAddress').text();
-        				var intro = $('#editIntro').text();
-        				$("input[name='nickname']").val(nickname);
-        				$("input[name='phone']").val(phone);
-        				$("input[name='address']").val(address);
-        				$("input[name='userIntro']").val(intro);
-        				$.ajax({
-            			    type: "POST",    
-            			    cache:false,
-            			    url: $(this).attr('action'),            			    
-            			    data: $('#editUser').serialize(),            			    
-            			    dataType: 'json',            			  
-            	            success : function() {        
-            	            }  
-            	        });				
-        			},
-        			/*  */
-        			showShoppingOrderList:function(){        				
-        				var _self = this;
-        				$.ajax({
-            			    type: "GET",      
-            			    url:'orderListAjax',            			      			    
-            			    dataType: 'json',            			  
-            	            success : function(data) { 
-            	          		_self.orders = data;
-            	          		
-            	            }  
-            	        });	    
-        			},
-        			/*  */
-        			showOrderDetail:function(orderId,e,index){          			
-        				console.log(orderId)  
-        				console.log(e.target)        				
-        				var _self = this;
-        				$.ajax({   
-            			    type: "GET",      
-            			    url:'showOneOrderDetail/'+ orderId+'/anOrderShow',            			      			    
-            			    dataType: 'json',            			  
-            	            success : function(data) {
-            	            	_self.orderDetail = data;
-            	            	_self.orderItems = data.items;	
-            	            }  
-            	        });	        				        				        		
-        				$('#order'+index).toggleClass('hidden');
-        			},
-        			/*  */        			
-        			deleteWorks: function(worksId,index,e){
-        				var _self = this;
-        				e.preventDefault();
-        			    if(confirm("確定要刪除作品？")){
-        			    	_self.works.splice(index,1);
-        					  $.ajax({
-    					        type: "POST",  
-    					        data : {_method:"DELETE"},  
-    					        dataType: 'json', 
-    					        url:'deleteWorks?id='+worksId,            					    
-    					        success: function() {    					        	    					        		        
-    					        }
-    					    });
-        				}
-        			},		
-        			/*  */
-        			updateWorks:function(worksId){        				
-        				$('#worksIntro'+worksId).prop('contenteditable',true).focus().css('background-color','rgba(32, 31, 58,0.8)');
-        				$('#worksIntro'+worksId).blur(function(e){
-        					var worksIntro = $('#worksIntro'+worksId).text();
-        					$("input[name='worksIntro']").val(worksIntro);        				        			
-        					$.ajax({   
-                			    type: "POST",	
-                			    cache:false,
-                			    url:'updateWorks/'+worksId,            			      			      
-                			    data: $('#updateForm'+worksId).serialize(),  
-                			    dataType: 'json',            			  
-                	            success : function(data) {
-                	            
-                	            }  
-                	        });
-        	        		$(this).prop('contenteditable',false)
-        	        		$(this).css('background-color','');  
-        	        	})
-        				
-        			},
-        		},        		
-        	})
-        	$("#userImage").change(function(){
-        		  readURL(this);
-        		});
-        		function readURL(input){
-        		  if(input.files && input.files[0]){
-        		    var reader = new FileReader();
-        		    reader.onload = function (e) {
-        		       $("#prviewUserImg").attr('src', e.target.result);
-        		    }
-        		    reader.readAsDataURL(input.files[0]);
-        		  }
-        		}
-        	
-        	$('#editUser .edit').dblclick(function(e){
-        		console.log("click")
-        		$(this).prop('contenteditable',true).focus();
-        		$(this).css('background-color','rgba(32, 31, 58,0.8)');   
-        	})
-        	.blur(function(e){
-        		$(this).prop('contenteditable',false)
-        		$(this).css('background-color','');  
-        	})
-        	$('#uploadWorksForm').submit(function(){        	
-        		var a = document.getElementById('worksName').value;
-				var b = document.getElementById('worksPhoto').value;
-				var c = document.getElementById('worksIntro').value;
-				var warn = "";
-				if(a ===""){
-					warn += '作品名不得為空 | '
-				}
-				if(b ===""){
-					warn += '請上傳作品圖片 | '
-				}
-				if(c ===""){
-					warn += '作品介紹不得為空'
-				}
-				if(warn != ""){
-					alert(warn);
-					return false;
-				}
-        		
-				  $.ajax({
-				  type:"POST", 
-				  cache: false,
-				  url: $(this).attr('action'),
-				  data: $('#uploadWorksForm').serialize(),
-				  datatype: 'json',
-
+<script>
+		var app = new Vue({
+			el : '#personalMainContent',
+			data : {
+				works : [],
+				orders : [],
+				orderDateStr : '',
+				orderDetail : [],
+				orderItems : [],
+			},
+			created : function() {
+				var _self = this;
+				var id = $('.personalImg img').attr('id').substring(7)
+				$.ajax({
+					type : "POST",
+					url : 'userWorks?userId=' + id,
+					contentType : 'application/json',
+					dataType : 'json',
+					success : function(data) {
+						_self.works = data;
+						console.log(_self.works)
+					}
 				});
-        	})
-        </script>
+
+			},
+			methods : {
+				getWorks : function(userId) {
+					var _self = this;
+					$.ajax({
+						type : "POST",
+						url : 'userWorks?userId=' + userId,
+						contentType : 'application/json',
+						dataType : 'json',
+						success : function(data) {
+							_self.works = data;
+							console.log(_self.works)
+						}
+					});
+				},
+				confirmUpdate : function(userId) {
+					var nickname = $('#editNickname').text();
+					var phone = $('#editPhone').text();
+					var address = $('#editAddress').text();
+					var intro = $('#editIntro').text();
+					$("input[name='nickname']").val(nickname);
+					$("input[name='phone']").val(phone);
+					$("input[name='address']").val(address);
+					$("input[name='userIntro']").val(intro);
+					$.ajax({
+						type : "POST",
+						cache : false,
+						url : $(this).attr('action'),
+						data : $('#editUser').serialize(),
+						dataType : 'json',
+						success : function() {
+
+						}
+					});
+				},
+				showShoppingOrderList : function() {
+					var _self = this;
+					$.ajax({
+						type : "GET",
+						url : 'orderListAjax',
+						dataType : 'json',
+						success : function(data) {
+							_self.orders = data;
+
+						}
+					});
+				},
+				showOrderDetail : function(orderId, e, index) {
+					console.log(orderId)
+					console.log(e.target)
+					var _self = this;
+					$.ajax({
+						type : "GET",
+						url : 'showOneOrderDetail/' + orderId + '/anOrderShow',
+						dataType : 'json',
+						success : function(data) {
+							_self.orderDetail = data;
+							_self.orderItems = data.items;
+						}
+					});
+					$('#order' + index).toggleClass('hidden');
+				},
+				submitForm : function(userId){
+		 			$.ajax({
+		 				type : "POST",
+		 				cache : false,
+		 				url : $(this).attr('action'),
+		 				data : $('#form').serialize(),
+		 				datatype : 'json',
+		 				success: function(){
+		 					window.location.href = 'personalPage?id='+userId;
+		 				}
+		 			});
+		 			
+				},
+			}
+		
+		$("#userImage").change(function() {
+			readURL(this);
+		});
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$("#prviewUserImg").attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$('#editUser .edit').dblclick(function(e) {
+			console.log("click")
+			$(this).prop('contenteditable', true).focus();
+			$(this).css('background-color', 'rgba(32, 31, 58,0.8)');
+		}).blur(function(e) {
+			$(this).prop('contenteditable', false)
+			$(this).css('background-color', '');
+		})
+		$('#uploadWorksForm').submit(function() {
+			debugger
+			var a = document.getElementById('worksName').value;
+			var b = document.getElementById('worksPhoto').value;
+			var c = document.getElementById('worksIntro').value;
+			var warn = "";
+			if (a === "") {
+				warn += '作品名不得為空 | '
+			}
+			if (b === "") {
+				warn += '請上傳作品圖片 | '
+			}
+			if (c === "") {
+				warn += '作品介紹不得為空'
+			}
+			if (warn != "") {
+				alert(warn);
+				return false;
+			}
+
+			$.ajax({
+				type : "POST",
+				cache : false,
+				url : $(this).attr('action'),
+				data : $('#uploadWorksForm').serialize(),
+				datatype : 'json',
+
+			});
+		})
+		
+// 		$('#form').submit(function() {
+// 			var checkbox = document.getElementById('checkForm');
+// 			var submit = document.getElementById('submitForm');
+// 			if(checkbox.checked == true){
+// 				submit.removeAttr('disabled');
+// 			}
+// 			}
+
+// 			$.ajax({
+// 				type : "POST",
+// 				cache : false,
+// 				url : $(this).attr('action'),
+// 				data : $('#form').serialize(),
+// 				datatype : 'json',
+// 				success: function(){
+// 				window.location.href = 'personalPage?id=${LoginOK.user_id }';
+// 					alert("hihi");
+// 				}
+// 			});
+// 		})
+	
+		function confirmAgree(){
+			var checkbox = document.getElementById('checkForm');
+			var submit = document.getElementById('submitForm');
+			if(checkbox.checked == true){
+				submit.removeAttr('disabled');
+			}
+		}
+	</script>
 <jsp:include page="/fragment/footer.jsp" />
 
