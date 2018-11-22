@@ -12,7 +12,7 @@
 	    <img class="rounded-circle" height='60px' width='60px'       							 
 						src="getUserPicture/${works.user_Id}" onclick="location.href='personalPageReadOnly?id=${works.user_Id}'"> 
 	</div>    
-	<div class="container-fluid lightbox-gallery" style="display:flex;">		     	     	
+	<div class="container-fluid lightbox-gallery" style="display:flex;">		     	       	
   		<div class="item" id="item1" style="margin:10px">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
   			<img id="img1" src="mainWorksPicture/${works.works_id}" style="height:50vh">  
   			<p id="intro1" style="color:white; font-weight:200; margin-top:5px">${works.worksIntro}</p>

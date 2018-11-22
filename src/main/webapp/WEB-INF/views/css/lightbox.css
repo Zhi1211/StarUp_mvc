@@ -9,7 +9,7 @@
     height: 100vh;
     font-family: "Open Sans", sans-serif;
   } */
-  .container {
+  .containerLightbox {
     max-width: 800px;
     margin: 5% auto;
     padding: 20px;

@@ -36,46 +36,46 @@
                     <div class="imgBlock" >   
                         <img class="prodDetailImg" src="<c:url value='/getProductPicture/${product.prod_id}'/>">
                     </div>                               
-                <div class="prodInfo col-lg-5" >
-                    <div class="upper" style="padding: 20px; background-color: rgba(255, 255, 255, 0.767); border-radius: 5px; box-shadow: 1px 1px 3px black">
-                        <form id="productForm" action="<c:url value='/addProductToCart' />" method="POST">
-                        <h4>${product.prodName}</h4>
-                        <h5>NT$ ${product.prodPrice}</h5>
-                        <div class="styled-select blue semi-square">
-	                        <select name="qty" id="prodQty" style="width:230px; text-align: center;" onchange = "caculateSubtotal(qty.value,${product.prodPrice})">
-	                            <option disabled selected>請選擇購買數量</option>
-	                            <option value="1">1</option>
-	                            <option value="2">2</option>
-	                            <option value="3">3</option>
-	                            <option value="4">4</option>
-	                            <option value="5">5</option>
-	                            <option value="6">6</option>
-	                            <option value="7">7</option>
-	                            <option value="8">8</option>
-	                            <option value="9">9</option>
-	                            <option value="10">10</option>
-	                        </select>
-                        </div>    
-                    
-                        <p>小計：NT$ <span id="subtotal"></span></p>
-                        <Input type='hidden' name='prod_id' value='${product.prod_id}'><P/>
-			            <Input type='hidden' name='prodName' value='${product.prodName}'><P/>
-			            <Input type='hidden' name='prodPrice' value='${product.prodPrice}'><P/>
-			            <Input type='hidden' name='prodCompany' value='${product.prodCompany}'><P/>
-			            <Input type='hidden' name='prodIntro' value='${product.prodIntro}'><P/>
-			            <Input type='hidden' name='prodType' value='${product.prodType}'><P/>
-			            <Input type='hidden' name='pageNo' value='${prodPageNo}'><P/> 
-                        <button class="btn btn-info" type="submit" style="width: 100%;"><h4 style="font-weight:300;font-size:20px">加入購物車</h4> </button>   
-                        </form>
-                    </div>               
-		                    <div class="lower" style=" margin: 10px 0px; padding: 20px 10px; background-color: rgba(255, 255, 255, 0.733); border-radius: 5px; box-shadow: 1px 1px 3px black">
-		                          <p style="font-size:20px; color:#123d82; text-align:center; margin:0px;">商品說明</p>   
-						                   <p style="line-height:30px;width:310px; margin-left:30px;word-break: break-all;">   
-						                   ${product.prodIntro}
-											 <hr>
-		                    </div>
-                  <!--   <button class="btn btn-outline-warning" style="width: 350px">想要了解更多商品背後的故事嗎？</button> -->                
-                </div>     
+	                <div class="prodInfo col-lg-5">
+	                    <div class="upper" style="padding: 20px; background-color: rgba(255, 255, 255, 0.767); border-radius: 5px; box-shadow: 1px 1px 3px black">
+	                        <form id="productForm" action="<c:url value='/addProductToCart' />" method="POST">
+	                        <h4>${product.prodName}</h4>
+	                        <h5>NT$ ${product.prodPrice}</h5>
+	                        <div class="styled-select blue semi-square">
+		                        <select name="qty" id="prodQty" style="width:230px; text-align: center;" onchange = "caculateSubtotal(qty.value,${product.prodPrice})">
+		                            <option disabled selected>請選擇購買數量</option>
+		                            <option value="1">1</option>
+		                            <option value="2">2</option>
+		                            <option value="3">3</option>
+		                            <option value="4">4</option>
+		                            <option value="5">5</option>
+		                            <option value="6">6</option>
+		                            <option value="7">7</option>
+		                            <option value="8">8</option>
+		                            <option value="9">9</option>
+		                            <option value="10">10</option>
+		                        </select>
+	                        </div>    
+	                    
+	                        <p>小計：NT$ <span id="subtotal"></span></p>
+	                        <Input type='hidden' name='prod_id' value='${product.prod_id}'><P/>
+				            <Input type='hidden' name='prodName' value='${product.prodName}'><P/>
+				            <Input type='hidden' name='prodPrice' value='${product.prodPrice}'><P/>
+				            <Input type='hidden' name='prodCompany' value='${product.prodCompany}'><P/>
+				            <Input type='hidden' name='prodIntro' value='${product.prodIntro}'><P/>
+				            <Input type='hidden' name='prodType' value='${product.prodType}'><P/>
+				            <Input type='hidden' name='pageNo' value='${prodPageNo}'><P/> 
+	                        <button class="btn btn-info" type="submit" style="width: 100%;"><h4 style="font-weight:300;font-size:20px">加入購物車</h4> </button>   
+	                        </form>
+	                    </div>               
+			                    <div class="lower" style=" margin: 10px 0px; padding: 20px 10px; background-color: rgba(255, 255, 255, 0.733); border-radius: 5px; box-shadow: 1px 1px 3px black">
+			                          <p style="font-size:20px; color:#123d82; text-align:center; margin:0px;">商品說明</p>   
+							                   <p style="line-height:30px;width:310px; margin-left:30px;word-break: break-all;">   
+							                   ${product.prodIntro}
+												 <hr>
+			                    </div>
+	                  <!--   <button class="btn btn-outline-warning" style="width: 350px">想要了解更多商品背後的故事嗎？</button> -->                
+	                </div>     
             </div>
         </div>
         <script src="js/jquery-3.3.1.min.js"></script>             	   

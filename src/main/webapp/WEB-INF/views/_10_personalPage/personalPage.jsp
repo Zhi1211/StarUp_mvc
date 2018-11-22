@@ -31,22 +31,10 @@
 				  <li class="active nav-item"><a class="active show" data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
 				  <li class="nav-item"><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>  
 				  <li class="nav-item"><a data-toggle="tab" href="#post"><button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
-				 <li class="nav-item"><a data-toggle="tab" href="#orders"><button
-						type="button" v-on:click="showShoppingOrderList()"
-						class="btn btn-circle btn-xl btnFeature"
-						style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46); font-size: 20px;">
-						訂單<br>查詢
-					</button></a></li>
-			<li class="nav-item"><a data-toggle="tab" href="#maintain">
-					<button type="button" class="btn btn-circle btn-xl btnFeature"
-						style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button>
-			</a></li>
-			<li class="nav-item"><a data-toggle="tab" href="#form">
-					<button type="button" class="btn btn-circle btn-xl btnFeature"
-						style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46); font-size: 20px;">
-						申請<br>上架
-					</button>
-			</a></li>
+				   <li class="nav-item"><a data-toggle="tab" href="#orders"><button type="button" v-on:click="showShoppingOrderList()" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46); font-size: 20px;"> 訂單<br>查詢</button></a></li>
+					<li class="nav-item"><a data-toggle="tab" href="#maintain">
+							<button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">維護</button></a></li>
+					<li class="nav-item"><a data-toggle="tab" href="#form"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46); font-size: 20px;">申請<br>上架 </button></a></li>
 			</ul>							
 				<div class="tab-content" style="margin:20px 0px 70px 0px;">  
 				  <div id="works" class="tab-pane fade active show">
@@ -327,8 +315,7 @@
 				    		<input type="hidden" name="userIntro" id="userIntro">				    						    				    		
 				    	</form>
 				  </div>
-				  
-				  			<!-- 申請上架 -->
+				  	  			<!-- 申請上架 -->
 			<div id="form" class="tab-pane fade">
 
 				<!-- 				<h3>表單填寫</h3> -->
@@ -408,18 +395,22 @@
 							<p>填寫上架申請表：</p>
 
 
-							<label for="InputName">姓名</label> <input type="text"
+							<label for="InputName">姓名</label> 
+							<input type="text"
 								name="realName" class="form-control" id="InputName"
 								placeholder="請輸入真實姓名" style="width: 250px;"> <label
 								for="ProductName">商品名稱</label> <input type="text"
 								class="form-control" id="ProductName" name="formProdName"
-								placeholder="請輸入商品名稱" style="width: 250px;"> <label
-								for="InputPrice">價格</label> <input type="text" name="formPrice"
+								placeholder="請輸入商品名稱" style="width: 250px;"> 
+								<label for="InputPrice">價格</label> 
+								<input type="text" name="formPrice"
 								class="form-control" id="InputPrice" placeholder="請輸入商品價格"
-								style="width: 250px;"> <label for="InputEmail">Email信箱</label>
-							<input type="email" class="form-control" id="InputEmail" name="formMail"
+								style="width: 250px;"> 
+								<label for="InputEmail">Email信箱</label>
+							    <input type="email" class="form-control" id="InputEmail" name="formMail"
 								aria-describedby="emailHelp" placeholder="請輸入信箱"
-								style="width: 450px;"> <label for="productPhoto">照片｜敘述</label>
+								style="width: 450px;"> 
+								<label for="productPhoto">照片｜敘述</label>
 							<div style="display: flex;">
 								<textarea class="form-control" name="formIntro"
 									id="productPhoto" rows="9" style="width: 450px; height: 150px;"></textarea>
@@ -449,186 +440,195 @@
         </div>
         <script src="js/jquery-3.3.1.min.js"></script>   
         <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-<script>
-		var app = new Vue({
-			el : '#personalMainContent',
-			data : {
-				works : [],
-				orders : [],
-				orderDateStr : '',
-				orderDetail : [],
-				orderItems : [],
-			},
-			created : function() {
-				var _self = this;
-				var id = $('.personalImg img').attr('id').substring(7)
-				$.ajax({
-					type : "POST",
-					url : 'userWorks?userId=' + id,
-					contentType : 'application/json',
-					dataType : 'json',
-					success : function(data) {
-						_self.works = data;
-						console.log(_self.works)
-					}
-				});
-
-			},
-			methods : {
-				getWorks : function(userId) {
-					var _self = this;
-					$.ajax({
-						type : "POST",
-						url : 'userWorks?userId=' + userId,
-						contentType : 'application/json',
-						dataType : 'json',
-						success : function(data) {
-							_self.works = data;
-							console.log(_self.works)
-						}
-					});
-				},
-				confirmUpdate : function(userId) {
-					var nickname = $('#editNickname').text();
-					var phone = $('#editPhone').text();
-					var address = $('#editAddress').text();
-					var intro = $('#editIntro').text();
-					$("input[name='nickname']").val(nickname);
-					$("input[name='phone']").val(phone);
-					$("input[name='address']").val(address);
-					$("input[name='userIntro']").val(intro);
-					$.ajax({
-						type : "POST",
-						cache : false,
-						url : $(this).attr('action'),
-						data : $('#editUser').serialize(),
-						dataType : 'json',
-						success : function() {
-
-						}
-					});
-				},
-				showShoppingOrderList : function() {
-					var _self = this;
-					$.ajax({
-						type : "GET",
-						url : 'orderListAjax',
-						dataType : 'json',
-						success : function(data) {
-							_self.orders = data;
-
-						}
-					});
-				},
-				showOrderDetail : function(orderId, e, index) {
-					console.log(orderId)
-					console.log(e.target)
-					var _self = this;
-					$.ajax({
-						type : "GET",
-						url : 'showOneOrderDetail/' + orderId + '/anOrderShow',
-						dataType : 'json',
-						success : function(data) {
-							_self.orderDetail = data;
-							_self.orderItems = data.items;
-						}
-					});
-					$('#order' + index).toggleClass('hidden');
-				},
-				submitForm : function(userId){
-		 			$.ajax({
-		 				type : "POST",
-		 				cache : false,
-		 				url : $(this).attr('action'),
-		 				data : $('#form').serialize(),
-		 				datatype : 'json',
-		 				success: function(){
-		 					window.location.href = 'personalPage?id='+userId;
-		 				}
-		 			});
-		 			
-				},
-			}
-		
-		$("#userImage").change(function() {
-			readURL(this);
-		});
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function(e) {
-					$("#prviewUserImg").attr('src', e.target.result);
+        <script>
+        	var app = new Vue({
+        		el:'#personalMainContent',
+        		data:{
+        			works:[],
+        			orders:[],
+        			orderDateStr:'',
+        			orderDetail:[],
+        			orderItems:[],
+        		},        	 	
+        		created: function(){	
+        				var _self = this;        				
+        				var id = $('.personalImg img').attr('id').substring(7)        				
+        				$.ajax({
+            			    type: "POST",    
+            			    url: 'userWorks?userId='+id,
+            			    contentType:'application/json',		
+            			    dataType: 'json',
+            	            success : function(data) { 
+            	            	_self.works = data;
+            	            	console.log(_self.works)
+            	            }  
+            	        });
+        		
+        		},
+        		methods:{
+        			getWorks:function(userId){        			
+        				var _self = this;
+        				$.ajax({
+            			    type: "POST",    
+            			    url: 'userWorks?userId='+userId,
+            			    contentType:'application/json',		
+            			    dataType: 'json',
+            	            success : function(data) { 
+            	            	_self.works = data;
+            	            	console.log(_self.works)
+            	            }  
+            	        });
+        			}, 
+        			/*  */
+        			confirmUpdate:function(userId){
+        				var nickname = $('#editNickname').text();
+        				var phone = $('#editPhone').text();
+        				var address = $('#editAddress').text();
+        				var intro = $('#editIntro').text();
+        				$("input[name='nickname']").val(nickname);
+        				$("input[name='phone']").val(phone);
+        				$("input[name='address']").val(address);
+        				$("input[name='userIntro']").val(intro);
+        				$.ajax({
+            			    type: "POST",    
+            			    cache:false,
+            			    url: $(this).attr('action'),            			    
+            			    data: $('#editUser').serialize(),            			    
+            			    dataType: 'json',            			  
+            	            success : function() {        
+            	            }  
+            	        });				
+        			},
+        			/*  */
+        			showShoppingOrderList:function(){        				
+        				var _self = this;
+        				$.ajax({
+            			    type: "GET",      
+            			    url:'orderListAjax',            			      			    
+            			    dataType: 'json',            			  
+            	            success : function(data) { 
+            	          		_self.orders = data;
+            	          		
+            	            }  
+            	        });	    
+        			},
+        			/*  */
+        			showOrderDetail:function(orderId,e,index){          			
+        				console.log(orderId)  
+        				console.log(e.target)        				
+        				var _self = this;
+        				$.ajax({   
+            			    type: "GET",      
+            			    url:'showOneOrderDetail/'+ orderId+'/anOrderShow',            			      			    
+            			    dataType: 'json',            			  
+            	            success : function(data) {
+            	            	_self.orderDetail = data;
+            	            	_self.orderItems = data.items;	
+            	            }  
+            	        });	        				        				        		
+        				$('#order'+index).toggleClass('hidden');
+        			},
+        			/*  */        			
+        			deleteWorks: function(worksId,index,e){
+        				var _self = this;
+        				e.preventDefault();
+        			    if(confirm("確定要刪除作品？")){
+        			    	_self.works.splice(index,1);
+        					  $.ajax({
+    					        type: "POST",  
+    					        data : {_method:"DELETE"},  
+    					        dataType: 'json', 
+    					        url:'deleteWorks?id='+worksId,            					    
+    					        success: function() {    					        	    					        		        
+    					        }
+    					    });
+        				}
+        			},		
+        			/*  */
+        			updateWorks:function(worksId){        				
+        				$('#worksIntro'+worksId).prop('contenteditable',true).focus().css('background-color','rgba(32, 31, 58,0.8)');
+        				$('#worksIntro'+worksId).blur(function(e){
+        					var worksIntro = $('#worksIntro'+worksId).text();
+        					$("input[name='worksIntro']").val(worksIntro);        				        			
+        					$.ajax({   
+                			    type: "POST",	
+                			    cache:false,
+                			    url:'updateWorks/'+worksId,            			      			      
+                			    data: $('#updateForm'+worksId).serialize(),  
+                			    dataType: 'json',            			  
+                	            success : function(data) {
+                	            
+                	            }  
+                	        });
+        	        		$(this).prop('contenteditable',false)
+        	        		$(this).css('background-color','');  
+        	        	})        				
+        			},
+        			submitForm : function(userId){
+                        $.ajax({
+                            type : "POST",
+                            cache : false,
+                            url : $(this).attr('action'),
+                            data : $('#form').serialize(),
+                            datatype : 'json',
+                            success: function(){
+                                window.location.href = 'personalPage?id='+userId;
+                            }
+                        });
+                        
+                   },
+        		},        		
+        	})
+        	$("#userImage").change(function(){
+        		  readURL(this);
+        		});
+        		function readURL(input){
+        		  if(input.files && input.files[0]){
+        		    var reader = new FileReader();
+        		    reader.onload = function (e) {
+        		       $("#prviewUserImg").attr('src', e.target.result);
+        		    }
+        		    reader.readAsDataURL(input.files[0]);
+        		  }
+        		}
+        	
+        	$('#editUser .edit').dblclick(function(e){
+        		console.log("click")
+        		$(this).prop('contenteditable',true).focus();
+        		$(this).css('background-color','rgba(32, 31, 58,0.8)');   
+        	})
+        	.blur(function(e){
+        		$(this).prop('contenteditable',false)
+        		$(this).css('background-color','');  
+        	})
+        	$('#uploadWorksForm').submit(function(){        	
+        		var a = document.getElementById('worksName').value;
+				var b = document.getElementById('worksPhoto').value;
+				var c = document.getElementById('worksIntro').value;
+				var warn = "";
+				if(a ===""){
+					warn += '作品名不得為空 | '
 				}
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
+				if(b ===""){
+					warn += '請上傳作品圖片 | '
+				}
+				if(c ===""){
+					warn += '作品介紹不得為空'
+				}
+				if(warn != ""){
+					alert(warn);
+					return false;
+				}
+        		
+				  $.ajax({
+				  type:"POST", 
+				  cache: false,
+				  url: $(this).attr('action'),
+				  data: $('#uploadWorksForm').serialize(),
+				  datatype: 'json',
 
-		$('#editUser .edit').dblclick(function(e) {
-			console.log("click")
-			$(this).prop('contenteditable', true).focus();
-			$(this).css('background-color', 'rgba(32, 31, 58,0.8)');
-		}).blur(function(e) {
-			$(this).prop('contenteditable', false)
-			$(this).css('background-color', '');
-		})
-		$('#uploadWorksForm').submit(function() {
-			debugger
-			var a = document.getElementById('worksName').value;
-			var b = document.getElementById('worksPhoto').value;
-			var c = document.getElementById('worksIntro').value;
-			var warn = "";
-			if (a === "") {
-				warn += '作品名不得為空 | '
-			}
-			if (b === "") {
-				warn += '請上傳作品圖片 | '
-			}
-			if (c === "") {
-				warn += '作品介紹不得為空'
-			}
-			if (warn != "") {
-				alert(warn);
-				return false;
-			}
-
-			$.ajax({
-				type : "POST",
-				cache : false,
-				url : $(this).attr('action'),
-				data : $('#uploadWorksForm').serialize(),
-				datatype : 'json',
-
-			});
-		})
-		
-// 		$('#form').submit(function() {
-// 			var checkbox = document.getElementById('checkForm');
-// 			var submit = document.getElementById('submitForm');
-// 			if(checkbox.checked == true){
-// 				submit.removeAttr('disabled');
-// 			}
-// 			}
-
-// 			$.ajax({
-// 				type : "POST",
-// 				cache : false,
-// 				url : $(this).attr('action'),
-// 				data : $('#form').serialize(),
-// 				datatype : 'json',
-// 				success: function(){
-// 				window.location.href = 'personalPage?id=${LoginOK.user_id }';
-// 					alert("hihi");
-// 				}
-// 			});
-// 		})
-	
-		function confirmAgree(){
-			var checkbox = document.getElementById('checkForm');
-			var submit = document.getElementById('submitForm');
-			if(checkbox.checked == true){
-				submit.removeAttr('disabled');
-			}
-		}
-	</script>
+				});
+        	})
+        </script>
 <jsp:include page="/fragment/footer.jsp" />
 

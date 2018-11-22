@@ -57,7 +57,80 @@
 		class="sr-only">Next</span>
 	</a>
 </div>
-<div style="height:2000px;"></div>
+<div style="height:2000px; position:absolute; top:600px; width:99vw">
+	 <div class="break" style="background-color:black; color:white; text-align:center;">
+        <p style="padding:5px 0px">What's your execellent plan !?</p>
+    </div>
+	<div style="text-align:center; margin-top:10px; display:flex">
+	  <div>
+		<img src="image/5b0a647ae296d.png" style="width:350px; margin: 0px 20px;">
+		<p style="font-weight:100; font-size:40px; color:white">作品</p>
+	  </div>	
+	  <div>
+	  	<img src="image/5b0a64c409e54.png" style="width:350px; margin: 0px 20px; ">
+	  	<p style="font-weight:100; font-size:40px; color:white">商城</p>
+	  </div>
+	  <div>
+		<img src="image/5b0a7f49d467f.png" style="width:350px; margin: 0px 20px;">
+		<p style="font-weight:100; font-size:40px; color:white">主頁</p>
+	  </div>
+	</div>
+	<div class="break" style="background-color:black; color:white; text-align:center;">
+        <p style="padding:5px 0px">What's your execellent plan !?</p>
+    </div>
+	<div>
+		<div class="container">
+		<form ENCTYPE="multipart/form-data" method="POST"
+			action="<c:url value='/opinion.do' />" id="/opinion.do">
+			<fieldset>
+				<legend>意見回覆</legend>
+				<p>${MsgMap.InsertNG}${MsgMap.errorSaveData}</p>
+				<section class="container col-sm-6">
+					<!--意見回覆表格內容 -->
+					<div class="form-group col-sm-8">
+						<div class="form-group col-sm-8" style="display:flex">  
+							<label for="opinionName">姓名:</label> 
+							<input type="text"
+								class="form-control" name="opinionName"
+								value="${param.opinionName}" id="opinionName"
+								aria-describedby="emailHelp" placeholder="請輸入姓名">
+							<p style="color: #b2b2b2;">
+								<small>${MsgMap.errorIDEmpty}${MsgMap.errorIDDUp}</small>
+							</p>
+						</div>
+						<div class="form-group col-sm-8">
+							<label for="opinionMail">電子郵件:</label> <input type="email"
+								class="form-control" name="opinionMail"
+								value="${param.opinionMail}" id="opinionMail"
+								aria-describedby="emailHelp" placeholder="請輸入常用信箱">
+							<p style="color: #b2b2b2;">
+								<small>${MsgMap.errorIDEmpty}${MsgMap.errorIDDUp}</small>
+							</p>
+						</div>
+						<div class="form-group col-sm-8">
+							<label for="opinionPhone"> 連絡電話:</label> <input type="text"
+								class="form-control" name="opinionPhone"
+								value="${param.opinionPhone}" id="opinionPhone"
+								aria-describedby="emailHelp" placeholder="請輸入連絡電話">
+							<p style="color: #b2b2b2;">
+								<small>${MsgMap.errorIDEmpty}${MsgMap.errorIDDUp}</small>
+							</p>
+						</div>
+						<div class="form-group col-sm-10">
+							<label for="introduction">訪客意見:</label>
+							<textarea class="form-control" name="opinionField"
+								id="opinionField" rows="5"></textarea>
+						</div>
+					</div>
+				</section>
+			</fieldset>
+			<input type="submit" class="btn btn-primary btn-lg btn-block"
+				name="submit" id="submit" value="Submit"
+				style="margin-bottom: 50px;">
+			</form>     
+	</div>
+	</div>
+</div>
 
 
    
