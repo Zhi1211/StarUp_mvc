@@ -15,21 +15,21 @@ public class OpinionBean implements Serializable {
 	Integer opinionId;
 	String opinionName;
 	String opinionMail;
-	String opinionPhone;
 	String opinionField;
+	String opinionUpTime;
+	
 	
 	
 	
 	public OpinionBean() {
 		super();
 	}
-	public OpinionBean(Integer opinionId, String opinionName, String opinionMail, String opinionPhone,
+	public OpinionBean(Integer opinionId, String opinionName, String opinionMail,
 			String opinionField) {
 		super();
 		this.opinionId = opinionId;
 		this.opinionName = opinionName;
 		this.opinionMail = opinionMail;
-		this.opinionPhone = opinionPhone;
 		this.opinionField = opinionField;
 	}
 	
@@ -64,14 +64,6 @@ public class OpinionBean implements Serializable {
 		this.opinionMail = opinionMail;
 	}
 
-	public String getOpinionPhone() {
-		return opinionPhone;
-	}
-
-	public void setOpinionPhone(String opinionPhone) {
-		this.opinionPhone = opinionPhone;
-	}
-
 	public String getOpinionField() {
 		return opinionField;
 	}
@@ -79,4 +71,12 @@ public class OpinionBean implements Serializable {
 	public void setOpinionField(String opinionField) {
 		this.opinionField = opinionField;
 	}	
+	
+	public String getOpinionUpTime() {
+		return opinionUpTime;
+	}
+	
+	public void setOpinionUpTime(String opinionUpTime) {
+		this.opinionUpTime = opinionUpTime;
+	}
 }

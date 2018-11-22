@@ -19,6 +19,7 @@ public class FormBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer form_id;
+	private Integer user_id;
 	private String question_1;
 	private String question_2;
 	private String question_3;
@@ -179,6 +180,14 @@ public class FormBean implements Serializable {
 
 	public void setFormMail(String formMail) {
 		this.formMail = formMail;
+	}
+
+	public Integer getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
 	
 	

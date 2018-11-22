@@ -85,8 +85,9 @@
 									</div>
                              </form>    
                             </div>
-                            <div>
-                            	<h4 style="text-align:center;">收件表</h4>
+                            <div>                            	    
+                            <hr style="margin-top:20px">                               
+                            	<h4 style="text-align:center;margin-top:40px">收件表</h4>
 	                            <table class="table table-striped table-dark" border="1" style="margin-top:20px;">			   			
 									<tr>
 										<td width="150" style="text-align:center;">信件編號</td>
@@ -307,7 +308,6 @@
 				    		</div> 
 				    		<div style="margin: 10px auto;display:flex; justify-content:center;">
 					    		<button v-on:click="confirmUpdate(${userBean.user_id })" class="btn btn-info" style="margin-right:10px;">保存</button>
-					    		<button class="btn btn-warning">取消</button>
 				    		</div>     				    	
 				    		<input type="hidden" name="nickname" id="nickname">
 				    		<input type="hidden" name="phone" id="phone">
@@ -321,22 +321,23 @@
 				<!-- 				<h3>表單填寫</h3> -->
 				<div
 					style="display: flex; background-color: white; padding: 10px; border-radius: 5px; width: 85%; margin: 0 auto;">
-					<div class="col-lg-8"
-						style="line-height: 28px; font-weight: 400; color: rgb(0, 0, 0);">
+					<div class="col-lg-10"
+						style="line-height: 28px; font-weight: 400; color: rgb(0, 0, 0);padding:10px">
 						<form ENCTYPE="multipart/form-data" action="addForm" method="post"
-							id="form" v-on:sumbit="submitForm()">
+							id="form" v-on:sumbit="submitForm($event)">
 
-							<p>
-								我要申請商品上架<br>以下舉例幾個常見的商品類別，幫助你檢視商品是否已經準備好開始於網路販售
+							<p style="font-size:28px; font-weight:200">
+								我要申請商品上架</p>								
+								<p class="text-info">以下提出幾個問題，幫助你檢視商品是否已經準備好開始於網路販售
 							</p>
 
 							<div class="custom-control custom-radio">
-								<input type="radio" id="product1" name="question_1" value="tableGame"
+								<input type="radio" id="product1" name="question_1" value="原創桌遊"
 									class="custom-control-input" checked=""> <label
 									class="custom-control-label" for="product1">原創桌遊</label>
 							</div>
 							<div class="custom-control custom-radio">
-								<input type="radio" id="product2" name="question_1" value="design"
+								<input type="radio" id="product2" name="question_1" value="文創周邊"
 									class="custom-control-input"> <label
 									class="custom-control-label" for="product2">文創周邊</label>
 							</div>
@@ -386,7 +387,7 @@
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input"
 									id="checkform"> <label class="custom-control-label"
-									for="checkform">我已經詳細閱讀這個頁面，並同意這樣的上架方式。</label>
+									for="checkform">我已經詳細閱讀<a href="#" style="color:blue">這個頁面</a>，並同意這樣的上架方式。</label>
 							</div>
 
 
@@ -395,23 +396,17 @@
 							<p>填寫上架申請表：</p>
 
 
-							<label for="InputName">姓名</label> 
-							<input type="text"
-								name="realName" class="form-control" id="InputName"
-								placeholder="請輸入真實姓名" style="width: 250px;"> <label
-								for="ProductName">商品名稱</label> <input type="text"
-								class="form-control" id="ProductName" name="formProdName"
-								placeholder="請輸入商品名稱" style="width: 250px;"> 
+								<label for="InputName">廠商名稱</label> 
+								<input type="text" name="realName" class="form-control" id="InputName" placeholder="請輸入廠商名稱"style="width: 250px;"> 
+								<label for="ProductName">商品名稱</label> 
+								<input type="text" class="form-control" id="ProductName" name="formProdName" placeholder="請輸入商品名稱" style="width: 250px;"> 
 								<label for="InputPrice">價格</label> 
-								<input type="text" name="formPrice"
-								class="form-control" id="InputPrice" placeholder="請輸入商品價格"
-								style="width: 250px;"> 
+								<input type="text" name="formPrice" class="form-control" id="InputPrice" placeholder="請輸入商品價格" style="width: 250px;"> 
 								<label for="InputEmail">Email信箱</label>
-							    <input type="email" class="form-control" id="InputEmail" name="formMail"
-								aria-describedby="emailHelp" placeholder="請輸入信箱"
-								style="width: 450px;"> 
+							    <input type="email" class="form-control" id="InputEmail" name="formMail" aria-describedby="emailHelp" value="${userBean.account}" style="width: 450px;"> 
 								<label for="productPhoto">照片｜敘述</label>
-							<div style="display: flex;">
+								<input type="hidden" name="user_id" id="user_id" value="${userBean.user_id }">
+							    <div style="display: flex;">
 								<textarea class="form-control" name="formIntro"
 									id="productPhoto" rows="9" style="width: 450px; height: 150px;"></textarea>
 								<div>
@@ -421,7 +416,7 @@
 										id="captionImg_3" aria-describedby="fileHelp"
 										style="margin-left: 5px">
 								</div>
-
+	
 							</div>
 							<div style="margin: 0 auto; margin-top: 30px;">
 								<input type="submit" class="btn btn-secondary" name="submit"
@@ -564,7 +559,7 @@
         	        		$(this).css('background-color','');  
         	        	})        				
         			},
-        			submitForm : function(userId){
+        			submitForm : function(e){
                         $.ajax({
                             type : "POST",
                             cache : false,
@@ -575,7 +570,7 @@
                                 window.location.href = 'personalPage?id='+userId;
                             }
                         });
-                        
+                        e.preventDefault(); 
                    },
         		},        		
         	})

@@ -14,7 +14,7 @@
 					<label for="account">帳號</label>  
 				
 					<form:input type="email" class="form-control" name="account" id="account" path="account"  
-						aria-describedby="emailHelp" aria-describedby="emailHelp" placeholder="請輸入註冊用信箱"/>
+						aria-describedby="emailHelp" placeholder="請輸入註冊用信箱"/>
 						<span class="badge badge-pill badge-primary" style="font-weight:300; margin-top:5px;">
 							驗證  
 						</span>  
