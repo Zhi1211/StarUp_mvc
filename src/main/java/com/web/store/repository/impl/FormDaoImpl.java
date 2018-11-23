@@ -33,5 +33,16 @@ public class FormDaoImpl  implements FormDao{
 		Session session=factory.getCurrentSession();
 		session.save(fb);
 	}
+	
+	@Override
+	public FormBean getFormById(Integer form_id) {
+		String hql = "FROM FormBean pb WHERE pb.form_id = :pid";
+		FormBean fb = new FormBean();
+		Session session = factory.getCurrentSession();
+		fb = (FormBean) session.createQuery(hql)
+											    	.setParameter("pid", form_id).getSingleResult();		
+		return fb;
+	}
 
 }
+

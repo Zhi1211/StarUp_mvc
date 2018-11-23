@@ -57,7 +57,7 @@
 		class="sr-only">Next</span>
 	</a>
 </div>
-<div style="height:2000px; position:absolute; top:600px; width:99vw">
+<div style="position:absolute; top:600px; width:99vw">
 	 <div class="break" style="background-color:black; color:white; text-align:center;">
         <p style="padding:5px 0px">What's your execellent plan !?</p>
     </div>
@@ -123,7 +123,7 @@
 								id="opinionField" rows="5"></textarea>
 						</div>
 					<input type="submit" class="btn btn-primary btn-lg btn-block"
-						name="submit" id="submit"  style="margin-bottom: 50px;" value="送出"">   
+						name="submit" id="submit"  style="margin-bottom: 100px;" value="送出">   
 					</div>
 				</section>
 		

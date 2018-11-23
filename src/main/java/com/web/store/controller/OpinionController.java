@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.web.store.model.OpinionBean;
+import com.web.store.model.ProductBean;
 import com.web.store.model.UserBean;
 import com.web.store.model.WorksBean;
 import com.web.store.service.OpinionService;
@@ -39,13 +41,13 @@ public class OpinionController {
 	@Autowired
 	ServletContext context;
 	
-	//________________________讀取意見回覆____________________________________________________________	
-		@RequestMapping("/opinionForm")
-		public String opinionForm(Model model) {
-			List<OpinionBean> list = opinionService.getAllOpinion();
-			model.addAttribute("worksBean", list);
-			return "_06_workUp/worksList";
-		}
+
+	@RequestMapping(value= "/opinionForm", produces="application/json")
+	public @ResponseBody byte[] opinionForm(Model model) throws UnsupportedEncodingException {	
+		List<OpinionBean> list = opinionService.getAllOpinion();
+		byte[] opinionJson = new Gson().toJson(list).getBytes("UTF-8");
+		return opinionJson;
+	}
 
 	//_________________________________新增意見回覆__________________________________________________________________
 	@RequestMapping(value = "/saveOpinion", method = RequestMethod.POST)

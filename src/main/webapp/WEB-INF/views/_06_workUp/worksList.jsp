@@ -12,9 +12,9 @@
 <div class="carousel-inner"
 	style="background-color: rgba(35, 36, 38, 0.8);">
 	<div class="carousel-item active"
-		style="width: 100%; height: 600px; overflow: hidden;">
+		style="width: 100%; height: 400px; overflow: hidden;">
 		
-			<div class="carousel-caption" style="margin-bottom: 150px;">
+			<div class="carousel-caption" style="margin-bottom:50px;">
 
 				<h1 style="text-shadow: 0px 0px 5px #f4dc42;">✯✯ STAR UP !
 					Design Action ✯✯</h1>
@@ -23,18 +23,17 @@
 					<form
 					class="form-inline my-10 my-xs-0"
 					style="display: flex; justify-content: center;">
-					<input class="form-control mr-xs-2"
-						style="width: 500px; display: flex; justify-content: center;"
-						type="search" placeholder="搜尋作品" aria-label="Search" type="button">
-					<input type="submit" class="btn btn-outline-warning" name="submit"
-						id="submit" value="Search">
+<!-- 					<input class="form-control mr-xs-2" -->
+<!-- 						style="width: 500px; display: flex; justify-content: center;" -->
+<!-- 						type="search" placeholder="搜尋作品" aria-label="Search" type="button"> -->
+<!-- 					<input type="submit" class="btn btn-outline-warning" name="submit" -->
+<!-- 						id="submit" value="Search"> -->
 
 				</form>
-				<p
-					style="font-family: '微軟正黑體', sans-serif; font-size: 16px; text-shadow: 0px 0px 5px #ffffff; margin-top: 15px;">
-					熱門搜尋:原創桌遊、現代風格、城市紋理、創意合成</p>
+<!-- 				<p -->
+<!-- 					style="font-family: '微軟正黑體', sans-serif; font-size: 16px; text-shadow: 0px 0px 5px #ffffff; margin-top: 15px;"> -->
+<!-- 					熱門搜尋:原創桌遊、現代風格、城市紋理、創意合成</p> -->
 			</div>
-		
 		<jsp:include page="/fragment/header.jsp" />
 	</div>
 </div>

@@ -323,17 +323,23 @@
 					style="display: flex; background-color: white; padding: 10px; border-radius: 5px; width: 85%; margin: 0 auto;">
 					<div class="col-lg-10"
 						style="line-height: 28px; font-weight: 400; color: rgb(0, 0, 0);padding:10px">
-						<form ENCTYPE="multipart/form-data" action="addForm" method="post"
-							id="form" v-on:sumbit="submitForm($event)">
+						<form ENCTYPE="multipart/form-data" id="applyForm" method="POST" action="addForm" v-on:submit="submitForm()">
 
 							<p style="font-size:28px; font-weight:200">
 								我要申請商品上架</p>								
 								<p class="text-info">以下提出幾個問題，幫助你檢視商品是否已經準備好開始於網路販售
 							</p>
+								<p>填寫上架申請表前，你是否已經閱讀各項上架資訊？</p>
 
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input"
+									id="checkform"> <label class="custom-control-label"
+									for="checkform">我已經詳細閱讀<a href="#" data-toggle="modal" data-target="#exampleModalLong">這個頁面</a>，並同意這樣的上架方式。</label>
+							</div>
+							<hr>
 							<div class="custom-control custom-radio">
 								<input type="radio" id="product1" name="question_1" value="原創桌遊"
-									class="custom-control-input" checked=""> <label
+									class="custom-control-input" > <label
 									class="custom-control-label" for="product1">原創桌遊</label>
 							</div>
 							<div class="custom-control custom-radio">
@@ -346,7 +352,7 @@
 
 							<div class="custom-control custom-radio">
 								<input type="radio" id="photo" name="question_2" value="yes"
-									class="custom-control-input" checked=""> <label
+									class="custom-control-input"> <label
 									class="custom-control-label" for="photo">有，我有好好拍，我的商品照都很好看！</label>
 							</div>
 							<div class="custom-control custom-radio">
@@ -359,7 +365,7 @@
 
 							<div class="custom-control custom-radio">
 								<input type="radio" id="understand" name="question_3" value="yes"
-									class="custom-control-input" checked=""> <label
+									class="custom-control-input"> <label
 									class="custom-control-label" for="understand">我了解，非原創商品和有侵權疑慮商品不可以賣。</label>
 							</div>
 							<div class="custom-control custom-radio">
@@ -372,7 +378,7 @@
 
 							<div class="custom-control custom-radio">
 								<input type="radio" id="great" name="question_4" value="yes"
-									class="custom-control-input" checked=""> <label
+									class="custom-control-input"> <label
 									class="custom-control-label" for="great">沒問題，無論商品品質和商品照，我都有信心可以從眾多申請者中脫穎而出！</label>
 							</div>
 							<div class="custom-control custom-radio">
@@ -382,22 +388,10 @@
 							</div>
 
 							<hr>
-							<p>填寫上架申請表前，你是否已經閱讀各項上架資訊？</p>
-
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="checkform"> <label class="custom-control-label"
-									for="checkform">我已經詳細閱讀<a href="#" style="color:blue">這個頁面</a>，並同意這樣的上架方式。</label>
-							</div>
-
-
-							<hr>
-
+						
 							<p>填寫上架申請表：</p>
-
-
-								<label for="InputName">廠商名稱</label> 
-								<input type="text" name="realName" class="form-control" id="InputName" placeholder="請輸入廠商名稱"style="width: 250px;"> 
+								<label for="InputName">申請人/團隊</label> 
+								<input type="text" name="realName" class="form-control" id="InputName" placeholder="請輸入申請人或團隊名稱"style="width: 250px;"> 
 								<label for="ProductName">商品名稱</label> 
 								<input type="text" class="form-control" id="ProductName" name="formProdName" placeholder="請輸入商品名稱" style="width: 250px;"> 
 								<label for="InputPrice">價格</label> 
@@ -558,20 +552,19 @@
         	        		$(this).prop('contenteditable',false)
         	        		$(this).css('background-color','');  
         	        	})        				
-        			},
-        			submitForm : function(e){
-                        $.ajax({
-                            type : "POST",
-                            cache : false,
-                            url : $(this).attr('action'),
-                            data : $('#form').serialize(),
-                            datatype : 'json',
-                            success: function(){
-                                window.location.href = 'personalPage?id='+userId;
-                            }
-                        });
-                        e.preventDefault(); 
-                   },
+        			},        		
+        			submitForm:function(e){        				
+        				$.ajax({   
+            			    type: "POST",	
+            			    cache:false,
+            			    url: $(this).attr('action'),            			    
+            			    data: $('#applyForm').serialize(),  
+            			    dataType: 'json',            			  
+            	            success : function(data) {
+            	            	e.preventDefault();
+            	            }  
+            	        });
+        			}
         		},        		
         	})
         	$("#userImage").change(function(){

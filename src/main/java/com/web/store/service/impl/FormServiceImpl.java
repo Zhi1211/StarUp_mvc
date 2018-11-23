@@ -1,5 +1,7 @@
 package com.web.store.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,13 +16,14 @@ public class FormServiceImpl implements FormService {
 	
 	@Autowired
 	FormDao formdao;
+	
 
 	public FormServiceImpl() {
 	}
 
 	@Override
-	public void getAllForms() {
-		formdao.getAllForms();
+	public List<FormBean> getAllForms() {
+		return formdao.getAllForms();
 		
 	}
 
@@ -28,5 +31,11 @@ public class FormServiceImpl implements FormService {
 	public void processForm(FormBean fb) {
     formdao.processForm(fb);		
 	}
+
+	@Override
+	public FormBean getFormById(Integer form_Id) {
+		return formdao.getFormById(form_Id);
+	}
+
 
 }

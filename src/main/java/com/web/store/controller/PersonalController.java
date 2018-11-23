@@ -1,6 +1,8 @@
 package com.web.store.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -18,11 +20,15 @@ import javax.sql.rowset.serial.SerialClob;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -198,5 +204,60 @@ public class PersonalController {
 			}		
 			formService.processForm(fb);
 			return new ResponseEntity<FormBean>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value= "/getAllForms", produces="application/json")
+	public @ResponseBody byte[] getAllForms(Model model) throws UnsupportedEncodingException {	
+		List<FormBean> list = formService.getAllForms();
+		byte[] FormJson = new Gson().toJson(list).getBytes("UTF-8");
+		return FormJson;
+	}
+	@RequestMapping(value="/getFormImg/{form_Id}",method=RequestMethod.GET)
+	public ResponseEntity<byte[]> getFormImg(@PathVariable("form_Id") Integer form_Id){
+		String filePath = "/resources/images/NoImage.jpg";
+		FormBean fb = formService.getFormById(form_Id);
+		HttpHeaders headers = new HttpHeaders();
+		String filename = "";
+		int len = 0;
+		byte[] media = null;
+		if(fb!=null) {
+			Blob blob = fb.getFormImg();
+			filename = fb.getFormImgName();
+			if(blob!= null) {
+				try {
+					len = (int) blob.length();
+					media = blob.getBytes(1, len);
+				} catch (SQLException e) {
+					throw new RuntimeException("FormController的getPicture()發生error"+e.getMessage());
+				}
+			}else {
+				media = toByteArray(filePath);
+				filename = filePath;
+			}
+		}else {
+			media = toByteArray(filePath);
+			filename = filePath;
+		}
+		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+		String mimeType = context.getMimeType(filename);
+		MediaType mediaType = MediaType.valueOf(mimeType);
+//		System.out.println("mediaType = "+mediaType);
+		headers.setContentType(mediaType);
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,headers,HttpStatus.OK);
+		return responseEntity;
+	}
+	private byte[] toByteArray(String filePath) {
+		byte[] b= null;
+		try {
+			String realPath = context.getRealPath(filePath);
+			File file = new File(realPath);
+			long size = file.length();
+			b= new byte[(int)size];
+			InputStream fis = context.getResourceAsStream(filePath);
+			fis.read(b);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return b;
 	}
 }

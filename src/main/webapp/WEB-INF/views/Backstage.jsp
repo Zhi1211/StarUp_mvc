@@ -18,7 +18,7 @@
 			    <a class="nav-link active show" data-toggle="tab" href="#product" v-on:click="getProducts">商品維護</a>
 			  </li>   
 			  <li class="nav-item">
-			  	<a class="nav-link" data-toggle="tab" href="#addProduct">商品上架</a>
+			  <a class="nav-link" data-toggle="tab" href="#addProduct" v-on:click="getForm">商品上架</a>
 			  </li>
 			  <li class="nav-item">
 			    <a class="nav-link" data-toggle="tab" href="#user" v-on:click="getUsers">會員管理</a>
@@ -26,11 +26,11 @@
 			  <li class="nav-item">
 			    <a class="nav-link" data-toggle="tab" href="#order" v-on:click="getAllOrders">訂單資料</a>
 			  </li>
-			  <li class="nav-item">
+			 <!--  <li class="nav-item">
 			    <a class="nav-link" data-toggle="tab" href="#mail">系統信件</a>
-			  </li>
+			  </li> -->
 			  <li class="nav-item">
-			    <a class="nav-link" data-toggle="tab" href="#opinion">意見回饋</a>
+			    <a class="nav-link" data-toggle="tab" href="#opinion" v-on:click="getAllOpinions">意見回饋</a>
 			  </li>
 			</ul>		
 			<div id="myTabContent" class="tab-content">
@@ -76,7 +76,7 @@
 					                        <label>商品名稱：</label>  
 					                        <input type="text" name="prodName" id="prodName" style="margin-bottom:15px"/> 
 					                        <br> 
-					                        <label>廠商名稱：</label>       
+					                        <label>申請人/團隊：</label>       
 					                        <input type="text" name="prodCompany"/>    
 					                        <br>                					                        					                          
 					                        <br>                					                        					                          
@@ -122,6 +122,8 @@
 					                </div>     
 					            </div>					 
 					        </form>
+					        
+					        
 					</div>
 			  
 			  <div class="tab-pane fade" id="user">
@@ -138,8 +140,11 @@
 			   						 <div>暱稱：{{ user.nickname}}</div>
 			   						 <div>性別：{{ user.gender}}</div>  
 			   						 <div>電話：{{ user.phone}}</div>
-			   						 <div>收件地址：{{ user.address}}</div>   	
+			   						 <div>收件地址：{{ user.address}}</div>  
 		   						 </div>   											   					
+			   						  <div style="flex-grow:2; text-align:right;">
+			   						  <a href="#">停權</a>
+	   						 </div>	  	 	
 							</div>  					  
 	  					<hr>
 	  					</li>  					
@@ -150,20 +155,29 @@
 			    	<ul>
 			    		<li>訂單編號：{{order.orderNo}}</li>
 			    		<li>會員帳號：{{order.account}}</li>
-			    		<li>訂單金額：{{order.totalAmount}}</li>
+			    		<li>訂單金額：$ {{order.totalAmount}}</li>
 			    		<li>出貨地址：{{order.shippingAddress}}</li>
 			    		<li>發票抬頭：{{order.bno}}</li>
 			    		<li>統一編號：{{order.invoiceTitle}}</li>
-			    		<li>訂貨日期：{{order.orderDate}}</li>
-			    		<li>預計出貨日期：{{}order.shippingDate}</li>
+			    		<li>訂貨日期：{{order.orderDateStr}}</li>   
 			    	</ul>
-			    </div>
+			    	<hr>
+			    </div>			    
 			  </div>
 			  <div class="tab-pane fade" id="mail">
 			    <p> denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
 			  </div>
 			  <div class="tab-pane fade" id="opinion">
-			    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
+			    <div class="orderItem" v-for="opinion in opinions">
+			    	<ul>
+			    		<li>意見編號：{{opinion.opinionId}}</li>
+			    		<li>姓名：{{opinion.opinionName}}</li>
+			    		<li>連絡信箱：$ {{opinion.opinionMail}}</li>
+			    		<li>意見：{{opinion.opinionField}}</li>
+			    		<li>發送時間：{{opinion.opinionUpTime}}</li>
+			    	</ul>
+			    	<hr>
+			    </div>			    
 			  </div>
 			</div>
       		 
@@ -180,6 +194,8 @@
         			products: [],
         			users:[],      
         			orders:[],
+        			opinions:[],
+        			forms:[],
         		},
         		created: function(){    
     				var _self = this;
@@ -250,6 +266,7 @@
         			},
         			/*  */
         			getAllOrders: function(){
+        				var _self = this;
         				$.ajax({
         					type:"GET",
         					url:"listAllOrders",
@@ -257,7 +274,28 @@
         						_self.orders = data;
         					}
         				})
-        			}
+        			},
+        			/*  */
+        			getAllOpinions: function(){
+        				var _self = this;
+        				$.ajax({
+        					type:"GET",
+        					url:"opinionForm",
+        					success:function(data){  
+        						_self.opinions = data;
+        					}
+        				})
+        			},
+        			/*  */
+        			getForm: function(){        				
+        				$.ajax({
+        					type:"GET",
+        					url:"getAllForms",
+        					success:function(data){  
+        						_self.forms = data;
+        					}
+        				})
+        			},
         			},
         			
         		}) 

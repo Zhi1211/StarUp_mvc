@@ -308,6 +308,10 @@ public class ShoppingController {
 	@RequestMapping(value="/listAllOrders")
 	public ResponseEntity<List<OrderBean>> listAllOrders(){
 		List<OrderBean> list = orderService.getAllOrders();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH : mm : ss");
+		for(OrderBean order:list) {			
+			order.setOrderDateStr(sdf.format(order.getOrderDate()));
+		}
 		return new ResponseEntity<List<OrderBean>>(list,HttpStatus.OK);
 	}
 }

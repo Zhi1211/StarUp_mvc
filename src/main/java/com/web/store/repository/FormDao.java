@@ -8,7 +8,8 @@ public interface FormDao {
 	List<FormBean> getAllForms();
 
 	void processForm(FormBean fb);
+
 	
-	
+	FormBean getFormById(Integer form_id);
 
 }
