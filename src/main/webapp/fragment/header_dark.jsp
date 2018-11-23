@@ -27,7 +27,7 @@
 </head>
  
 <body>
-	<div class="container-fluid" style="position: relative; z-index: 10;">
+	<div class="container-fluid" style="position: relative; z-index: 10; background-color:rgba(35, 36, 38, 0.8); padding-top:5px">
 		<!-- -------------------------navgation----------------------------- -->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}/">Star Up</a>
@@ -88,7 +88,7 @@
 				<!-- Modal Content -->
 				<form class="modal-content animate border-warning" action="<c:url value='/login' />" method="POST"
 					style="width: 300px; height: 370px; margin: 100px auto; padding: 30px; text-align: center; background-color:rgba(255, 255, 255,0.9);">
-					<div>
+					<div class="container">
 					 <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
 						<label for="account"  style="margin: 15px;"><b>帳號</b></label>
 						 <input

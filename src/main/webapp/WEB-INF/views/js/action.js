@@ -64,6 +64,19 @@ function doFirst() {
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
+	
+	$("#captionImg_3").change(function() {
+		readURL4(this);
+	});
+	function readURL4(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$("#previewImg_4").attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 
 
 }

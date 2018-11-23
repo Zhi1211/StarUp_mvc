@@ -57,18 +57,92 @@
 		class="sr-only">Next</span>
 	</a>
 </div>
-<div style="height:2000px;">
-	<c:if test="${!empty LoginOK}">
-		<input id="temporarySaveUserId" type="hidden" value="${LoginOK.user_id}">
-		<input id="temporarySaveUnreadMessageNumber" type="hidden" value="${unreadMessageNumber}">
-	</c:if>
-</div>
+<!-- <div style="height:2000px;"> -->
+<%-- 	<c:if test="${!empty LoginOK}"> --%>
+<%-- 		<input id="temporarySaveUserId" type="hidden" value="${LoginOK.user_id}"> --%>
+<%-- 		<input id="temporarySaveUnreadMessageNumber" type="hidden" value="${unreadMessageNumber}"> --%>
+<%-- 	</c:if> --%>
+<!-- </div> -->
 <script type="text/javascript">
 // var unreadMessageNumber = parseInt(document.getElementById('temporarySaveUnreadMessageNumber').value);
 // if (unreadMessageNumber > 0 ) {
 // 	alert('您尚有 ' + unreadMessageNumber + ' 封訊息尚未閱讀。');
 // }
 </script>
+<div style="height:2000px; position:absolute; top:600px; width:99vw">
+	 <div class="break" style="background-color:black; color:white; text-align:center;">
+        <p style="padding:5px 0px">What's your execellent plan !?</p>
+    </div>
+	<div style="text-align:center; margin-top:10px; display:flex; justify-content:center">
+	  <div>
+		<a href="works"><img src="image/5b0a647ae296d.png" style="width:350px; margin: 0px 20px;"></a>
+		<p style="font-weight:100; font-size:40px; color:white">作品</p>
+	  </div>	
+	  <div>
+	  	<a href="products"><img src="image/5b0a64c409e54.png" style="width:350px; margin: 0px 20px; "></a>
+	  	<p style="font-weight:100; font-size:40px; color:white">商城</p>
+	  </div>
+	  <div>
+		<img src="image/5b0a7f49d467f.png" style="width:350px; margin: 0px 20px;">
+		<p style="font-weight:100; font-size:40px; color:white">主頁</p>
+	  </div>
+	</div>
+	<div class="break" style="background-color:black; color:white; text-align:center;">
+        <p style="padding:5px 0px">What's your execellent plan !?</p>
+    </div>
+	<div>
+		<div class="container">
+		<form method="POST" action="<c:url value='saveOpinion'/>" id="opinionForm">			         
+				<legend class="text-warning" style="text-align:center">意見回覆</legend>
+				<p>${MsgMap.InsertNG}${MsgMap.errorSaveData}</p>   
+				<section class="container col-sm-6">    
+					<!--意見回覆表格內容 -->
+					<div class="form-group col-sm-12" style="margin:0px auto;">
+						<div class="form-group col-sm-8">     
+					
+								<label class="text-warning" for="opinionName">姓名:</label> 
+								<input type="text"
+									class="form-control" name="opinionName"
+									value="${param.opinionName}" id="opinionName"
+									aria-describedby="emailHelp" placeholder="請輸入姓名">
+								<p style="color: #b2b2b2;">
+									<small>${MsgMap.errorIDEmpty}${MsgMap.errorIDDUp}</small>
+								</p>
+						</div>
+							<div>
+							<div class="form-group col-sm-8">
+								<label class="text-warning" for="opinionMail">電子郵件:</label> <input type="email"
+									class="form-control" name="opinionMail"
+									value="${param.opinionMail}" id="opinionMail"
+									aria-describedby="emailHelp" placeholder="請輸入常用信箱">
+								<p style="color: #b2b2b2;">
+									<small>${MsgMap.errorIDEmpty}${MsgMap.errorIDDUp}</small>
+								</p>
+							</div>
+						</div>
+						<div class="form-group col-sm-8">
+							<label class="text-warning" for="opinionPhone"> 連絡電話:</label> <input type="text"
+								class="form-control" name="opinionPhone"
+								value="${param.opinionPhone}" id="opinionPhone"
+								aria-describedby="emailHelp" placeholder="請輸入連絡電話">
+							<p style="color: #b2b2b2;">
+								<small>${MsgMap.errorIDEmpty}${MsgMap.errorIDDUp}</small>
+							</p>
+						</div>
+						<div class="form-group col-sm-10">
+							<label class="text-warning" for="introduction">訪客意見:</label>
+							<textarea class="form-control" name="opinionField"
+								id="opinionField" rows="5"></textarea>
+						</div>
+					<input type="submit" class="btn btn-primary btn-lg btn-block"
+						name="submit" id="submit"  style="margin-bottom: 50px;" value="送出"">   
+					</div>
+				</section>
+		
+			</form>     
+	</div>
+	</div>
+</div>
 
    
 ${logoutMessage}${MsgOK.InsertOK}
@@ -78,6 +152,27 @@ ${logoutMessage}${MsgOK.InsertOK}
 	// 顯示MsgOK.InsertOK後，就要立刻移除，以免每次回到首 頁都會顯示新增成功的訊息
 	session.removeAttribute("MsgOK");
 %>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script type="text/javascript">
+	// this is the id of the form
+$("#opinionForm").submit(function(e) {
+    var form = $(this);
+    var url = form.attr('action');
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: form.serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+            // show response from the php script.
+           }
+         });
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+</script>
+<!--
 
+//-->
+</script>
 </body>
 <jsp:include page="/fragment/footer.jsp" />  
