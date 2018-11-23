@@ -33,17 +33,23 @@
 <div class="msg-box container" style="margin:0px auto;">
 
 	<div class="form-group" style="">
-		<textarea class="form-control" placeholder="新增留言 . . ."
-			id="exampleTextarea" rows="9" style="width: 50%; height: 200px;"></textarea>
-		<input type="submit" class="btn btn-danger" name="submit" id="submit"
-			value="send" style="width: 50%; margin-top: 20px;">
+		<form action="updateComment" name="uppdateComment" id="uppdateComment" method="POST">
+			<textarea class="form-control" placeholder="新增留言 . . ." name="newComment"
+				id="exampleTextarea" rows="9" style="width: 50%; height: 200px;"></textarea>
+			<input type="hidden" name="workId" value="${works.works_id}">
+			<input type="submit" class="btn btn-danger" name="submit" id="submit"
+				value="send" style="width: 50%; margin-top: 20px;">
+		</form>
 
+<!-- 		<div class="minbox"> -->
+<!-- 			<p>Simple 喜歡這個作品!!!</p> -->
 
-		<div class="minbox">
-			<p>Simple 喜歡這個作品!!!</p>
-
-		</div>
-
+<!-- 		</div> -->
+		<c:forEach var="workComment" items="${commentElements}">
+			<div class="minbox">
+				<p>${workComment.userNickName}   ${workComment.comment}</p>  
+			</div>
+		</c:forEach>
 
 	</div>
 </div>

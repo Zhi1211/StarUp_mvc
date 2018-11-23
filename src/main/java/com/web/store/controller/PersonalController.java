@@ -31,10 +31,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.web.store.model.FormBean;
+import com.web.store.model.MessageBean;
 import com.web.store.model.UserBean;
 import com.web.store.model.WorkCommentBean;
 import com.web.store.model.WorksBean;
 import com.web.store.service.FormService;
+import com.web.store.service.MessageService;
 import com.web.store.service.UserService;
 import com.web.store.service.WorksService;
 @Controller
@@ -47,6 +49,8 @@ public class PersonalController {
 	WorksService worksService;
 	@Autowired
 	FormService formService;
+	@Autowired
+	MessageService messageService;
 	
 	public PersonalController() {
 		
@@ -63,6 +67,10 @@ public class PersonalController {
 		}
 		model.addAttribute("userBean", ub);
 		model.addAttribute("introduction", intro);
+		List<MessageBean> receivedMessages = messageService.getReceivedMessages(userId);
+		List<MessageBean> deliveredMessage = messageService.getDeliveredMessages(userId);
+		model.addAttribute("receivedMessages", receivedMessages);
+		model.addAttribute("deliveredMessage", deliveredMessage);
 		return "_10_personalPage/personalPage";
 	}
 
@@ -121,7 +129,7 @@ public class PersonalController {
 			}
 		}
 		model.addAttribute("oneWork", wb);
-		return "_06_workUp/works";
+		return "_06_workUp/worksList";
 	}
 	/* 測試存入留言 */
 	@RequestMapping(value="/updateComment", params= {"newComment", "workId"}, method=RequestMethod.POST, 
@@ -137,8 +145,10 @@ public class PersonalController {
 		UserBean ub = (UserBean)request.getSession(false).getAttribute("LoginOK");
 		Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
 		String commentDate = ts.toString();
-		//String comment = request.getParameter("newComment");
 		String totalCommentStrNew = "";
+		/**留言內容以WorkCommentBean暫存，每筆留言以"-#"做區隔，每筆留言之元素以"/="做區隔，
+		  *範例:( 留言者ID /= 留言者暱稱 /= 留言時間 /= 留言內容 -#)作為儲存格式(不包含空白)
+		  **/
 		if (wb.getComment() != null) {
 			Clob totalComment = wb.getComment();
 			try {
@@ -159,7 +169,7 @@ public class PersonalController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return "redirect:/testComment";
+		return "redirect:/works";
 	}
 	
 //	-------------------申請商品上架表單ajax-------------------
@@ -198,5 +208,33 @@ public class PersonalController {
 			}		
 			formService.processForm(fb);
 			return new ResponseEntity<FormBean>(HttpStatus.OK);
+	}
+	/*測試送出(存入)信件*/
+	@RequestMapping(value="/sendMail", params= {"receiverNickname", "messageTitle", "messageContent"}
+					, produces="text/html;charset=UTF-8", method=RequestMethod.POST)
+	public String sendMail(HttpServletRequest request, Model model, 
+			@RequestParam("receiverNickname")String receiverNickname, 
+			@RequestParam("messageTitle")String messageTitle, 
+			@RequestParam("messageContent")String messageContent) {
+		int afterSendMailTag = 0;
+		/*取得信件送出者資料*/
+		UserBean fromUser = (UserBean)request.getSession(false).getAttribute("LoginOK");
+		/*依照暱稱取得信件收取者資料*/
+		UserBean toUser = userService.getUserByNickname(receiverNickname);
+		/*取得信件送出時間*/
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String posttime = df.format(new Date());
+		/* MessageBean(主鍵,送件者ID,送件者暱稱,收件者ID,收件者暱稱,發信件時間,信件標題,信件內容,未讀(已讀)標記) */
+		MessageBean mb = new MessageBean(null, 
+										 fromUser.getUser_id(), 
+										 fromUser.getNickname(), 
+										 toUser.getUser_id(), 
+										 toUser.getNickname(), 
+										 posttime, 
+										 messageTitle, 
+										 messageContent, 
+										 0);
+		afterSendMailTag = messageService.insertMessage(mb);
+		return "redirect:/personalPage?id=" + fromUser.getUser_id();
 	}
 }

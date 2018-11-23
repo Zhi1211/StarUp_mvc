@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.web.store.model.UserBean;
+import com.web.store.model.WorkCommentBean;
 import com.web.store.model.WorksBean;
 import com.web.store.service.WorksService;
 
@@ -189,7 +192,44 @@ public class WorksController {
 //___________________________________________________________________________________________________
 	@RequestMapping("/worksDetail")
     public String getWorksById(@RequestParam("id")Integer id, Model model) {
-    	model.addAttribute("works", worksService.getWorksById(id));
+    	/*依照點擊作品之ID取出作品資料*/
+		model.addAttribute("works", worksService.getWorksById(id));
+    	/*若作品帶有留言便取出，留言以Clob(LongText)形式儲存於資料庫*/
+    	if (worksService.getWorksById(id).getComment() != null) {
+    		WorkCommentBean wcb = null;
+    		List<WorkCommentBean> list = new ArrayList<>();
+    		/**留言內容以WorkCommentBean暫存，每筆留言以"-#"做區隔，每筆留言之元素以"/="做區隔，
+    		  *範例:( 留言者ID /= 留言者暱稱 /= 留言時間 /= 留言內容 -#)作為儲存格式(不包含空白)
+    		  **/
+    		Clob totalComments = worksService.getWorksById(id).getComment();
+    		try {
+    			String totalCommentsStr = totalComments.getSubString(1, (int)totalComments.length()-2);
+    			String[] oneCommentElementsStr = null;
+    			if (totalCommentsStr.contains("-#")) {
+    				String[] totalCommentsStrArr = totalCommentsStr.split("-#");
+    				for(String oneCommentStr : totalCommentsStrArr) {
+    					oneCommentElementsStr = oneCommentStr.split("/=");
+    					wcb = new WorkCommentBean(
+    							Integer.parseInt(oneCommentElementsStr[0]), 
+    							oneCommentElementsStr[1], 
+    							oneCommentElementsStr[2], 
+    							oneCommentElementsStr[3]);
+    					list.add(wcb);
+    				}
+    			} else {
+    				oneCommentElementsStr = totalCommentsStr.split("/=");
+    				wcb = new WorkCommentBean(
+    						Integer.parseInt(oneCommentElementsStr[0]), 
+    						oneCommentElementsStr[1], 
+    						oneCommentElementsStr[2], 
+    						oneCommentElementsStr[3]);
+    				list.add(wcb);
+    			}
+    			model.addAttribute("commentElements", list);
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
     	return "_06_workUp/worksDetail";
     }
 	

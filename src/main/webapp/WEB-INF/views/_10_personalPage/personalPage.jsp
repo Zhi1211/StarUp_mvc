@@ -96,7 +96,7 @@
 										<td style="text-align:center;">標題</td>
 										<td width="70" style="text-align:center;"><i class="far fa-times-circle" style="margin-right:5px; cursor:pointer;"></i></td>     
 									</tr>    
-									<c:forEach varStatus='vsRM' var="receivedMail" items="${receivedMails}">
+									<c:forEach varStatus='vsRM' var="receivedMail" items="${receivedMessages}">
 									<tr>
 										<td width="150" style="text-align:center;">${vsRM.count}</td>
 										<td width="225" style="text-align:center;">${receivedMail.posttime}</td>
@@ -123,7 +123,7 @@
 										<td style="text-align:center;">標題</td>
 										<td width="70" style="text-align:center;"><i class="far fa-times-circle" style="margin-right:5px; cursor:pointer;"></i></td>
                             		</tr>
-                            		<c:forEach varStatus='vsDM' var="deliveredMail" items="${deliveredMails}">
+                            		<c:forEach varStatus='vsDM' var="deliveredMail" items="${deliveredMessage}">
 									<tr>
 										<td width="150" style="text-align:center;">${vsDM.count}</td>
 										<td width="225" style="text-align:center;">${deliveredMail.posttime}</td>
