@@ -50,7 +50,14 @@
                 </nav>
            
                 <nav class="nav flex-column nav-tabs">                        
-                        <a class="nav-link active" href="<c:url value='/showShoppingCart' />">結帳</a>                     
+                <c:choose>
+                	<c:when test="${ShoppingCart.itemNumber == 0}">
+                		<a class="nav-link active" href="#" onclick="shoppingCartIsEmpty()">結帳</a>
+                	</c:when>
+                	<c:otherwise>
+                		<a class="nav-link active" href="<c:url value='/showShoppingCart' />">結帳</a>
+                	</c:otherwise>
+                </c:choose>
                 </nav>
             </div>
             <!-- 商品列表 -->
@@ -106,6 +113,9 @@
         	        }); 		
  					alert("成功啦(*´▽`*)");
  				})           				
+ 				function shoppingCartIsEmpty() {
+ 					alert('目前購物車是空的。');
+ 				}
           	   </script>	
           
                 <!-- 頁數 -->

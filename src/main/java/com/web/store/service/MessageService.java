@@ -13,4 +13,6 @@ public interface MessageService {
 	List<MessageBean> getDeliveredMessages(Integer fromId);
 	
 	List<MessageBean> getUnreadMessages(Integer toId);
+	
+	int changeUnreadMessageToRead(Integer user_id);
 }

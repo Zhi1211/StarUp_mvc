@@ -13,6 +13,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
@@ -38,6 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.web.store.model.ProductBean;
+import com.web.store.model.ShoppingCart;
 import com.web.store.service.ProductService;
 
 
@@ -50,9 +52,17 @@ public class ProductController {
 		ServletContext context;
 		
 		@RequestMapping("/products")
-		public String listProduct(Model model) {
+		public String listProduct(Model model, HttpServletRequest request) {
 			List<ProductBean> list = prodService.getAllProducts();
-			model.addAttribute("products", list);			
+			model.addAttribute("products", list);
+			if (request.getSession(false) != null) {
+				HttpSession session = request.getSession(false);
+				ShoppingCart cart = (ShoppingCart)session.getAttribute("ShoppingCart");
+				if (cart == null) {
+					cart = new ShoppingCart();
+					session.setAttribute("ShoppingCart", cart);
+				}
+			}
 			return "/_03_product/listProducts";
 		}
 		@RequestMapping("/type_products")

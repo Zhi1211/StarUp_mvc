@@ -57,6 +57,7 @@
 		class="sr-only">Next</span>
 	</a>
 </div>
+<<<<<<< HEAD
 <div style="position:absolute; top:600px; width:99vw">
 
 <!-- <div style="height:2000px;"> -->
@@ -71,6 +72,15 @@
 // 	alert('您尚有 ' + unreadMessageNumber + ' 封訊息尚未閱讀。');
 // }
 </script>
+=======
+<div style="height:2000px; position:absolute;text-align:center;margin-left:45%;">
+	<c:if test="${!empty LoginOK}">
+		<c:if test="${unreadMessageNumber > 0}">
+			<p style="color:red;">你尚有 ${unreadMessageNumber} 訊息未閱覽</p>
+		</c:if>
+	</c:if>
+</div>
+>>>>>>> dc4267f5389127000a51c0f0e6f48b017d07c9de
 <div style="height:2000px; position:absolute; top:600px; width:99vw">
 	 <div class="break" style="background-color:black; color:white; text-align:center;">
         <p style="padding:5px 0px">What's your execellent plan !?</p>

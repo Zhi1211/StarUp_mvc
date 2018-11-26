@@ -68,4 +68,17 @@ public class MessageDaoImpl implements MessageDao {
 		return list;
 	}
 
+	@Override
+	public int changeUnreadMessageToRead(Integer user_id) {
+		int n = 0;
+		String hql = "UPDATE MessageBean SET checkedTag = :checkedTag WHERE toId = :toId";
+		Session session = factory.getCurrentSession();
+		n = session.createQuery(hql)
+				.setParameter("checkedTag", 1)
+				.setParameter("toId", user_id)
+				.executeUpdate();
+		n++;
+		return n;
+	}
+
 }

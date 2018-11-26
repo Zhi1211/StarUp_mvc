@@ -73,6 +73,10 @@ public class PersonalController {
 		}
 		model.addAttribute("userBean", ub);
 		model.addAttribute("introduction", intro);
+<<<<<<< HEAD
+=======
+		messageService.changeUnreadMessageToRead(userId);
+>>>>>>> dc4267f5389127000a51c0f0e6f48b017d07c9de
 		List<MessageBean> receivedMessages = messageService.getReceivedMessages(userId);
 		List<MessageBean> deliveredMessage = messageService.getDeliveredMessages(userId);
 		model.addAttribute("receivedMessages", receivedMessages);
@@ -301,6 +305,7 @@ public class PersonalController {
 			UserBean toUser = userService.getUserByNickname(receiverNickname);
 			/*取得信件送出時間*/
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+<<<<<<< HEAD
 			String posttime = df.format(new Date());
 			/* MessageBean(主鍵,送件者ID,送件者暱稱,收件者ID,收件者暱稱,發信件時間,信件標題,信件內容,未讀(已讀)標記) */
 			MessageBean mb = new MessageBean(null, 
@@ -316,4 +321,97 @@ public class PersonalController {
 			return "redirect:/personalPage?id=" + fromUser.getUser_id();
 		}
 		
+=======
+			String date = df.format(new Date());
+			fb.setSubmitDate(date);
+			//建立Blob物件，交由Hibernate寫入資料庫
+			if(formImage != null && !formImage.isEmpty()) {
+				fb.setFormImgName(originalFilename);
+				String ext = originalFilename.substring(originalFilename.lastIndexOf("."));	
+				try {
+					byte[] b = formImage.getBytes();
+					Blob blob = new SerialBlob(b);
+					fb.setFormImg(blob);
+				}catch(Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+				}
+				try {
+					File imageFolder = new File(rootDirectory+"images");
+					if(!imageFolder.exists()) {
+						imageFolder.mkdirs();
+					}
+					File file = new File(imageFolder, fb.getForm_id()+ext);
+					formImage.transferTo(file);
+				}catch(Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
+				}
+			}		
+			formService.processForm(fb);
+			
+			UserBean master = userService.getUser2("starup@gamil.com");
+			UserBean user = (UserBean)request.getSession(false).getAttribute("LoginOK");
+			int afterSendMailTag = 0;
+			String applicationSuccess = user.getNickname() + 
+					"您好，恭喜您！先前您所填寫的商品上架表單，經過審核後，已通過商品上架的審核，您的" + 
+					fb.getFormProdName() + 
+					"商品已完成上架，感謝您！";
+			String applicationFailed = user.getNickname() + 
+					"您好，先前您所填寫的商品上架表單，經過審核後，因商品含有侵權的可能性或不當的商品名稱與敘述，"
+					+ "未通過商品上架的審核，很抱歉，目前無法完成此商品的上架！";
+			MessageBean successMb = new MessageBean(null, 
+											 master.getUser_id(), 
+											 master.getNickname(), 
+											 user.getUser_id(), 
+											 user.getNickname(), 
+											 date, 
+											 "申請上架通過", 
+											 applicationSuccess, 
+											 0);
+			MessageBean failedMb = new MessageBean(null, 
+					 						 master.getUser_id(), 
+					 						 master.getNickname(), 
+					 						 user.getUser_id(), 
+					 						 user.getNickname(), 
+					 						 date, 
+					 						 "申請上架未通過", 
+					 						 applicationFailed, 
+					 						 0);
+//			messageService.insertMessage(successMb);
+//			messageService.insertMessage(failedMb);
+			
+			return new ResponseEntity<FormBean>(HttpStatus.OK);
+	}
+	/*測試送出(存入)信件*/
+	@RequestMapping(value="/sendMail", params= {"receiverNickname", "messageTitle", "messageContent"}
+					, produces="text/html;charset=UTF-8", method=RequestMethod.POST)
+	public String sendMail(HttpServletRequest request, Model model, 
+			@RequestParam("receiverNickname")String receiverNickname, 
+			@RequestParam("messageTitle")String messageTitle, 
+			@RequestParam("messageContent")String messageContent) {
+		int afterSendMailTag = 0;
+		/*取得信件送出者資料*/
+		UserBean fromUser = (UserBean)request.getSession(false).getAttribute("LoginOK");
+		/*若暱稱對應到使用者時，依照暱稱取得信件收取者資料*/
+		if (userService.nicknameExists(receiverNickname)) {
+			UserBean toUser = userService.getUserByNickname(receiverNickname);
+			/*取得信件送出時間*/
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String posttime = df.format(new Date());
+			/* MessageBean(主鍵,送件者ID,送件者暱稱,收件者ID,收件者暱稱,發信件時間,信件標題,信件內容,未讀(已讀)標記) */
+			MessageBean mb = new MessageBean(null, 
+					fromUser.getUser_id(), 
+					fromUser.getNickname(), 
+					toUser.getUser_id(), 
+					toUser.getNickname(), 
+					posttime, 
+					messageTitle, 
+					messageContent, 
+					0);
+			afterSendMailTag = messageService.insertMessage(mb);
+		}
+		return "redirect:/personalPage?id=" + fromUser.getUser_id();
+	}
+>>>>>>> dc4267f5389127000a51c0f0e6f48b017d07c9de
 }

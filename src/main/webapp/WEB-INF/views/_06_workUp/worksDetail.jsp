@@ -39,22 +39,31 @@
 			<input type="hidden" name="workId" value="${works.works_id}">
 			<input type="submit" class="btn btn-danger" name="submit" id="submit"
 				value="send" style="width: 50%; margin-top: 20px;">
+
 					<c:forEach var="workComment" items="${commentElements}">
 						<div class="minbox" style="padding:5px">
 							<p style="color:white">${workComment.userNickName} :  ${workComment.comment}</p>  
 						</div>
 					</c:forEach>
+
 		</form>
 
 <!-- 		<div class="minbox"> -->
 <!-- 			<p>Simple 喜歡這個作品!!!</p> -->
 
 <!-- 		</div> -->
+
 	
+
+		<c:forEach var="workComment" items="${commentElements}">
+			<div class="minbox">
+				<p>${workComment.userNickName}   ${workComment.comment}</p>  
+			</div>
+		</c:forEach>
 
 	</div>
 </div>
- --%>
+
  	<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
     <script>
   //Create a lightbox
