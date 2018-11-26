@@ -73,29 +73,12 @@ public class PersonalController {
 		}
 		model.addAttribute("userBean", ub);
 		model.addAttribute("introduction", intro);
-<<<<<<< HEAD
-=======
 		messageService.changeUnreadMessageToRead(userId);
->>>>>>> dc4267f5389127000a51c0f0e6f48b017d07c9de
 		List<MessageBean> receivedMessages = messageService.getReceivedMessages(userId);
 		List<MessageBean> deliveredMessage = messageService.getDeliveredMessages(userId);
 		model.addAttribute("receivedMessages", receivedMessages);
 		model.addAttribute("deliveredMessage", deliveredMessage);
 		return "_10_personalPage/personalPage";
-	}
-	@RequestMapping(value="/personalPageReadOnly")
-	public String getPersonalPageRead(@RequestParam(value = "id") Integer userId, Model model) {
-		UserBean ub = userService.getUser(userId);
-		Clob introduction = ub.getIntroduction();
-		String intro = null;
-		try {
-			intro = introduction.getSubString(1, (int) ub.getIntroduction().length());
-		} catch (SQLException e) {			
-			e.printStackTrace();
-		}
-		model.addAttribute("userBean", ub);
-		model.addAttribute("introduction", intro);
-		return "_10_personalPage/personalPageReadOnly";
 	}
 
 	@RequestMapping(value="/worksList")
@@ -196,132 +179,14 @@ public class PersonalController {
 		return "redirect:/works";
 	}
 	
-	//    -------------------申請商品上架表單-------------------
-    @RequestMapping(value="/addForm", method=RequestMethod.POST)    
-    public ResponseEntity<FormBean> processAddForm(HttpServletRequest request,@ModelAttribute FormBean fb) throws SerialException, SQLException {
-        System.out.println(fb);        
-            MultipartFile formImage = fb.getFormImage();
-            String originalFilename = formImage.getOriginalFilename();
-            String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String date = df.format(new Date());
-            fb.setSubmitDate(date);
-            //建立Blob物件，交由Hibernate寫入資料庫
-            if(formImage != null && !formImage.isEmpty()) {
-                fb.setFormImgName(originalFilename);
-                String ext = originalFilename.substring(originalFilename.lastIndexOf("."));    
-                try {
-                    byte[] b = formImage.getBytes();
-                    Blob blob = new SerialBlob(b);
-                    fb.setFormImg(blob);
-                }catch(Exception e) {
-                    e.printStackTrace();
-                    throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-                }
-                try {
-                    File imageFolder = new File(rootDirectory+"images");
-                    if(!imageFolder.exists()) {
-                        imageFolder.mkdirs();
-                    }
-                    File file = new File(imageFolder, fb.getForm_id()+ext);
-                    formImage.transferTo(file);
-                }catch(Exception e) {
-                    e.printStackTrace();
-                    throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
-                }
-            }        
-            formService.processForm(fb);
-            return new ResponseEntity<FormBean>(HttpStatus.OK);
-    }
-
-    @RequestMapping(value= "/getAllForms", produces="application/json")
-    public @ResponseBody byte[] getAllForms(Model model) throws UnsupportedEncodingException {    
-        List<FormBean> list = formService.getAllForms();
-        byte[] FormJson = new Gson().toJson(list).getBytes("UTF-8");
-        return FormJson;
-    }
-    @RequestMapping(value="/getFormImg/{form_Id}",method=RequestMethod.GET)
-    public ResponseEntity<byte[]> getFormImg(@PathVariable("form_Id") Integer form_Id){
-        String filePath = "/resources/images/NoImage.jpg";
-        FormBean fb = formService.getFormById(form_Id);
-        HttpHeaders headers = new HttpHeaders();
-        String filename = "";
-        int len = 0;
-        byte[] media = null;
-        if(fb!=null) {
-            Blob blob = fb.getFormImg();
-            filename = fb.getFormImgName();
-            if(blob!= null) {
-                try {
-                    len = (int) blob.length();
-                    media = blob.getBytes(1, len);
-                } catch (SQLException e) {
-                    throw new RuntimeException("FormController的getPicture()發生error"+e.getMessage());
-                }
-            }else {
-                media = toByteArray(filePath);
-                filename = filePath;
-            }
-        }else {
-            media = toByteArray(filePath);
-            filename = filePath;
-        }
-        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-        String mimeType = context.getMimeType(filename);
-        MediaType mediaType = MediaType.valueOf(mimeType);
-//        System.out.println("mediaType = "+mediaType);
-        headers.setContentType(mediaType);
-        ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,headers,HttpStatus.OK);
-        return responseEntity;
-    }
-    private byte[] toByteArray(String filePath) {
-        byte[] b= null;
-        try {
-            String realPath = context.getRealPath(filePath);
-            File file = new File(realPath);
-            long size = file.length();
-            b= new byte[(int)size];
-            InputStream fis = context.getResourceAsStream(filePath);
-            fis.read(b);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return b;
-    }
-
-
-	
-		/*測試送出(存入)信件*/
-		@RequestMapping(value="/sendMail", params= {"receiverNickname", "messageTitle", "messageContent"}
-						, produces="text/html;charset=UTF-8", method=RequestMethod.POST)
-		public String sendMail(HttpServletRequest request, Model model, 
-				@RequestParam("receiverNickname")String receiverNickname, 
-				@RequestParam("messageTitle")String messageTitle, 
-				@RequestParam("messageContent")String messageContent) {
-			int afterSendMailTag = 0;
-			/*取得信件送出者資料*/
-			UserBean fromUser = (UserBean)request.getSession(false).getAttribute("LoginOK");
-			/*依照暱稱取得信件收取者資料*/
-			UserBean toUser = userService.getUserByNickname(receiverNickname);
-			/*取得信件送出時間*/
+//	-------------------申請商品上架表單ajax-------------------
+	@RequestMapping(value="/addForm", method=RequestMethod.POST)	
+	public ResponseEntity<FormBean> processAddForm(HttpServletRequest request,@ModelAttribute FormBean fb) throws SerialException, SQLException {
+		System.out.println(fb);		
+			MultipartFile formImage = fb.getFormImage();
+			String originalFilename = formImage.getOriginalFilename();
+			String rootDirectory = request.getSession().getServletContext().getRealPath("/");
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-<<<<<<< HEAD
-			String posttime = df.format(new Date());
-			/* MessageBean(主鍵,送件者ID,送件者暱稱,收件者ID,收件者暱稱,發信件時間,信件標題,信件內容,未讀(已讀)標記) */
-			MessageBean mb = new MessageBean(null, 
-											 fromUser.getUser_id(), 
-											 fromUser.getNickname(), 
-											 toUser.getUser_id(), 
-											 toUser.getNickname(), 
-											 posttime, 
-											 messageTitle, 
-											 messageContent, 
-											 0);
-			afterSendMailTag = messageService.insertMessage(mb);
-			return "redirect:/personalPage?id=" + fromUser.getUser_id();
-		}
-		
-=======
 			String date = df.format(new Date());
 			fb.setSubmitDate(date);
 			//建立Blob物件，交由Hibernate寫入資料庫
@@ -383,6 +248,63 @@ public class PersonalController {
 			
 			return new ResponseEntity<FormBean>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value= "/getAllForms", produces="application/json")
+    public @ResponseBody byte[] getAllForms(Model model) throws UnsupportedEncodingException {    
+        List<FormBean> list = formService.getAllForms();
+        byte[] FormJson = new Gson().toJson(list).getBytes("UTF-8");
+        return FormJson;
+    }
+    @RequestMapping(value="/getFormImg/{form_Id}",method=RequestMethod.GET)
+    public ResponseEntity<byte[]> getFormImg(@PathVariable("form_Id") Integer form_Id){
+        String filePath = "/resources/images/NoImage.jpg";
+        FormBean fb = formService.getFormById(form_Id);
+        HttpHeaders headers = new HttpHeaders();
+        String filename = "";
+        int len = 0;
+        byte[] media = null;
+        if(fb!=null) {
+            Blob blob = fb.getFormImg();
+            filename = fb.getFormImgName();
+            if(blob!= null) {
+                try {
+                    len = (int) blob.length();
+                    media = blob.getBytes(1, len);
+                } catch (SQLException e) {
+                    throw new RuntimeException("FormController的getPicture()發生error"+e.getMessage());
+                }
+            }else {
+                media = toByteArray(filePath);
+                filename = filePath;
+            }
+        }else {
+            media = toByteArray(filePath);
+            filename = filePath;
+        }
+        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+        String mimeType = context.getMimeType(filename);
+        MediaType mediaType = MediaType.valueOf(mimeType);
+//        System.out.println("mediaType = "+mediaType);
+        headers.setContentType(mediaType);
+        ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,headers,HttpStatus.OK);
+        return responseEntity;
+    }
+    private byte[] toByteArray(String filePath) {
+        byte[] b= null;
+        try {
+            String realPath = context.getRealPath(filePath);
+            File file = new File(realPath);
+            long size = file.length();
+            b= new byte[(int)size];
+            InputStream fis = context.getResourceAsStream(filePath);
+            fis.read(b);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return b;
+    }
+
+	
 	/*測試送出(存入)信件*/
 	@RequestMapping(value="/sendMail", params= {"receiverNickname", "messageTitle", "messageContent"}
 					, produces="text/html;charset=UTF-8", method=RequestMethod.POST)
@@ -413,5 +335,4 @@ public class PersonalController {
 		}
 		return "redirect:/personalPage?id=" + fromUser.getUser_id();
 	}
->>>>>>> dc4267f5389127000a51c0f0e6f48b017d07c9de
 }

@@ -522,7 +522,8 @@
         				var _self = this;
         				$.ajax({
             			    type: "GET",      
-            			    url:'orderListAjax',            			      			    
+            			    url:'orderListAjax',            		
+            			    
             			    dataType: 'json',            			  
             	            success : function(data) { 
             	          		_self.orders = data;

@@ -29,38 +29,29 @@
 	</div>	
 
 <!-- =================留言區================== -->
+<hr>
+<div class="container" style="margin:0px auto;">
 
-<div class="msg-box container" style="margin:0px auto;">
-
-	<div class="form-group" style="">
+	<div class="form-group">
 		<form action="updateComment" name="uppdateComment" id="uppdateComment" method="POST">
-			<textarea class="form-control" placeholder="新增留言 . . ." name="newComment"
-				id="exampleTextarea" rows="9" style="width: 50%; height: 200px;"></textarea>
-			<input type="hidden" name="workId" value="${works.works_id}">
-			<input type="submit" class="btn btn-danger" name="submit" id="submit"
-				value="send" style="width: 50%; margin-top: 20px;">
-
-					<c:forEach var="workComment" items="${commentElements}">
-						<div class="minbox" style="padding:5px">
-							<p style="color:white">${workComment.userNickName} :  ${workComment.comment}</p>  
-						</div>
-					</c:forEach>
+			<div  style="display:flex">
+				<div>
+					<textarea class="form-control" placeholder="新增留言 . . ." name="newComment"
+						id="exampleTextarea" rows="9" style="width:25vw; height: 200px;"></textarea>
+					<input type="hidden" name="workId" value="${works.works_id}">
+					<input type="submit" class="btn btn-danger" name="submit" id="submit"
+						value="send" style="width: 50%; margin-top: 20px;">
+				</div>
+				<div style="display:inline-block">   
+						<c:forEach var="workComment" items="${commentElements}">
+							<div class="minbox" style="padding:5px; width:60vw; margin:5px 0px">
+								<p style="color:white">${workComment.userNickName} :  ${workComment.comment}</p>  
+							</div>
+						</c:forEach>
+				</div>
+			</div>
 
 		</form>
-
-<!-- 		<div class="minbox"> -->
-<!-- 			<p>Simple 喜歡這個作品!!!</p> -->
-
-<!-- 		</div> -->
-
-	
-
-		<c:forEach var="workComment" items="${commentElements}">
-			<div class="minbox">
-				<p>${workComment.userNickName}   ${workComment.comment}</p>  
-			</div>
-		</c:forEach>
-
 	</div>
 </div>
 
