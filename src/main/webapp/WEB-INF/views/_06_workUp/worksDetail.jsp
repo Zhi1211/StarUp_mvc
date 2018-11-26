@@ -7,11 +7,11 @@
 
 <jsp:include page="/fragment/header_dark.jsp" />
 	<div style="display:flex">   
-		<p style="color:white; font-weight:300; font-size:26px; flex-grow:1; align-self:flex-end; margin-left:30px;">${works.worksName}</p>  
+		<p style="color:white; font-weight:300; font-size:26px; flex-grow:2; align-self:flex-end; margin-left:30px;">${works.worksName}</p>  
 	   	<p style="color:white; font-weight:200; line-height:60px; margin-right:10px">by ${works.author}</p>		
-	    <img class="rounded-circle" height='60px' width='60px'       							 
+	    <img class="rounded-circle" height='60px' width='60px' 						 
 						src="getUserPicture/${works.user_Id}" onclick="location.href='personalPageReadOnly?id=${works.user_Id}'"> 
-	</div>    
+	</div>      
 	<div class="container-fluid lightbox-gallery" style="display:flex;">		     	       	
   		<div class="item" id="item1" style="margin:10px">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
   			<img id="img1" src="mainWorksPicture/${works.works_id}" style="height:50vh">  
@@ -33,17 +33,24 @@
 <div class="msg-box container" style="margin:0px auto;">
 
 	<div class="form-group" style="">
-		<textarea class="form-control" placeholder="新增留言 . . ."
-			id="exampleTextarea" rows="9" style="width: 50%; height: 200px;"></textarea>
-		<input type="submit" class="btn btn-danger" name="submit" id="submit"
-			value="send" style="width: 50%; margin-top: 20px;">
+		<form action="updateComment" name="uppdateComment" id="uppdateComment" method="POST">
+			<textarea class="form-control" placeholder="新增留言 . . ." name="newComment"
+				id="exampleTextarea" rows="9" style="width: 50%; height: 200px;"></textarea>
+			<input type="hidden" name="workId" value="${works.works_id}">
+			<input type="submit" class="btn btn-danger" name="submit" id="submit"
+				value="send" style="width: 50%; margin-top: 20px;">
+					<c:forEach var="workComment" items="${commentElements}">
+						<div class="minbox" style="padding:5px">
+							<p style="color:white">${workComment.userNickName} :  ${workComment.comment}</p>  
+						</div>
+					</c:forEach>
+		</form>
 
+<!-- 		<div class="minbox"> -->
+<!-- 			<p>Simple 喜歡這個作品!!!</p> -->
 
-		<div class="minbox">
-			<p>Simple 喜歡這個作品!!!</p>
-
-		</div>
-
+<!-- 		</div> -->
+	
 
 	</div>
 </div>
@@ -52,7 +59,6 @@
     <script>
   //Create a lightbox
     (function() {
-       
         $('.lightbox-gallery img').click(function(e) {
           var src = $(this).attr('src');          
           e.preventDefault();   

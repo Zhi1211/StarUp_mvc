@@ -58,6 +58,20 @@
 	</a>
 </div>
 <div style="position:absolute; top:600px; width:99vw">
+
+<!-- <div style="height:2000px;"> -->
+<%-- 	<c:if test="${!empty LoginOK}"> --%>
+<%-- 		<input id="temporarySaveUserId" type="hidden" value="${LoginOK.user_id}"> --%>
+<%-- 		<input id="temporarySaveUnreadMessageNumber" type="hidden" value="${unreadMessageNumber}"> --%>
+<%-- 	</c:if> --%>
+<!-- </div> -->
+<script type="text/javascript">
+// var unreadMessageNumber = parseInt(document.getElementById('temporarySaveUnreadMessageNumber').value);
+// if (unreadMessageNumber > 0 ) {
+// 	alert('您尚有 ' + unreadMessageNumber + ' 封訊息尚未閱讀。');
+// }
+</script>
+<div style="height:2000px; position:absolute; top:600px; width:99vw">
 	 <div class="break" style="background-color:black; color:white; text-align:center;">
         <p style="padding:5px 0px">What's your execellent plan !?</p>
     </div>
@@ -131,7 +145,6 @@
 	</div>
 	</div>
 </div>
-
 
    
 ${logoutMessage}${MsgOK.InsertOK}

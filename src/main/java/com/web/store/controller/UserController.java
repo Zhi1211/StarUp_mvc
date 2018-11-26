@@ -103,11 +103,13 @@ public class UserController {
 		}
 		return b;
 	}
+	
 	@RequestMapping(value="/updateUser/{id}", method = RequestMethod.POST, consumes="multipart/form-data")
-	public ResponseEntity<UserBean> updateUser(@PathVariable("id") int userId,
+	@ResponseBody
+	public void updateUser(@PathVariable("id") int userId,
 			@ModelAttribute UserBean userBean,BindingResult result, HttpServletRequest request){
 		String [] suppressedField = result.getSuppressedFields();
-		userBean.setUser_id(userId);;
+		userBean.setUser_id(userId);
 		long sizeInByte = 0;
 		if(suppressedField.length > 0 ) {
 			throw new RuntimeException("嘗試傳入不合法的欄位 :"
@@ -150,11 +152,9 @@ public class UserController {
 				e.printStackTrace();
 				throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
 			}
+			userService.updateUser(userBean,sizeInByte);
 		}else {
 			userService.updateUser(userBean);
-			return new ResponseEntity<UserBean>(userBean, HttpStatus.OK);
 		} 		
-		userService.updateUser(userBean,sizeInByte);
-		return new ResponseEntity<UserBean>(userBean,HttpStatus.OK);
-	}
+	}  
 }

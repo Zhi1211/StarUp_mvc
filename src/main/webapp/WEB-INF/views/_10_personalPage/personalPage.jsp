@@ -27,7 +27,7 @@
                 </div>
             </div>     
             <div class="mainContent col-lg-9" id="personalMainContent" style="padding:15px; border-radius:10px;">       
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs" style="border-style:none">
 				  <li class="active nav-item"><a class="active show" data-toggle="tab" href="#works" v-on:click="getWorks(${userBean.user_id})"> <button type="button"  class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">作品</button></a></li>
 				  <li class="nav-item"><a data-toggle="tab" href="#mail"> <button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">信件</button></a></li>  
 				  <li class="nav-item"><a data-toggle="tab" href="#post"><button type="button" class="btn btn-circle btn-xl btnFeature" style="padding: 5px; box-shadow: 3px 3px rgb(46, 46, 46)">發表</button></a></li>
@@ -96,7 +96,7 @@
 										<td style="text-align:center;">標題</td>
 										<td width="70" style="text-align:center;"><i class="far fa-times-circle" style="margin-right:5px; cursor:pointer;"></i></td>     
 									</tr>    
-									<c:forEach varStatus='vsRM' var="receivedMail" items="${receivedMails}">
+									<c:forEach varStatus='vsRM' var="receivedMail" items="${receivedMessages}">
 									<tr>
 										<td width="150" style="text-align:center;">${vsRM.count}</td>
 										<td width="225" style="text-align:center;">${receivedMail.posttime}</td>
@@ -123,7 +123,7 @@
 										<td style="text-align:center;">標題</td>
 										<td width="70" style="text-align:center;"><i class="far fa-times-circle" style="margin-right:5px; cursor:pointer;"></i></td>
                             		</tr>
-                            		<c:forEach varStatus='vsDM' var="deliveredMail" items="${deliveredMails}">
+                            		<c:forEach varStatus='vsDM' var="deliveredMail" items="${deliveredMessage}">
 									<tr>
 										<td width="150" style="text-align:center;">${vsDM.count}</td>
 										<td width="225" style="text-align:center;">${deliveredMail.posttime}</td>
@@ -307,7 +307,7 @@
 				    		</div>
 				    		</div> 
 				    		<div style="margin: 10px auto;display:flex; justify-content:center;">
-					    		<button v-on:click="confirmUpdate(${userBean.user_id })" class="btn btn-info" style="margin-right:10px;">保存</button>
+					    		<button type="submit" v-on:click="confirmUpdate(${userBean.user_id },$event)" class="btn btn-info" style="margin-right:10px;">保存</button>
 				    		</div>     				    	
 				    		<input type="hidden" name="nickname" id="nickname">
 				    		<input type="hidden" name="phone" id="phone">
@@ -469,8 +469,8 @@
             	        });
         			}, 
         			/*  */
-        			confirmUpdate:function(userId){
-        				var nickname = $('#editNickname').text();
+        			confirmUpdate:function(userIde,e){
+        	/* 			var nickname = $('#editNickname').text();
         				var phone = $('#editPhone').text();
         				var address = $('#editAddress').text();
         				var intro = $('#editIntro').text();
@@ -483,10 +483,39 @@
             			    cache:false,
             			    url: $(this).attr('action'),            			    
             			    data: $('#editUser').serialize(),            			    
-            			    dataType: 'json',            			  
-            	            success : function() {        
-            	            }  
-            	        });				
+            			/*     dataType: 'json',   	   */
+            	        /*     success : function(data,XMLHttpRequest, textStatus, errorThrown) {
+            	            	console.log(data+' success');  
+            	            	console.log(XMLHttpRequest.status +' success');  
+            	            	console.log(XMLHttpRequest.readyState +' success');  
+            	            	console.log(textStatus +' success');  
+			   	            	e.preventDefault()
+            	            },
+            	            error:function(data, XMLHttpRequest, textStatus, errorThrown){  
+            	            	alert(data);  
+            	            	         alert(XMLHttpRequest.status);  
+            	            	alert(XMLHttpRequest.readyState);  
+            	            	alert(textStatus);  
+            	            	}  
+            	        });	 */
+        				var nickname = $('#editNickname').text();
+         				var phone = $('#editPhone').text();
+         				var address = $('#editAddress').text();
+         				var intro = $('#editIntro').text();
+         				$("input[name='nickname']").val(nickname);
+         				$("input[name='phone']").val(phone);
+         				$("input[name='address']").val(address);
+         				$("input[name='userIntro']").val(intro);
+         				$.ajax({
+             			    type: "POST",    
+             			    cache:false,
+             			    url: $(this).attr('action'),            			    
+             			    data: $('#editUser').serialize(),            			    
+             			    dataType: 'json',            			  
+             	            success : function() {  		
+             	            }  
+             	        });	  
+       
         			},
         			/*  */
         			showShoppingOrderList:function(){        				

@@ -122,8 +122,40 @@
 					                </div>     
 					            </div>					 
 					        </form>
-					        
-					        
+					                 <hr>
+			
+			<!-- 申請上架表單列表 -->
+			                <div class="container" style="margin-top: 50px;" id="getForm">
+			
+			                    <ul style="list-style: none;">
+			                        <li v-for="(form, index) in forms">
+			                            <div style="display: flex; margin: 5px 0px;">
+			                                <div style="width: 200px; height: 200px; overflow: hidden;">
+			                                    <img style="width: 100%;"
+			                                        v-bind:src="'getFormImg/'+form.form_id" />
+			                                </div>
+			                                <div style="margin-left: 5px;">
+			                                    <div>商品名稱：{{ form.formProdName }}</div>
+			                                    <div>廠商名稱：{{ form.realName }}</div>
+			                                    <div>商品分類：{{ form.question_1}}</div>
+			                                    <div>售價：{{ form.formPrice}}</div>
+			                                    <div>商品說明：{{ form.formIntro}}</div>
+			                                </div>
+			
+			                                <hr>
+			                                <div style="flex-grow: 2; text-align: right;">
+			                                    <button class="btn"><a>核准</a></button>
+			                                    <button class="btn">不核准</button>
+			
+			                                    <!--     <button class="btn"><a  v-bind:href="'modifyProduct?id='+ form.form_id">核准</a></button>      -->
+			                                    <!--     <button class="btn" v-bind:id="'delProdBtn'+form.form_id" v-on:click="confirmDelete(index,$event)" style="text-decoration:underline;">拒絕</button> -->
+			                                </div>
+			                            </div>
+			                            <hr>
+			                        </li>
+			                    </ul>
+			
+			                </div>					        
 					</div>
 			  
 			  <div class="tab-pane fade" id="user">
@@ -287,7 +319,8 @@
         				})
         			},
         			/*  */
-        			getForm: function(){        				
+        			getForm: function(){      
+        				var _self = this;
         				$.ajax({
         					type:"GET",
         					url:"getAllForms",
