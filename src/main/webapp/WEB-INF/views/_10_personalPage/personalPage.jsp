@@ -323,7 +323,7 @@
 					style="display: flex; background-color: white; padding: 10px; border-radius: 5px; width: 85%; margin: 0 auto;">
 					<div class="col-lg-10"
 						style="line-height: 28px; font-weight: 400; color: rgb(0, 0, 0);padding:10px">
-						<form ENCTYPE="multipart/form-data" id="applyForm" method="POST" action="addForm" v-on:submit="submitForm()">
+						<form ENCTYPE="multipart/form-data" id="applyForm" method="POST" action="addForm" v-on:submit="submitForm(${userBean.user_id })">
 
 							<p style="font-size:28px; font-weight:200">
 								我要申請商品上架</p>								
@@ -395,7 +395,7 @@
 								<label for="ProductName">商品名稱</label> 
 								<input type="text" class="form-control" id="ProductName" name="formProdName" placeholder="請輸入商品名稱" style="width: 250px;"> 
 								<label for="InputPrice">價格</label> 
-								<input type="text" name="formPrice" class="form-control" id="InputPrice" placeholder="請輸入商品價格" style="width: 250px;"> 
+								<input type="number" name="formPrice" class="form-control" id="InputPrice" placeholder="請輸入商品價格" style="width: 250px;"> 
 								<label for="InputEmail">Email信箱</label>
 							    <input type="email" class="form-control" id="InputEmail" name="formMail" aria-describedby="emailHelp" value="${userBean.account}" style="width: 450px;"> 
 								<label for="productPhoto">照片｜敘述</label>
@@ -410,7 +410,6 @@
 										id="captionImg_3" aria-describedby="fileHelp"
 										style="margin-left: 5px">
 								</div>
-	
 							</div>
 							<div style="margin: 0 auto; margin-top: 30px;">
 								<input type="submit" class="btn btn-secondary" name="submit"
@@ -418,9 +417,6 @@
 								<!-- 									 disabled -->
 							</div>
 						</form>
-
-
-
 					</div>
 				</div>
 			</div>
@@ -469,35 +465,7 @@
             	        });
         			}, 
         			/*  */
-        			confirmUpdate:function(userIde,e){
-        	/* 			var nickname = $('#editNickname').text();
-        				var phone = $('#editPhone').text();
-        				var address = $('#editAddress').text();
-        				var intro = $('#editIntro').text();
-        				$("input[name='nickname']").val(nickname);
-        				$("input[name='phone']").val(phone);
-        				$("input[name='address']").val(address);
-        				$("input[name='userIntro']").val(intro);
-        				$.ajax({
-            			    type: "POST",    
-            			    cache:false,
-            			    url: $(this).attr('action'),            			    
-            			    data: $('#editUser').serialize(),            			    
-            			/*     dataType: 'json',   	   */
-            	        /*     success : function(data,XMLHttpRequest, textStatus, errorThrown) {
-            	            	console.log(data+' success');  
-            	            	console.log(XMLHttpRequest.status +' success');  
-            	            	console.log(XMLHttpRequest.readyState +' success');  
-            	            	console.log(textStatus +' success');  
-			   	            	e.preventDefault()
-            	            },
-            	            error:function(data, XMLHttpRequest, textStatus, errorThrown){  
-            	            	alert(data);  
-            	            	         alert(XMLHttpRequest.status);  
-            	            	alert(XMLHttpRequest.readyState);  
-            	            	alert(textStatus);  
-            	            	}  
-            	        });	 */
+        			confirmUpdate:function(userId,e){
         				var nickname = $('#editNickname').text();
          				var phone = $('#editPhone').text();
          				var address = $('#editAddress').text();
@@ -511,11 +479,11 @@
              			    cache:false,
              			    url: $(this).attr('action'),            			    
              			    data: $('#editUser').serialize(),            			    
-             			    dataType: 'json',            			  
-             	            success : function() {  		
-             	            }  
-             	        });	  
-       
+             			    /* dataType: 'json', */            			  
+             	            success : function() {  
+             	            	window.location.href="personalPage?id="+userId;
+             	            },           				
+             	        });	         
         			},
         			/*  */
         			showShoppingOrderList:function(){        				
@@ -583,16 +551,16 @@
         	        		$(this).css('background-color','');  
         	        	})        				
         			},        		
-        			submitForm:function(e){        				
+        			submitForm:function(userId){        				
         				$.ajax({   
             			    type: "POST",	
             			    cache:false,
             			    url: $(this).attr('action'),            			    
             			    data: $('#applyForm').serialize(),  
-            			    dataType: 'json',            			  
-            	            success : function(data) {
-            	            	e.preventDefault();
-            	            }  
+            			    /* dataType: 'json', */            			  
+            	            success : function() {
+            	            	window.location.href="personalPage?id="+userId;           	            	
+            	            },    
             	        });
         			}
         		},        		

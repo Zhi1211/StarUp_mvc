@@ -215,37 +215,6 @@ public class PersonalController {
 			}		
 			formService.processForm(fb);
 			
-			UserBean master = userService.getUser2("starup@gamil.com");
-			UserBean user = (UserBean)request.getSession(false).getAttribute("LoginOK");
-			int afterSendMailTag = 0;
-			String applicationSuccess = user.getNickname() + 
-					"您好，恭喜您！先前您所填寫的商品上架表單，經過審核後，已通過商品上架的審核，您的" + 
-					fb.getFormProdName() + 
-					"商品已完成上架，感謝您！";
-			String applicationFailed = user.getNickname() + 
-					"您好，先前您所填寫的商品上架表單，經過審核後，因商品含有侵權的可能性或不當的商品名稱與敘述，"
-					+ "未通過商品上架的審核，很抱歉，目前無法完成此商品的上架！";
-			MessageBean successMb = new MessageBean(null, 
-											 master.getUser_id(), 
-											 master.getNickname(), 
-											 user.getUser_id(), 
-											 user.getNickname(), 
-											 date, 
-											 "申請上架通過", 
-											 applicationSuccess, 
-											 0);
-			MessageBean failedMb = new MessageBean(null, 
-					 						 master.getUser_id(), 
-					 						 master.getNickname(), 
-					 						 user.getUser_id(), 
-					 						 user.getNickname(), 
-					 						 date, 
-					 						 "申請上架未通過", 
-					 						 applicationFailed, 
-					 						 0);
-//			messageService.insertMessage(successMb);
-//			messageService.insertMessage(failedMb);
-			
 			return new ResponseEntity<FormBean>(HttpStatus.OK);
 	}
 	
@@ -334,5 +303,48 @@ public class PersonalController {
 			afterSendMailTag = messageService.insertMessage(mb);
 		}
 		return "redirect:/personalPage?id=" + fromUser.getUser_id();
+	}
+	/*管理者審核商品上架時，送出審核信件*/
+	@RequestMapping(value="/reviewMail/{form_id}/{review}")
+	@ResponseBody
+	public void sendReviewMail(HttpServletRequest request, 
+			@PathVariable("review")String review,
+			@PathVariable("form_id")Integer form_id) {
+		UserBean user = (UserBean)request.getSession(false).getAttribute("LoginOK");
+		UserBean master = userService.getUser2("starup@gamil.com");
+		FormBean fb = formService.getFormById(form_id);
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String date = df.format(new Date());
+		int afterSendMailTag = 0;
+		String applicationSuccess = user.getNickname() + 
+				"您好，恭喜您！先前您所填寫的商品上架表單，經過審核後，已通過商品上架的審核，您的" + 
+				fb.getFormProdName() + 
+				"商品已完成上架，感謝您！";
+		String applicationFailed = user.getNickname() + 
+				"您好，先前您所填寫的商品上架表單，經過審核後，因商品含有侵權的可能性或不當的商品名稱與敘述，"
+				+ "未通過商品上架的審核，很抱歉，目前無法完成此商品的上架！";
+		MessageBean successMb = new MessageBean(null, 
+				 master.getUser_id(), 
+				 master.getNickname(), 
+				 user.getUser_id(), 
+				 user.getNickname(), 
+				 date, 
+				 "申請上架通過", 
+				 applicationSuccess, 
+				 0);
+		MessageBean failedMb = new MessageBean(null, 
+				 master.getUser_id(), 
+				 master.getNickname(), 
+				 user.getUser_id(), 
+				 user.getNickname(), 
+				 date, 
+				 "申請上架未通過", 
+				 applicationFailed, 
+				 0);
+		if (review.equalsIgnoreCase("approved")) {
+			afterSendMailTag = messageService.insertMessage(successMb);
+		} else if (review.equalsIgnoreCase("notApproved")) {
+			afterSendMailTag = messageService.insertMessage(failedMb);
+		}
 	}
 }
