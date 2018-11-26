@@ -134,7 +134,7 @@
 			                                    <img style="width: 100%;"
 			                                        v-bind:src="'getFormImg/'+form.form_id" />
 			                                </div>
-			                                <div style="margin-left: 5px;">
+			                                <div style="margin-left: 5px;" >
 			                                    <div>商品名稱：{{ form.formProdName }}</div>
 			                                    <div>廠商名稱：{{ form.realName }}</div>
 			                                    <div>商品分類：{{ form.question_1}}</div>
@@ -144,8 +144,8 @@
 			
 			                                <hr>
 			                                <div style="flex-grow: 2; text-align: right;">
-			                                    <button class="btn"><a>核准</a></button>
-			                                    <button class="btn">不核准</button>
+			                                    <button class="btn" v-on:click="approved($event)" v-bind:id="'approved'+form.form_id">核准</button>
+			                                    <button class="btn" v-on:click="notApproved($event)" v-bind:id="'notApproved'+form.form_id">不核准</button>
 			
 			                                    <!--     <button class="btn"><a  v-bind:href="'modifyProduct?id='+ form.form_id">核准</a></button>      -->
 			                                    <!--     <button class="btn" v-bind:id="'delProdBtn'+form.form_id" v-on:click="confirmDelete(index,$event)" style="text-decoration:underline;">拒絕</button> -->
@@ -329,8 +329,37 @@
         					}
         				})
         			},
+        			/* */
+        			approved: function(e){
+        				var id = e.target.id;
+        				var form_id = id.substring(8);
+        				//console.log(form_id)
+        				var _self = this;
+        				var review = "approved";
+            			$.ajax({
+            				type:"GET",
+            				url:"reviewMail/" + form_id + "/" + review,
+            				success:function(){
+            					
+            				}
+            			})
         			},
-        			
+        			/* */
+        			notApproved: function(e){
+        				var id = e.target.id;
+        				var form_id = id.substring(11);
+        				//console.log(form_id)
+        				var _self = this;
+            			var review = "notApproved";
+            			$.ajax({
+            				type:"GET",
+            				url:"reviewMail/" + form_id + "/" + review,
+            				success:function(){
+            					
+            				}
+            			})
+        			},
+        			},
         		}) 
         </script>     
       
