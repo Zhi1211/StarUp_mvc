@@ -41,4 +41,9 @@ public class MessageServiceImpl implements MessageService {
 		return mdao.getUnreadMessages(toId);
 	}
 
+	@Override
+	public int changeUnreadMessageToRead(Integer user_id) {
+		return mdao.changeUnreadMessageToRead(user_id);
+	}
+
 }
