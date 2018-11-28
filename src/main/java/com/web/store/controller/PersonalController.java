@@ -310,9 +310,9 @@ public class PersonalController {
 	public void sendReviewMail(HttpServletRequest request, 
 			@PathVariable("review")String review,
 			@PathVariable("form_id")Integer form_id) {
-		UserBean user = (UserBean)request.getSession(false).getAttribute("LoginOK");
-		UserBean master = userService.getUser2("starup@gamil.com");
 		FormBean fb = formService.getFormById(form_id);
+		UserBean user = userService.getUser2(fb.getFormMail());
+		UserBean master = userService.getUser2("starup@gamil.com");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = df.format(new Date());
 		int afterSendMailTag = 0;
