@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "form")
 public class FormBean implements Serializable {
@@ -26,6 +28,7 @@ public class FormBean implements Serializable {
 	private String realName;
 	private String formProdName;
 	private Integer formPrice;
+	@JsonIgnore
 	private Blob formImg;
 	private String formImgName;
 	private String formIntro;

@@ -58,7 +58,7 @@
 	</a>
 </div>
 
-<div style="position:absolute; top:600px; width:99vw">
+<div">
 
 <!-- <div style="height:2000px;"> -->
 <%-- 	<c:if test="${!empty LoginOK}"> --%>
@@ -73,7 +73,7 @@
 // }
 </script>
 
-<div style="height:2000px; position:absolute;text-align:center;margin-left:45%;">
+<div style="position:absolute;text-align:center;margin-left:45%;">
 	<c:if test="${!empty LoginOK}">
 		<c:if test="${unreadMessageNumber > 0}">
 			<p style="color:red;">你尚有 ${unreadMessageNumber} 訊息未閱覽</p>
@@ -82,13 +82,13 @@
 </div>
 
 <div style="height:2000px; position:absolute; top:600px; width:99vw">
-	 <div class="break" style="background-color:black; color:white; text-align:center;">
-        <p style="padding:5px 0px">What's your execellent plan !?</p>
+	 <div class="break" style="background-color:rgba(51, 51, 51, 0.8); color:white; text-align:center;">
+        <p style="padding:5px 0px;  text-shadow: 1px 1px 2px rgb(255, 249, 198)">If we are sparkling stars , we don't need to worry where we spark</p>
     </div>
 	<div style="text-align:center; margin-top:10px; display:flex; justify-content:center">
 	  <div>
 		<a href="works"><img src="image/5b0a647ae296d.png" style="width:350px; margin: 0px 20px;"></a>
-		<p style="font-weight:100; font-size:40px; color:white">作品</p>
+		<!-- <p style="font-weight:100; font-size:40px; color:white">作品</p> -->
 	  </div>	
 	  <div>
 	  	<a href="products"><img src="image/5b0a64c409e54.png" style="width:350px; margin: 0px 20px; "></a>
@@ -99,8 +99,8 @@
 		<p style="font-weight:100; font-size:40px; color:white">主頁</p>
 	  </div>
 	</div>
-	<div class="break" style="background-color:black; color:white; text-align:center;">
-        <p style="padding:5px 0px">What's your execellent plan !?</p>
+	<div class="break" style="background-color:rgba(51, 51, 51, 0.8); color:white; text-align:center;">
+        <p style="padding:5px 0px;  text-shadow: 1px 1px 2px rgb(255, 249, 198)">Tell me what is in your mind</p>
     </div>
 	<div>
 		<div class="container">

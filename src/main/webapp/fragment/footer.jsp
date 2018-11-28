@@ -6,7 +6,7 @@
 		<div style="padding:50px"></div>  
         <footer class="page-footer font-small"  style="z-index:10;background-color:rgba(51, 51, 51, 0.9);">
        <!-- Copyright -->
-           <div class="footer-copyright text-center py-3 text-info">
+           <div class="footer-copyright py-3 text-info">
            		<a>使用規範 ｜</a><a class="text-info" href=" <c:url value='/_09_opinion/opinion.jsp'/>" style="text-decoration:none;">意見回饋 ｜</a><a>關於我們 ｜</a>
            		© 2018 Copyright :  NTUT JAVA009 Team2
            </div>
