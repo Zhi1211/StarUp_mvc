@@ -3,13 +3,23 @@
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 @import url('/fonts.googleapis.com/earlyaccess/notosanstc.css');
-body {
-  background-image: url('../image/background-light-1.jpg');  
+/* body {
+  background-image: url('../image/blackNwhite.png');  
   background-size: cover;
   font-weight: normal;
-}
+} */
 
+      html {
+            height: 100%;
+        }
 
+        body {
+            background-image: url('../image/blackNwhite.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */  
 

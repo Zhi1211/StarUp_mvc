@@ -30,7 +30,9 @@
 	<div class="container-fluid" style="position: relative; z-index: 10;">
 		<!-- -------------------------navgation----------------------------- -->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}/">Star Up</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/">
+			<img src="image/logo.png" style="width:140px;">
+			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarColor03" aria-controls="navbarColor03"
 				aria-expanded="false" aria-label="Toggle navigation">

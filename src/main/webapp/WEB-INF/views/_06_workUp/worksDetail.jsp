@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <jsp:include page="/fragment/header_dark.jsp" />
-	<div style="display:flex">   
+	<div style="display:flex">     
 		<p style="color:white; font-weight:300; font-size:26px; flex-grow:2; align-self:flex-end; margin-left:30px;">${works.worksName}</p>  
 	   	<p style="color:white; font-weight:200; line-height:60px; margin-right:10px">by ${works.author}</p>		
 	    <img class="rounded-circle" height='60px' width='60px' 						 
@@ -30,17 +30,17 @@
 
 <!-- =================留言區================== -->
 <hr>
-<div class="container" style="margin:0px auto;">
+<div class="container" style="margin:0px 20px;">
 
 	<div class="form-group">
 		<form action="updateComment" name="uppdateComment" id="uppdateComment" method="POST">
 			<div  style="display:flex">
 				<div>
 					<textarea class="form-control" placeholder="新增留言 . . ." name="newComment"
-						id="exampleTextarea" rows="9" style="width:25vw; height: 200px;"></textarea>
+						id="exampleTextarea" rows="9" style="width:25vw; height: 200px; margin-right:20px"></textarea>
 					<input type="hidden" name="workId" value="${works.works_id}">
 					<input type="submit" class="btn btn-danger" name="submit" id="submit"
-						value="send" style="width: 50%; margin-top: 20px;">
+						value="send" style="width: 50%; margin: 20px 15px;">
 				</div>
 				<div style="display:inline-block">   
 						<c:forEach var="workComment" items="${commentElements}">
@@ -57,6 +57,26 @@
 
  	<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
     <script>
+    $("#updateComment").submit(function(e) {
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+               type: "POST",
+               url: url,
+               cache:false,
+               dataType: 'json',      
+               data: form.serialize(), // serializes the form's elements.
+               success: function(data)
+               {
+                   alert(data); // show response from the php script.       
+               },
+               error: function(data){
+            	   alert(data)
+               }
+             });
+        	 e.preventDefault();
+    });
+    
   //Create a lightbox
     (function() {
         $('.lightbox-gallery img').click(function(e) {

@@ -36,16 +36,16 @@
                     <a class="nav-link" href="<c:url value='/type_products?type=文創周邊'/>" style="color:#dfc2ef; font-weight:400;">
                     <i class="fas fa-gift"></i>  文創周邊</a>
                     		
-                    			<a class="dropdown-item" href="<c:url value='/category_products?category=暖心'/>">暖心</a>
-    							<a class="dropdown-item" href="<c:url value='/category_products?category=城市'/>">城市</a>
-    							<a class="dropdown-item" href="<c:url value='/category_products?category=質感'/>">質感</a>
+                    			<a class="dropdown-item text-muted" href="<c:url value='/category_products?category=暖心'/>">暖心</a>
+    							<a class="dropdown-item text-muted" href="<c:url value='/category_products?category=城市'/>">城市</a>
+    							<a class="dropdown-item text-muted" href="<c:url value='/category_products?category=質感'/>">質感</a>
     						
                     <a class="nav-link" href="<c:url value='/type_products?type=原創桌遊'/>" style="color:#dfc2ef; font-weight:400;">
                     <i class="fas fa-user-astronaut"></i>  原創桌遊</a> 
                     		
-                    			<a class="dropdown-item" href="<c:url value='/category_products?category=1~3人'/>">建議遊玩：1 ~ 3人</a>
-    							<a class="dropdown-item" href="<c:url value='/category_products?category=3~5人'/>">建議遊玩：3 ~ 5人</a>
-    							<a class="dropdown-item" href="<c:url value='/category_products?category=5~10人'/>">建議遊玩：5 ~ 10人</a>
+                    			<a class="dropdown-item text-muted" href="<c:url value='/category_products?category=1~3人'/>">建議遊玩：1 ~ 3人</a>
+    							<a class="dropdown-item text-muted" href="<c:url value='/category_products?category=3~5人'/>">建議遊玩：3 ~ 5人</a>
+    							<a class="dropdown-item text-muted" href="<c:url value='/category_products?category=5~10人'/>">建議遊玩：5 ~ 10人</a>
     						
                 </nav>
            

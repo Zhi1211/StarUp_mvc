@@ -9,12 +9,11 @@
 <!------------------------------------ Search -------------------------------------->
 
 
-<div class="carousel-inner"
-	style="background-color: rgba(35, 36, 38, 0.8);">
+<div class="carousel-inner">
 	<div class="carousel-item active"
 		style="width: 100%; height: 400px; overflow: hidden;">
 		
-			<div class="carousel-caption" style="margin-bottom:50px;">
+			<div class="carousel-caption">
 
 				<h1 style="text-shadow: 0px 0px 5px #f4dc42;">✯✯ STAR UP !
 					Design Action ✯✯</h1>
@@ -34,7 +33,8 @@
 <!-- 					style="font-family: '微軟正黑體', sans-serif; font-size: 16px; text-shadow: 0px 0px 5px #ffffff; margin-top: 15px;"> -->
 <!-- 					熱門搜尋:原創桌遊、現代風格、城市紋理、創意合成</p> -->
 			</div>
-		<jsp:include page="/fragment/header.jsp" />
+		
+		<jsp:include page="/fragment/header.jsp" />  
 	</div>
 </div>
 <!-- 作品列表 -->

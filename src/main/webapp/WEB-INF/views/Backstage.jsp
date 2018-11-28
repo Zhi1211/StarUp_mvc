@@ -77,7 +77,7 @@
 					                        <input type="text" name="prodName" id="prodName" style="margin-bottom:15px"/> 
 					                        <br> 
 					                        <label>申請人/團隊：</label>       
-					                        <input type="text" name="prodCompany"/>    
+					                        <input type="text" name="prodCompany" id="prodCompany"/>    
 					                        <br>                					                        					                          
 					                        <br>                					                        					                          
 					                        <div style="display:flex;">
@@ -108,14 +108,14 @@
 						                        </div>
 					                        </div>             					                       
 					                        <label>售價：NT$ </label>    
-					                        <input type="number" name="prodPrice" style="margin-bottom:15px"/>   									
+					                        <input type="number" name="prodPrice" id="prodPrice" style="margin-bottom:15px"/>   									
 											<br>  
 					                        <label>庫存：</label>    
 					                        <input type="number" name="prodStock"/>   
 					                    </div> 
 						                <div class="lower" style=" margin: 10px 0px; padding: 20px 10px; border-radius: 5px; box-shadow: 1px 1px 3px black">
 							                    <p style="font-size:20px; color:#123d82; text-align:center; margin:0px;">商品說明</p>   
-							                    <textarea name="prodIntro" rows="5" cols="55"></textarea>   
+							                    <textarea name="prodIntro" id="prodIntro" rows="5" cols="55"></textarea>   
 						                        <hr>                                          
 						                 </div> 
 					                    <input id="btnAdd" type='submit' class='btn btn-outline-primary' value="送出"  style="margin-bottom:10px;"/>              
@@ -128,25 +128,25 @@
 			                <div class="container" style="margin-top: 50px;" id="getForm">
 			
 			                    <ul style="list-style: none;">
-			                        <li v-for="(form, index) in forms">
+			                        <li v-for="(form, index) in forms"  v-bind:id="'form'+form.form_id" style="padding:5px">			                        
 			                            <div style="display: flex; margin: 5px 0px;">
 			                                <div style="width: 200px; height: 200px; overflow: hidden;">
 			                                    <img style="width: 100%;"
 			                                        v-bind:src="'getFormImg/'+form.form_id" />
 			                                </div>
 			                                <div style="margin-left: 5px;" >
-			                                    <div>商品名稱：{{ form.formProdName }}</div>
-			                                    <div>廠商名稱：{{ form.realName }}</div>
-			                                    <div>商品分類：{{ form.question_1}}</div>
-			                                    <div>售價：{{ form.formPrice}}</div>
-			                                    <div>商品說明：{{ form.formIntro}}</div>
+			                                    <div>商品名稱：<span v-bind:id="'prodName'+form.form_id" >{{ form.formProdName }}</span></div>
+			                                    <div>申請人 / 團隊名稱：<span v-bind:id="'applyName'+form.form_id" >{{ form.realName }}</span></div>
+			                                    <div>商品分類：<span v-bind:id="'type'+form.form_id" >{{ form.question_1}}</span></div>
+			                                    <div>售價：<span v-bind:id="'price'+form.form_id" >{{ form.formPrice}}</span></div>
+			                                    <div>商品說明：<span v-bind:id="'intro'+form.form_id" >{{ form.formIntro}}</span></div>
 			                                </div>
 			
 			                                <hr>
 			                                <div style="flex-grow: 2; text-align: right;">
+			                                    <button class="btn btn-outline-primary" v-bind:id="'status'+form.form_id" style="cursor:none">{{form.status}}</button>			
 			                                    <button class="btn" v-on:click="approved($event)" v-bind:id="'approved'+form.form_id">核准</button>
 			                                    <button class="btn" v-on:click="notApproved($event)" v-bind:id="'notApproved'+form.form_id">不核准</button>
-			
 			                                    <!--     <button class="btn"><a  v-bind:href="'modifyProduct?id='+ form.form_id">核准</a></button>      -->
 			                                    <!--     <button class="btn" v-bind:id="'delProdBtn'+form.form_id" v-on:click="confirmDelete(index,$event)" style="text-decoration:underline;">拒絕</button> -->
 			                                </div>
@@ -333,6 +333,14 @@
         			approved: function(e){
         				var id = e.target.id;
         				var form_id = id.substring(8);
+        				
+        				var prodName = $('#prodName'+form_id).text();
+        				var applyName = $('#applyName'+form_id).text();
+        				var price = $('#price'+form_id).text();
+        				var type = $('#type'+form_id).text();
+        				var intro = $('#intro'+form_id).text();
+        				var imgUrl = "getFormImg/"+form_id";
+        				alert(prodName+"|"+applyName+"|"+price+"|"+type+"|"+intro)
         				//console.log(form_id)
         				var _self = this;
         				var review = "approved";
@@ -340,7 +348,17 @@
             				type:"GET",
             				url:"reviewMail/" + form_id + "/" + review,
             				success:function(){
-            					
+            					$('#status'+form_id).text('通過審核');
+            					$('#prodName').val(prodName);
+            					$('#prodCompany').val(applyName); 
+            					if(type === '文創周邊'){
+            						$('input[name="prodType"]')[0].checked = true; 
+            					}else{
+            						$('input[name="prodType"]')[1].checked = true; 
+            					}            				
+            					$('#prodType').val(type).attr('checked',true); 
+            					$('#prodPrice').val(price);
+            					$('#prodIntro').val(intro);
             				}
             			})
         			},
@@ -354,8 +372,8 @@
             			$.ajax({
             				type:"GET",
             				url:"reviewMail/" + form_id + "/" + review,
-            				success:function(){
-            					
+            				success:function(){					
+            					$('#status'+form_id).text('未通過審核');
             				}
             			})
         			},

@@ -44,5 +44,14 @@ public class FormDaoImpl  implements FormDao{
 		return fb;
 	}
 
+	@Override
+	public void updateFormStatus(Integer form_id,String status) {
+		String hql = "UPDATE FormBean pb SET status = :status WHERE pb.form_id = :pid";
+		Session session = factory.getCurrentSession();
+		session.createQuery(hql).setParameter("status", status)
+												  .setParameter("pid", form_id).executeUpdate();
+		
+	}
+
 }
 

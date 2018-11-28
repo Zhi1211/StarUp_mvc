@@ -11,5 +11,6 @@ public interface FormService {
 	public void processForm(FormBean fb);
 
 	FormBean getFormById(Integer form_Id);
-
+	
+	public void updateFormStatus(Integer form_Id, String status);
 }
