@@ -20,7 +20,7 @@ public class FormServiceImpl implements FormService {
 
 	public FormServiceImpl() {
 	}
-
+  
 	@Override
 	public List<FormBean> getAllForms() {
 		return formdao.getAllForms();
@@ -35,6 +35,12 @@ public class FormServiceImpl implements FormService {
 	@Override
 	public FormBean getFormById(Integer form_Id) {
 		return formdao.getFormById(form_Id);
+	}
+
+	@Override
+	public void updateFormStatus(Integer form_Id, String status) {
+			formdao.updateFormStatus(form_Id,status);
+		
 	}
 
 

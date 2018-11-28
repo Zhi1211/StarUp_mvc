@@ -80,6 +80,20 @@ public class PersonalController {
 		model.addAttribute("deliveredMessage", deliveredMessage);
 		return "_10_personalPage/personalPage";
 	}
+	@RequestMapping(value="/personalPageReadOnly")
+	public String getPersonalPageReadOnly(@RequestParam(value = "id") Integer userId, Model model) {
+		UserBean ub = userService.getUser(userId);
+		Clob introduction = ub.getIntroduction();
+		String intro = null;
+		try {
+			intro = introduction.getSubString(1, (int) ub.getIntroduction().length());
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		model.addAttribute("userBean", ub);
+		model.addAttribute("introduction", intro);
+		return "_10_personalPage/personalPageReadOnly";
+	}
 
 	@RequestMapping(value="/worksList")
 	public String getWorkList() {
@@ -141,6 +155,7 @@ public class PersonalController {
 	/* 測試存入留言 */
 	@RequestMapping(value="/updateComment", params= {"newComment", "workId"}, method=RequestMethod.POST, 
 			produces="text/html;charset=UTF-8")
+	@ResponseBody
 	public String updateComment(HttpServletRequest request, Model model, 
 			@RequestParam("workId")String workIdStr, 
 			@RequestParam("newComment")String newComment) {
@@ -176,8 +191,48 @@ public class PersonalController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return "redirect:/works";
+		return "success";
 	}
+//	/* 測試存入留言 */
+//	@RequestMapping(value="/updateComment", params= {"newComment", "workId"}, method=RequestMethod.POST, 
+//			produces="text/html;charset=UTF-8")
+//	public String updateComment(HttpServletRequest request, Model model, 
+//			@RequestParam("workId")String workIdStr, 
+//			@RequestParam("newComment")String newComment) {
+//		WorksBean wb = null;
+//		if(workIdStr != null) {
+//			Integer works_id = Integer.parseInt(workIdStr);
+//			wb = worksService.getWorksById(works_id);
+//		}
+//		UserBean ub = (UserBean)request.getSession(false).getAttribute("LoginOK");
+//		Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
+//		String commentDate = ts.toString();
+//		String totalCommentStrNew = "";
+//		/**留言內容以WorkCommentBean暫存，每筆留言以"-#"做區隔，每筆留言之元素以"/="做區隔，
+//		 *範例:( 留言者ID /= 留言者暱稱 /= 留言時間 /= 留言內容 -#)作為儲存格式(不包含空白)
+//		 **/
+//		if (wb.getComment() != null) {
+//			Clob totalComment = wb.getComment();
+//			try {
+//				String totalCommentStr = totalComment.getSubString(1, (int)totalComment.length());
+//				totalCommentStrNew = totalCommentStr + ub.getUser_id() +"/=" +
+//						ub.getNickname() +"/=" + commentDate + "/=" + newComment + "-#";
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		} else {
+//			totalCommentStrNew = ub.getUser_id() + "/=" + ub.getNickname() + "/=" + 
+//					commentDate + "/=" + newComment + "-#";
+//		}
+//		try {
+//			Clob totalCommentNew = new SerialClob(totalCommentStrNew.toCharArray());
+//			wb.setComment(totalCommentNew);
+//			worksService.updateWorksComment(wb);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return "redirect:/works";
+//	}
 	
 //	-------------------申請商品上架表單ajax-------------------
 	@RequestMapping(value="/addForm", method=RequestMethod.POST)	
@@ -212,7 +267,8 @@ public class PersonalController {
 					e.printStackTrace();
 					throw new RuntimeException("檔案上傳發生異常"+ e.getMessage());
 				}
-			}		
+			}	
+			fb.setStatus("待審核");
 			formService.processForm(fb);
 			
 			return new ResponseEntity<FormBean>(HttpStatus.OK);
@@ -342,8 +398,10 @@ public class PersonalController {
 				 applicationFailed, 
 				 0);
 		if (review.equalsIgnoreCase("approved")) {
+			formService.updateFormStatus(form_id, "通過審核");
 			afterSendMailTag = messageService.insertMessage(successMb);
 		} else if (review.equalsIgnoreCase("notApproved")) {
+			formService.updateFormStatus(form_id, "未通過審核");
 			afterSendMailTag = messageService.insertMessage(failedMb);
 		}
 	}

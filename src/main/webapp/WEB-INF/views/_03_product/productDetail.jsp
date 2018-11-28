@@ -29,14 +29,14 @@
               
                  <nav class="nav flex-column nav-tabs">                        
                         <a class="nav-link active" href="<c:url value='/showShoppingCart' />">結帳</a>                       
-                </nav>
+                </nav>  
             </div>
-               
-            <div class="container col-lg-10" style=" display: flex;margin-top:20px">    
-                    <div class="imgBlock" >   
+                 
+            <div class="container col-lg-10" style=" display: flex;margin-top:20px; justify-content:space-around">    
+                    <div class="imgBlock">   
                         <img class="prodDetailImg" src="<c:url value='/getProductPicture/${product.prod_id}'/>">
                     </div>                               
-	                <div class="prodInfo col-lg-5">
+	                <div class="prodInfo col-lg-5">  
 	                    <div class="upper" style="padding: 20px; background-color: rgba(255, 255, 255, 0.767); border-radius: 5px; box-shadow: 1px 1px 3px black">
 	                        <form id="productForm" action="<c:url value='/addProductToCart' />" method="POST">
 	                        <h4>${product.prodName}</h4>

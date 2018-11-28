@@ -76,36 +76,36 @@
 <div style="position:absolute;text-align:center;margin-left:45%;">
 	<c:if test="${!empty LoginOK}">
 		<c:if test="${unreadMessageNumber > 0}">
-			<p style="color:red;">你尚有 ${unreadMessageNumber} 訊息未閱覽</p>
+			<p style="color:white; text-shadow: 1px 	1px 3px yellow">你尚有 ${unreadMessageNumber} 封未讀信件</p>
 		</c:if>
 	</c:if>
-</div>
+</div>   
 
-<div style="height:2000px; position:absolute; top:600px; width:99vw">
+<div style="position:absolute; top:600px; width:99vw">
 	 <div class="break" style="background-color:rgba(51, 51, 51, 0.8); color:white; text-align:center;">
-        <p style="padding:5px 0px;  text-shadow: 1px 1px 2px rgb(255, 249, 198)">If we are sparkling stars , we don't need to worry where we spark</p>
+        <p style="padding:5px 0px;">If we are sparkling stars , we don't need to worry where we spark</p>
     </div>
 	<div style="text-align:center; margin-top:10px; display:flex; justify-content:center">
-	  <div>
-		<a href="works"><img src="image/5b0a647ae296d.png" style="width:350px; margin: 0px 20px;"></a>
+	  <div>  
+		<a href="products"><img src="image/商城.png" style="width:200px; margin: 50px 100px;"></a>
 		<!-- <p style="font-weight:100; font-size:40px; color:white">作品</p> -->
-	  </div>	
+	  </div>	   
 	  <div>
-	  	<a href="products"><img src="image/5b0a64c409e54.png" style="width:350px; margin: 0px 20px; "></a>
-	  	<p style="font-weight:100; font-size:40px; color:white">商城</p>
-	  </div>
-	  <div>
-		<img src="image/5b0a7f49d467f.png" style="width:350px; margin: 0px 20px;">
-		<p style="font-weight:100; font-size:40px; color:white">主頁</p>
+	  	<a href="works"><img src="image/創作.png" style="width:200px; margin: 50px 100px; "></a>
+<!-- 	  	<p style="font-weight:100; font-size:40px; color:white">商城</p> -->
+	  </div>          
+	  <div>  
+	  <a href="personalPage?id=${LoginOK.user_id }"><img src="image/主頁.png" style="width:200px; margin: 50px 100px;"></a>
+<!-- 		<p style="font-weight:100; font-size:40px; color:white">主頁</p> -->
 	  </div>
 	</div>
 	<div class="break" style="background-color:rgba(51, 51, 51, 0.8); color:white; text-align:center;">
-        <p style="padding:5px 0px;  text-shadow: 1px 1px 2px rgb(255, 249, 198)">Tell me what is in your mind</p>
+        <p style="padding:5px 0px;">Tell me what is in your mind</p>
     </div>
 	<div>
 		<div class="container">
 		<form method="POST" action="<c:url value='saveOpinion'/>" id="opinionForm">			         
-				<legend class="text-warning" style="text-align:center">意見回覆</legend>
+				<legend id="op" class="text-warning" style="text-align:center">意見回覆</legend>
 				<p>${MsgMap.InsertNG}${MsgMap.errorSaveData}</p>   
 				<section class="container col-sm-6">    
 					<!--意見回覆表格內容 -->
@@ -132,7 +132,7 @@
 								</p>
 							</div>
 						</div>
-						<div class="form-group col-sm-8">
+					<%-- 	<div class="form-group col-sm-8">
 							<label class="text-warning" for="opinionPhone"> 連絡電話:</label> <input type="text"
 								class="form-control" name="opinionPhone"
 								value="${param.opinionPhone}" id="opinionPhone"
@@ -140,7 +140,7 @@
 							<p style="color: #b2b2b2;">
 								<small>${MsgMap.errorIDEmpty}${MsgMap.errorIDDUp}</small>
 							</p>
-						</div>
+						</div> --%>
 						<div class="form-group col-sm-10">
 							<label class="text-warning" for="introduction">訪客意見:</label>
 							<textarea class="form-control" name="opinionField"
@@ -176,6 +176,10 @@ $("#opinionForm").submit(function(e) {
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
+        	   alert('感謝您寶貴的意見')
+        	   $('input[name="opinionName"]').val('');
+        	   $('input[name="opinionMail"]').val('');
+        	   $('textarea[name="opinionField"]').val('');
             // show response from the php script.
            }
          });
