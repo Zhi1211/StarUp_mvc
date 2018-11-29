@@ -58,20 +58,7 @@
 	</a>
 </div>
 
-<div">
-
-<!-- <div style="height:2000px;"> -->
-<%-- 	<c:if test="${!empty LoginOK}"> --%>
-<%-- 		<input id="temporarySaveUserId" type="hidden" value="${LoginOK.user_id}"> --%>
-<%-- 		<input id="temporarySaveUnreadMessageNumber" type="hidden" value="${unreadMessageNumber}"> --%>
-<%-- 	</c:if> --%>
-<!-- </div> -->
-<script type="text/javascript">
-// var unreadMessageNumber = parseInt(document.getElementById('temporarySaveUnreadMessageNumber').value);
-// if (unreadMessageNumber > 0 ) {
-// 	alert('您尚有 ' + unreadMessageNumber + ' 封訊息尚未閱讀。');
-// }
-</script>
+<div></div>
 
 <div style="position:absolute;text-align:center;margin-left:45%;">
 	<c:if test="${!empty LoginOK}">
