@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<jsp:include page="/fragment/header_dark.jsp" />
+<jsp:include page="/fragment/header.jsp" />
 	<div style="display:flex">     
 		<p style="color:white; font-weight:300; font-size:26px; flex-grow:2; align-self:flex-end; margin-left:30px;">${works.worksName}</p>  
 	   	<p style="color:white; font-weight:200; line-height:60px; margin-right:10px">by ${works.author}</p>		
@@ -33,16 +33,16 @@
 <div class="container" style="margin:0px 20px;">
 
 	<div class="form-group">
-		<form action="updateComment" name="uppdateComment" id="uppdateComment" method="POST">
+		<form name="uppdateComment" id="uppdateComment" method="POST">
 			<div  style="display:flex">
 				<div>
 					<textarea class="form-control" placeholder="新增留言 . . ." name="newComment"
 						id="exampleTextarea" rows="9" style="width:25vw; height: 200px; margin-right:20px"></textarea>
 					<input type="hidden" name="workId" value="${works.works_id}">
-					<input type="submit" class="btn btn-danger" name="submit" id="submit"
+					<input type="submit" class="btn btn-danger" name="submit" id="submitBtn"
 						value="send" style="width: 50%; margin: 20px 15px;">
 				</div>
-				<div style="display:inline-block">   
+				<div class="commentBox" style="display:inline-block">   
 						<c:forEach var="workComment" items="${commentElements}">
 							<div class="minbox" style="padding:5px; width:60vw; margin:5px 0px">
 								<p style="color:white">${workComment.userNickName} :  ${workComment.comment}</p>  
@@ -57,24 +57,31 @@
 
  	<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
     <script>
-    $("#updateComment").submit(function(e) {
-        var form = $(this);
-        var url = form.attr('action');
+    $("#submitBtn").click(function(e) {
+    	 e.preventDefault();
+    	 var userName = "undefined";
+    	 var comment = $('#exampleTextarea').val();
+    	 var str = "<div class='minbox' style='padding:5px; width:60vw; margin:5px 0px'>"+
+			"<p style='color:white'>"+userName+ ":"+comment +"</p></div>" ;			
+    	alert('submit')        
         $.ajax({
                type: "POST",
-               url: url,
+               url: 'updateComment',
                cache:false,
-               dataType: 'json',      
-               data: form.serialize(), // serializes the form's elements.
+               /* dataType: 'json',      */ 
+               data: $('#uppdateComment').serialize(), // serializes the form's elements.
                success: function(data)
                {
-                   alert(data); // show response from the php script.       
+            	   alert('success')
+            	   $('#commentBox').append(str);            	  
+                   $('#exampleTextarea').val("");
+                   
                },
                error: function(data){
-            	   alert(data)
+            	   alert('error')
                }
              });
-        	 e.preventDefault();
+        	
     });
     
   //Create a lightbox
@@ -139,20 +146,9 @@
 	   	var totalWidth = width1+width2+width3
 	   	var winWidth = window.screen.width ;
 	   	if(totalWidth > winWidth){
-	   		var x = winWidth / totalWidth;
-	   		$('#img1').width(width1*x);
-		   	$('#img2').width(width2*x);
-		   	$('#img3').width(width3*x);
-	   		$('#img1').height(height1*x);
-		   	$('#img2').height(height2*x);
-		   	$('#img3').height(height3*x);
-			
-		   	$('#item1').width(width1*x);
-		   	$('#item2').width(width2*x);
-		   	$('#item3').width(width3*x);
-	   		$('#item1').height(height1*x);
-		   	$('#item2').height(height2*x);
-		   	$('#item1').height(height3*x);
+	   		$('#img1').css('height','45vh');  
+	   		$('#img2').css('height','45vh');
+	   		$('#img3').css('height','45vh');
 	   	}
    }
     </script>
